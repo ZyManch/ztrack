@@ -13,8 +13,6 @@ return array(
     'language' => 'ru',
     'import'=>array(
         'application.models.original.*',
-        'application.models.good.*',
-        'application.models.cart_has_good.*',
         'application.models.*',
         'application.forms.*',
         'application.components.*',

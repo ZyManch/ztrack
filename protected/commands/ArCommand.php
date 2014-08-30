@@ -27,11 +27,15 @@ class ArCommand extends CConsoleCommand {
             if (isset($this->aliases[$className])) {
                 $className = $this->aliases[$className];
             }
+            $model->baseClass = 'ActiveRecord';
             $model->template = 'default';
             $model->tableName = $table;
             $model->modelPath = 'application.models.original';
             $model->modelClass = 'C'.$className;
             $model->prepare();
+            foreach ($model->files as $file) {
+                $model->answers[md5($file->path)] = true;
+            }
             $model->save();
             $modelPath = Yii::getPathOfAlias('application.models.'.$className).'.php';
             if (!file_exists($modelPath)) {

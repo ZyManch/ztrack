@@ -15,29 +15,19 @@
  * @property string $changed
  *
  * The followings are the available model relations:
+ * @property Request $request
  * @property CTrace $parent
  * @property CTrace[] $traces
- * @property Request $request
  * @property TraceArgument[] $traceArguments
  * @property TraceCode[] $traceCodes
  */
-class CTrace extends ActiveRecord
-{
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
+class CTrace extends ActiveRecord {
+
+	public function tableName()	{
 		return 'trace';
 	}
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
+	public function rules()	{
 		return array(
 			array('position, changed', 'required'),
 			array('line, method', 'numerical', 'integerOnly'=>true),
@@ -53,24 +43,19 @@ class CTrace extends ActiveRecord
 	/**
 	 * @return array relational rules.
 	 */
-	public function _baseRelations()
-	{
+	protected function _baseRelations()	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'request' => array(self::BELONGS_TO, 'Request', 'request_id'),
 			'parent' => array(self::BELONGS_TO, 'CTrace', 'parent_id'),
 			'traces' => array(self::HAS_MANY, 'CTrace', 'parent_id'),
-			'request' => array(self::BELONGS_TO, 'Request', 'request_id'),
 			'traceArguments' => array(self::HAS_MANY, 'TraceArgument', 'trace_id'),
 			'traceCodes' => array(self::HAS_MANY, 'TraceCode', 'trace_id'),
 		);
 	}
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
+	public function attributeLabels() {
 		return array(
 			'id' => 'ID',
 			'request_id' => 'Request',
@@ -84,20 +69,7 @@ class CTrace extends ActiveRecord
 		);
 	}
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 *
-	 * Typical usecase:
-	 * - Initialize the model fields with values from filter form.
-	 * - Execute this method to get CActiveDataProvider instance which will filter
-	 * models according to data in model fields.
-	 * - Pass data provider to CGridView, CListView or any similar widget.
-	 *
-	 * @return CActiveDataProvider the data provider that can return the models
-	 * based on the search/filter conditions.
-	 */
-	public function search()
-	{
+	public function search() {
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;

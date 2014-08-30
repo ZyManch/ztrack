@@ -5,16 +5,16 @@
  *
  * The followings are the available columns in table 'group_access':
  * @property string $id
- * @property string $user_id
+ * @property string $group_id
  * @property string $access_id
  * @property string $project_id
  * @property string $status
  * @property string $changed
  *
  * The followings are the available model relations:
- * @property Project $project
- * @property User $user
+ * @property Group $group
  * @property Access $access
+ * @property Project $project
  */
 class CGroupAccess extends ActiveRecord {
 
@@ -24,12 +24,12 @@ class CGroupAccess extends ActiveRecord {
 
 	public function rules()	{
 		return array(
-			array('user_id, access_id, project_id, changed', 'required'),
-			array('user_id, access_id, project_id', 'length', 'max'=>10),
+			array('group_id, access_id, project_id, changed', 'required'),
+			array('group_id, access_id, project_id', 'length', 'max'=>10),
 			array('status', 'length', 'max'=>7),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, user_id, access_id, project_id, status, changed', 'safe', 'on'=>'search'),
+			array('id, group_id, access_id, project_id, status, changed', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -40,16 +40,16 @@ class CGroupAccess extends ActiveRecord {
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
-			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
+			'group' => array(self::BELONGS_TO, 'Group', 'group_id'),
 			'access' => array(self::BELONGS_TO, 'Access', 'access_id'),
+			'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
 		);
 	}
 
 	public function attributeLabels() {
 		return array(
 			'id' => 'ID',
-			'user_id' => 'User',
+			'group_id' => 'Group',
 			'access_id' => 'Access',
 			'project_id' => 'Project',
 			'status' => 'Status',
@@ -63,7 +63,7 @@ class CGroupAccess extends ActiveRecord {
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id,true);
-		$criteria->compare('user_id',$this->user_id,true);
+		$criteria->compare('group_id',$this->group_id,true);
 		$criteria->compare('access_id',$this->access_id,true);
 		$criteria->compare('project_id',$this->project_id,true);
 		$criteria->compare('status',$this->status,true);

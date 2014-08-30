@@ -16,23 +16,13 @@
  * The followings are the available model relations:
  * @property Level $level
  */
-class CProjectException extends ActiveRecord
-{
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
+class CProjectException extends ActiveRecord {
+
+	public function tableName()	{
 		return 'exception';
 	}
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
+	public function rules()	{
 		return array(
 			array('title, level_id, changed', 'required'),
 			array('title, trace_line', 'numerical', 'integerOnly'=>true),
@@ -48,8 +38,7 @@ class CProjectException extends ActiveRecord
 	/**
 	 * @return array relational rules.
 	 */
-	public function _baseRelations()
-	{
+	protected function _baseRelations()	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
@@ -57,11 +46,7 @@ class CProjectException extends ActiveRecord
 		);
 	}
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
+	public function attributeLabels() {
 		return array(
 			'id' => 'ID',
 			'title' => 'Title',
@@ -74,20 +59,7 @@ class CProjectException extends ActiveRecord
 		);
 	}
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 *
-	 * Typical usecase:
-	 * - Initialize the model fields with values from filter form.
-	 * - Execute this method to get CActiveDataProvider instance which will filter
-	 * models according to data in model fields.
-	 * - Pass data provider to CGridView, CListView or any similar widget.
-	 *
-	 * @return CActiveDataProvider the data provider that can return the models
-	 * based on the search/filter conditions.
-	 */
-	public function search()
-	{
+	public function search() {
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
@@ -105,5 +77,6 @@ class CProjectException extends ActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
 
 }

@@ -23,10 +23,7 @@ class Controller extends CController
         $isGuest = $user->getIsGuest();
         $this->menu = array(
             array('label'=>'Главная', 'url'=>array('site/index')),
-            array('label'=>'Магазин', 'url'=>array('site/page'),'items' => array(
-                array('label'=>'О нас', 'url'=>array('site/page', 'id'=>'about')),
-                array('label'=>'Доставка и оплата', 'url'=>array('site/index')),
-            )),
+            array('label'=>'Проекты', 'visible' => !$isGuest, 'items' => $this->_getProjectTree()),
             array('label'=>'Аккаунт'.(!$isGuest ? ' ('.Yii::app()->user->name.')':''), 'items' => array(
                 array('label'=>'Выход', 'url'=>array('site/logout'), 'visible'=>!$isGuest),
                 array('label'=>'Войти', 'url'=>array('site/login'), 'visible'=>$isGuest),
@@ -41,10 +38,39 @@ class Controller extends CController
         }
         $user = Yii::app()->user->getUser();
         $projectIds = array();
-        foreach ($user->accesses as $access) {
-            //$projectIds[] = $access->pro
+        foreach ($user->userAccesses as $access) {
+            $projectIds[] = $access->project_id;
         }
-        return array();
+        foreach ($user->groups as $group) {
+            foreach ($group->groupAccesses as $access) {
+                $projectIds[] = $access->project_id;
+            }
+        }
+        /** @var Project[] $projects */
+        $projects = Project::model()->findAllByPk($projectIds);
+        $list = array();
+        $tree = array();
+        $isFirst = true;
+        while (sizeof($projects) > 0) {
+            foreach ($projects as $key => $project) {
+                $item = array(
+                    'label' => $project->title,
+                    'url' => array('project/view','id' => $project->id),
+                    'items' => array()
+                );
+                $list[$project->id] = &$item;
+                if (!$project->parent_id) {
+                    $tree[] = &$item;
+                    unset($projects[$key]);
+                } else if (isset($list[$project->parent_id])) {
+                    $list[$project->parent_id]['items'][] = &$item;
+                    unset($projects[$key]);
+                }
+                unset($item);
+            }
+            $isFirst = false;
+        }
+        return $tree;
 
     }
 

@@ -18,33 +18,23 @@
  * @property string $changed
  *
  * The followings are the available model relations:
- * @property Os $os
  * @property Branch $branch
  * @property Url $url
  * @property Method $method
  * @property Server $server
  * @property Url $refererUrl
  * @property Browser $browser
+ * @property Os $os
  * @property RequestData[] $requestDatas
  * @property Trace[] $traces
  */
-class CRequest extends ActiveRecord
-{
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
+class CRequest extends ActiveRecord {
+
+	public function tableName()	{
 		return 'request';
 	}
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
+	public function rules()	{
 		return array(
 			array('browser_id, os_id, user_ip, code, method_id, url_id, branch_id, changed', 'required'),
 			array('browser_id, os_id, user_ip, method_id, url_id, server_id, branch_id', 'length', 'max'=>10),
@@ -60,28 +50,23 @@ class CRequest extends ActiveRecord
 	/**
 	 * @return array relational rules.
 	 */
-	public function _baseRelations()
-	{
+	protected function _baseRelations()	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'os' => array(self::BELONGS_TO, 'Os', 'os_id'),
 			'branch' => array(self::BELONGS_TO, 'Branch', 'branch_id'),
 			'url' => array(self::BELONGS_TO, 'Url', 'url_id'),
 			'method' => array(self::BELONGS_TO, 'Method', 'method_id'),
 			'server' => array(self::BELONGS_TO, 'Server', 'server_id'),
 			'refererUrl' => array(self::BELONGS_TO, 'Url', 'referer_url_id'),
 			'browser' => array(self::BELONGS_TO, 'Browser', 'browser_id'),
+			'os' => array(self::BELONGS_TO, 'Os', 'os_id'),
 			'requestDatas' => array(self::HAS_MANY, 'RequestData', 'request_id'),
 			'traces' => array(self::HAS_MANY, 'Trace', 'request_id'),
 		);
 	}
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
+	public function attributeLabels() {
 		return array(
 			'id' => 'ID',
 			'browser_id' => 'Browser',
@@ -98,20 +83,7 @@ class CRequest extends ActiveRecord
 		);
 	}
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 *
-	 * Typical usecase:
-	 * - Initialize the model fields with values from filter form.
-	 * - Execute this method to get CActiveDataProvider instance which will filter
-	 * models according to data in model fields.
-	 * - Pass data provider to CGridView, CListView or any similar widget.
-	 *
-	 * @return CActiveDataProvider the data provider that can return the models
-	 * based on the search/filter conditions.
-	 */
-	public function search()
-	{
+	public function search() {
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;

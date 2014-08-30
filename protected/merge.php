@@ -9,7 +9,9 @@ function array_merge_config() {
     $result = array();
     foreach (func_get_args() as $config) {
         foreach ($config as $key => $value) {
-            if (isset($result[$key]) && is_array($result[$key])) {
+            if (is_numeric($key)) {
+                $result[] = $value;
+            } else if (isset($result[$key]) && is_array($result[$key])) {
                 $result[$key] = array_merge_config($result[$key], $value);
             } else {
                 $result[$key] = $value;
