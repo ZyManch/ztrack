@@ -7,6 +7,9 @@
  */
 class ArCommand extends CConsoleCommand {
 
+    public $aliases = array(
+        'Exception' => 'ProjectException'
+    );
 
     public function run($args) {
         Yii::import('system.gii.*',true);
@@ -21,14 +24,28 @@ class ArCommand extends CConsoleCommand {
         ));
         foreach ($tables as $table) {
             $className = $this->_underscoreToCamelCase($table);
+            if (isset($this->aliases[$className])) {
+                $className = $this->aliases[$className];
+            }
             $model->template = 'default';
             $model->tableName = $table;
             $model->modelPath = 'application.models.original';
             $model->modelClass = 'C'.$className;
             $model->prepare();
             $model->save();
+            $modelPath = Yii::getPathOfAlias('application.models.'.$className).'.php';
+            if (!file_exists($modelPath)) {
+                file_put_contents($modelPath,$this->_getModelCode($className));
+            }
         }
 
+    }
+
+    protected function _getModelCode($className) {
+        return sprintf('<?php
+class %s extends %s {
+
+}',$className,'C'.$className);
     }
 
     protected function _getTables() {
