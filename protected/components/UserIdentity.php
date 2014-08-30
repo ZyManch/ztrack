@@ -11,13 +11,12 @@ class UserIdentity extends CUserIdentity {
     protected $_user;
 
 	public function authenticate() {
-        /** @var User $user */
-        $user = User::model()->findByAttributes(array('email' => $this->username));
-		if (!$user) {
+        $this->_user = User::model()->findByAttributes(array('email' => $this->username));
+		if (!$this->_user) {
             $this->errorCode=self::ERROR_USERNAME_INVALID;
             return false;
         }
-		if(!$user->checkPassword($this->password)) {
+		if(!$this->_user->checkPassword($this->password)) {
 			$this->errorCode=self::ERROR_PASSWORD_INVALID;
             return false;
         }

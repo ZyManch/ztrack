@@ -35,4 +35,17 @@ class Controller extends CController
         );
     }
 
+    protected function _getProjectTree() {
+        if (Yii::app()->user->isGuest) {
+            return array();
+        }
+        $user = Yii::app()->user->getUser();
+        $projectIds = array();
+        foreach ($user->accesses as $access) {
+            //$projectIds[] = $access->pro
+        }
+        return array();
+
+    }
+
 }

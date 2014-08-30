@@ -6,24 +6,7 @@
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
 return array(
-	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'My Web Application',
-	// preloading 'log' component
-	'preload'=>array('log'),
-    'sourceLanguage' => 'en',
-    'language' => 'ru',
-	// autoloading model and component classes
-	'import'=>array(
-		'application.models.original.*',
-		'application.models.good.*',
-		'application.models.cart_has_good.*',
-		'application.models.*',
-		'application.forms.*',
-		'application.components.*',
-		'application.controllers.*',
-        'editable.*'
-	),
-
+    'preload'=>array('log'),
 	'modules'=>array(
 		'gii'=>array(
 			'class'=>'system.gii.GiiModule',
@@ -34,7 +17,9 @@ return array(
 			'ipFilters'=>array('127.0.0.1','::1'),
 		),
 	),
-
+    'import'=>array(
+        'editable.*'
+    ),
 	// application components
 	'components'=>array(
 		'user'=>array(
@@ -66,28 +51,6 @@ return array(
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 			),
 		),
-		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=ztrack',
-			'emulatePrepare' => true,
-			'username' => 'root',
-			'password' => '',
-			'charset' => 'utf8',
-		),
-        'robokassa' => array(
-            'class' => 'ext.robokassa.Robokassa',
-            'sMerchantLogin' => 'login',
-            'sMerchantPass1' => 'pass1',
-            'sMerchantPass2' => 'pass2',
-            'sCulture' => 'ru',
-            'sIncCurrLabel' => '',
-            'orderModel' => 'Invoice', // ваша модель для выставления счетов
-            'priceField' => 'amount', // атрибут модели, где хранится сумма
-            'server' => 'our', // тестовый либо боевой режим работы
-        ),
-		'errorHandler'=>array(
-			// use 'site/error' action to display errors
-			'errorAction'=>'site/error',
-		),
         'log' => array(
             'class' => 'CLogRouter',
             'routes'=> array(
@@ -99,15 +62,13 @@ return array(
                 ),
             ),
         ),
-	),
 
-	// application-level parameters that can be accessed
-	// using Yii::app()->params['paramName']
+		'errorHandler'=>array(
+			// use 'site/error' action to display errors
+			'errorAction'=>'site/error',
+		),
+	),
 	'params'=>array(
-		// this is used in contact page
-		'adminEmail'=>'webmaster@example.com',
-        'salt' => 'salt',
-        'price' => 2.00,
-        'min_count' => 50
+
 	),
 );

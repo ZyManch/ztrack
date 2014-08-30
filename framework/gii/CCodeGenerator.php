@@ -44,6 +44,10 @@ class CCodeGenerator extends CController
 
 	private $_viewPath;
 
+    public function __construct($id = '',$module = null) {
+        parent::__construct($id, $module);
+    }
+
 	/**
 	 * @return string the page title
 	 */

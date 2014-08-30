@@ -40,4 +40,19 @@ class ActiveRecord extends CActiveRecord {
         $this->status = self::STATUS_DELETED;
         return $this->save(false);
     }
+
+    public function relations() {
+        return array_merge(
+            $this->_baseRelations(),
+            $this->_extendedRelations()
+        );
+    }
+
+    protected function _baseRelations() {
+        return array();
+    }
+
+    protected function _extendedRelations() {
+        return array();
+    }
 }

@@ -1,27 +1,25 @@
 <?php
 
 /**
- * This is the model class for table "browser".
+ * This is the model class for table "group".
  *
- * The followings are the available columns in table 'browser':
+ * The followings are the available columns in table 'group':
  * @property string $id
- * @property string $browser
- * @property string $name
- * @property string $version
- * @property string $status
- * @property string $changed
+ * @property string $company_id
+ * @property string $title
  *
  * The followings are the available model relations:
- * @property Request[] $requests
+ * @property Company $company
+ * @property UserGroup[] $userGroups
  */
-class CBrowser extends ActiveRecord
+class CGroup extends ActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'browser';
+		return 'group';
 	}
 
 	/**
@@ -32,13 +30,12 @@ class CBrowser extends ActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('browser, changed', 'required'),
-			array('browser', 'length', 'max'=>255),
-			array('name, version', 'length', 'max'=>32),
-			array('status', 'length', 'max'=>7),
+			array('company_id, title', 'required'),
+			array('company_id', 'length', 'max'=>10),
+			array('title', 'length', 'max'=>32),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, browser, name, version, status, changed', 'safe', 'on'=>'search'),
+			array('id, company_id, title', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -50,7 +47,8 @@ class CBrowser extends ActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'requests' => array(self::HAS_MANY, 'Request', 'browser_id'),
+			'company' => array(self::BELONGS_TO, 'Company', 'company_id'),
+			'userGroups' => array(self::HAS_MANY, 'UserGroup', 'group_id'),
 		);
 	}
 
@@ -61,11 +59,8 @@ class CBrowser extends ActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'browser' => 'Browser',
-			'name' => 'Name',
-			'version' => 'Version',
-			'status' => 'Status',
-			'changed' => 'Changed',
+			'company_id' => 'Company',
+			'title' => 'Title',
 		);
 	}
 
@@ -88,11 +83,8 @@ class CBrowser extends ActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id,true);
-		$criteria->compare('browser',$this->browser,true);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('version',$this->version,true);
-		$criteria->compare('status',$this->status,true);
-		$criteria->compare('changed',$this->changed,true);
+		$criteria->compare('company_id',$this->company_id,true);
+		$criteria->compare('title',$this->title,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

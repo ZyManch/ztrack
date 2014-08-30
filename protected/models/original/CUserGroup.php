@@ -1,34 +1,23 @@
 <?php
 
 /**
- * This is the model class for table "trace".
+ * This is the model class for table "user_group".
  *
- * The followings are the available columns in table 'trace':
+ * The followings are the available columns in table 'user_group':
  * @property string $id
- * @property string $request_id
- * @property string $parent_id
- * @property string $filename
- * @property integer $line
- * @property integer $method
- * @property string $position
+ * @property string $user_id
+ * @property string $group_id
  * @property string $status
  * @property string $changed
- *
- * The followings are the available model relations:
- * @property CTrace $parent
- * @property CTrace[] $traces
- * @property Request $request
- * @property TraceArgument[] $traceArguments
- * @property TraceCode[] $traceCodes
  */
-class CTrace extends ActiveRecord
+class CUserGroup extends ActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'trace';
+		return 'user_group';
 	}
 
 	/**
@@ -39,14 +28,12 @@ class CTrace extends ActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('position, changed', 'required'),
-			array('line, method', 'numerical', 'integerOnly'=>true),
-			array('request_id, parent_id, position', 'length', 'max'=>10),
-			array('filename', 'length', 'max'=>255),
+			array('user_id, group_id, changed', 'required'),
+			array('user_id, group_id', 'length', 'max'=>10),
 			array('status', 'length', 'max'=>7),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, request_id, parent_id, filename, line, method, position, status, changed', 'safe', 'on'=>'search'),
+			array('id, user_id, group_id, status, changed', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -58,11 +45,6 @@ class CTrace extends ActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'parent' => array(self::BELONGS_TO, 'CTrace', 'parent_id'),
-			'traces' => array(self::HAS_MANY, 'CTrace', 'parent_id'),
-			'request' => array(self::BELONGS_TO, 'Request', 'request_id'),
-			'traceArguments' => array(self::HAS_MANY, 'TraceArgument', 'trace_id'),
-			'traceCodes' => array(self::HAS_MANY, 'TraceCode', 'trace_id'),
 		);
 	}
 
@@ -73,12 +55,8 @@ class CTrace extends ActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'request_id' => 'Request',
-			'parent_id' => 'Parent',
-			'filename' => 'Filename',
-			'line' => 'Line',
-			'method' => 'Method',
-			'position' => 'Position',
+			'user_id' => 'User',
+			'group_id' => 'Group',
 			'status' => 'Status',
 			'changed' => 'Changed',
 		);
@@ -103,12 +81,8 @@ class CTrace extends ActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id,true);
-		$criteria->compare('request_id',$this->request_id,true);
-		$criteria->compare('parent_id',$this->parent_id,true);
-		$criteria->compare('filename',$this->filename,true);
-		$criteria->compare('line',$this->line);
-		$criteria->compare('method',$this->method);
-		$criteria->compare('position',$this->position,true);
+		$criteria->compare('user_id',$this->user_id,true);
+		$criteria->compare('group_id',$this->group_id,true);
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('changed',$this->changed,true);
 

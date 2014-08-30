@@ -10,7 +10,9 @@
  * @property string $changed
  *
  * The followings are the available model relations:
+ * @property Access[] $accesses
  * @property Branch[] $branches
+ * @property Group[] $groups
  * @property Level[] $levels
  * @property Server[] $servers
  * @property User[] $users
@@ -45,12 +47,14 @@ class CCompany extends ActiveRecord
 	/**
 	 * @return array relational rules.
 	 */
-	public function relations()
+	public function _baseRelations()
 	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'accesses' => array(self::HAS_MANY, 'Access', 'company_id'),
 			'branches' => array(self::HAS_MANY, 'Branch', 'company_id'),
+			'groups' => array(self::HAS_MANY, 'Group', 'company_id'),
 			'levels' => array(self::HAS_MANY, 'Level', 'company_id'),
 			'servers' => array(self::HAS_MANY, 'Server', 'company_id'),
 			'users' => array(self::HAS_MANY, 'User', 'company_id'),
@@ -98,14 +102,5 @@ class CCompany extends ActiveRecord
 		));
 	}
 
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return Company the static model class
-	 */
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
-	}
+
 }

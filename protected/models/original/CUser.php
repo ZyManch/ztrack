@@ -13,7 +13,10 @@
  * @property string $changed
  *
  * The followings are the available model relations:
+ * @property GroupAccess[] $groupAccesses
  * @property Company $company
+ * @property UserAccess[] $userAccesses
+ * @property UserGroup[] $userGroups
  */
 class CUser extends ActiveRecord
 {
@@ -47,12 +50,15 @@ class CUser extends ActiveRecord
 	/**
 	 * @return array relational rules.
 	 */
-	public function relations()
+	public function _baseRelations()
 	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'groupAccesses' => array(self::HAS_MANY, 'GroupAccess', 'user_id'),
 			'company' => array(self::BELONGS_TO, 'Company', 'company_id'),
+			'userAccesses' => array(self::HAS_MANY, 'UserAccess', 'user_id'),
+			'userGroups' => array(self::HAS_MANY, 'UserGroup', 'user_id'),
 		);
 	}
 
@@ -103,14 +109,5 @@ class CUser extends ActiveRecord
 		));
 	}
 
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return CUser the static model class
-	 */
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
-	}
+
 }
