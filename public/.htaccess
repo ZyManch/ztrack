@@ -1,0 +1,16 @@
+AddDefaultCharset utf-8
+php_value default_charset UTF-8
+php_value mbstring.language Russian
+php_value mbstring.internal_encoding UTF-8
+php_flag magic_quotes_qpc Off
+php_flag magic_quotes_runtime Off
+php_flag magic_quotes_sybase Off
+
+RewriteEngine on
+
+# if a directory or a file exists, use it directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# otherwise forward it to index.php
+RewriteRule . index.php

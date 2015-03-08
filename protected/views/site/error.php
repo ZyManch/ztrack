@@ -7,11 +7,16 @@ $this->breadcrumbs=array(
 	'Error',
 );
 ?>
-<div class="panel info">
-    <div  class="info-block">
-        <h2>Error <?php echo $code; ?></h2>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="page-header">
+            <h1>Error <?php echo $code; ?></h1>
+        </div>
+    </div>
+</div>
 
-        <div class="error">
+<div class="row">
+    <div class="col-xs-12">
         <?php echo CHtml::encode($message); ?>
         </div>
     </div>

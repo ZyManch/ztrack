@@ -8,7 +8,9 @@ class Controller extends CController
 	/**
 	 * @var array context menu items. This property will be assigned to {@link CMenu::items}.
 	 */
-	public $menu=array();
+	public $topMenu=array();
+
+    public $projects = array();
 	/**
 	 * @var array the breadcrumbs of the current page. The value of this property will
 	 * be assigned to {@link CBreadcrumbs::links}. Please refer to {@link CBreadcrumbs::links}
@@ -18,12 +20,11 @@ class Controller extends CController
 
     public function init() {
         parent::init();
-        Yii::app()->bootstrap->register();
         $user = Yii::app()->user;
         $isGuest = $user->getIsGuest();
-        $this->menu = array(
+        $this->projects = $this->_getProjectTree();
+        $this->topMenu = array(
             array('label'=>'Главная', 'url'=>array('site/index')),
-            array('label'=>'Проекты', 'visible' => !$isGuest, 'items' => $this->_getProjectTree()),
             array('label'=>'Аккаунт'.(!$isGuest ? ' ('.Yii::app()->user->name.')':''), 'items' => array(
                 array('label'=>'Выход', 'url'=>array('site/logout'), 'visible'=>!$isGuest),
                 array('label'=>'Войти', 'url'=>array('site/login'), 'visible'=>$isGuest),
@@ -32,7 +33,7 @@ class Controller extends CController
         );
     }
 
-    protected function _getProjectTree() {
+    protected function _getProjectTree($id = null) {
         if (Yii::app()->user->isGuest) {
             return array();
         }
@@ -50,12 +51,10 @@ class Controller extends CController
         $projects = Project::model()->findAllByPk($projectIds);
         $list = array();
         $tree = array();
-        $isFirst = true;
         while (sizeof($projects) > 0) {
             foreach ($projects as $key => $project) {
                 $item = array(
-                    'label' => $project->title,
-                    'url' => array('project/view','id' => $project->id),
+                    'project' => $project,
                     'items' => array()
                 );
                 $list[$project->id] = &$item;
@@ -68,7 +67,6 @@ class Controller extends CController
                 }
                 unset($item);
             }
-            $isFirst = false;
         }
         return $tree;
 

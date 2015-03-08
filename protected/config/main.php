@@ -18,7 +18,7 @@ return array(
 		),
 	),
     'import'=>array(
-        'editable.*'
+
     ),
 	// application components
 	'components'=>array(
@@ -26,17 +26,7 @@ return array(
             'class'=>'WebUser',
 			'allowAutoLogin'=>true,
 		),
-        'bootstrap'=>array(
-            'class'=>'bootstrap.components.Bootstrap',
-        ),
-        'editable' => array(
-            'class'     => 'editable.EditableConfig',
-            'form'      => 'bootstrap',        //form style: 'bootstrap', 'jqueryui', 'plain'
-            'mode'      => 'popup',            //mode: 'popup' or 'inline'
-            'defaults'  => array(              //default settings for all editable elements
-                'emptytext' => 'Click to edit'
-            )
-        ),
+
         'themeManager'=>array(
             'class'=>'CThemeManager',
         ),

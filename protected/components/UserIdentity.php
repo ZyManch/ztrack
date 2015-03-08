@@ -43,6 +43,6 @@ class UserIdentity extends CUserIdentity {
      */
     public function getName()
     {
-        return $this->_user->email;
+        return $this->_user->login;
     }
 }
