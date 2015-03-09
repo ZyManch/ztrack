@@ -7,15 +7,15 @@ $currentModule = Yii::app()->request->getParam('module');
 $currentAction = Yii::app()->request->getParam('action');
 $activeSystemModule = null;
 ?>
-<div class="row">
+<div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-xs-12">
         <div class="page-header">
-            <h1><?php echo $model->title; ?></h1>
+            <h2><?php echo $model->title; ?></h2>
         </div>
     </div>
 </div>
 
-<div class="row">
+<div class="wrapper wrapper-content  animated fadeInRight">
     <div class="col-xs-12">
         <ul class="nav nav-tabs">
             <?php foreach ($model->systemModules as $systemModule):?>

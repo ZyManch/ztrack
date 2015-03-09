@@ -5,6 +5,7 @@
  * @property Access[] $accesses
  * @property Project[] $projects
  * @property AbstractUserModule[] $systemModules
+ * @property Page[] $mainNotes
  */
 class User extends CUser {
 
@@ -29,6 +30,7 @@ class User extends CUser {
             'groups' => array(self::MANY_MANY,'Group','user_group(user_id,group_id)'),
             'projects' => array(self::MANY_MANY,'Project','user_access(user_id,project_id)'),
             'systemModules' => array(self::MANY_MANY, 'SystemModule','user_system_module(user_id,system_module_id)', 'order' => 'systemModules.position ASC'),
+            'mainNotes' => array(self::HAS_MANY, 'Page','author_user_id', 'on' => 'mainNotes.page_type_id='.PAGE_TYPE_NOTES.' AND mainNotes.parent_page_id IS  null'),
         );
     }
 

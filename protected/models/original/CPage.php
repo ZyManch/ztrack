@@ -20,6 +20,7 @@
  * @property User $authorUser
  * @property User $assignUser
  * @property PageType $pageType
+ * @property Page[] $childPages
  */
 class CPage extends ActiveRecord {
 
@@ -31,7 +32,7 @@ class CPage extends ActiveRecord {
 		return array(
 			array('author_user_id, page_type_id, body, changed', 'required'),
 			array('author_user_id, assign_user_id, page_type_id, project_id', 'length', 'max'=>10),
-			array('url', 'length', 'max'=>64),
+			array('url,parent_page_id', 'length', 'max'=>64),
 			array('title', 'length', 'max'=>128),
 			array('status', 'length', 'max'=>7),
 			// The following rule is used by search().
@@ -51,6 +52,7 @@ class CPage extends ActiveRecord {
 			'authorUser' => array(self::BELONGS_TO, 'User', 'author_user_id'),
 			'assignUser' => array(self::BELONGS_TO, 'User', 'assign_user_id'),
 			'pageType' => array(self::BELONGS_TO, 'PageType', 'page_type_id'),
+			'childPages' => array(self::HAS_MANY, 'Page', 'parent_page_id'),
 		);
 	}
 
