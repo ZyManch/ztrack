@@ -11,8 +11,8 @@
  * @property string $changed
  *
  * The followings are the available model relations:
- * @property Group $group
  * @property User $user
+ * @property Group $group
  */
 class CUserGroup extends ActiveRecord {
 
@@ -38,8 +38,8 @@ class CUserGroup extends ActiveRecord {
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'group' => array(self::BELONGS_TO, 'Group', 'group_id'),
 			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
+			'group' => array(self::BELONGS_TO, 'Group', 'group_id'),
 		);
 	}
 

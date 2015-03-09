@@ -5,6 +5,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <base href="/"/>
     <?php
+    // http://infinite-woodland-5276.herokuapp.com/index.html
     $clientScript = Yii::app()->clientScript;
     $clientScript->registerCssFile('/css/styles.css');
     $clientScript->registerCssFile('/css/bootstrap.min.css');

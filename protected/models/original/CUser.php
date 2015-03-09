@@ -13,9 +13,12 @@
  * @property string $changed
  *
  * The followings are the available model relations:
+ * @property Page[] $pages
+ * @property Page[] $pages1
  * @property Company $company
  * @property UserAccess[] $userAccesses
  * @property UserGroup[] $userGroups
+ * @property UserSystemModule[] $userSystemModules
  */
 class CUser extends ActiveRecord {
 
@@ -43,9 +46,12 @@ class CUser extends ActiveRecord {
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'pages' => array(self::HAS_MANY, 'Page', 'author_user_id'),
+			'pages1' => array(self::HAS_MANY, 'Page', 'assign_user_id'),
 			'company' => array(self::BELONGS_TO, 'Company', 'company_id'),
 			'userAccesses' => array(self::HAS_MANY, 'UserAccess', 'user_id'),
 			'userGroups' => array(self::HAS_MANY, 'UserGroup', 'user_id'),
+			'userSystemModules' => array(self::HAS_MANY, 'UserSystemModule', 'user_id'),
 		);
 	}
 

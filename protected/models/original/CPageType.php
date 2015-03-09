@@ -1,38 +1,32 @@
 <?php
 
 /**
- * This is the model class for table "project".
+ * This is the model class for table "page_type".
  *
- * The followings are the available columns in table 'project':
+ * The followings are the available columns in table 'page_type':
  * @property string $id
+ * @property string $constant
  * @property string $title
- * @property string $parent_id
  * @property string $status
  * @property string $changed
  *
  * The followings are the available model relations:
- * @property GroupAccess[] $groupAccesses
  * @property Page[] $pages
- * @property CProject $parent
- * @property CProject[] $projects
- * @property ProjectSystemModule[] $projectSystemModules
- * @property UserAccess[] $userAccesses
  */
-class CProject extends ActiveRecord {
+class CPageType extends ActiveRecord {
 
 	public function tableName()	{
-		return 'project';
+		return 'page_type';
 	}
 
 	public function rules()	{
 		return array(
-			array('title, changed', 'required'),
-			array('title', 'length', 'max'=>64),
-			array('parent_id', 'length', 'max'=>10),
+			array('constant, title, changed', 'required'),
+			array('constant, title', 'length', 'max'=>64),
 			array('status', 'length', 'max'=>7),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, title, parent_id, status, changed', 'safe', 'on'=>'search'),
+			array('id, constant, title, status, changed', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -43,20 +37,15 @@ class CProject extends ActiveRecord {
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'groupAccesses' => array(self::HAS_MANY, 'GroupAccess', 'project_id'),
-			'pages' => array(self::HAS_MANY, 'Page', 'project_id'),
-			'parent' => array(self::BELONGS_TO, 'CProject', 'parent_id'),
-			'projects' => array(self::HAS_MANY, 'CProject', 'parent_id'),
-			'projectSystemModules' => array(self::HAS_MANY, 'ProjectSystemModule', 'project_id'),
-			'userAccesses' => array(self::HAS_MANY, 'UserAccess', 'project_id'),
+			'pages' => array(self::HAS_MANY, 'Page', 'page_type_id'),
 		);
 	}
 
 	public function attributeLabels() {
 		return array(
 			'id' => 'ID',
+			'constant' => 'Constant',
 			'title' => 'Title',
-			'parent_id' => 'Parent',
 			'status' => 'Status',
 			'changed' => 'Changed',
 		);
@@ -68,8 +57,8 @@ class CProject extends ActiveRecord {
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id,true);
+		$criteria->compare('constant',$this->constant,true);
 		$criteria->compare('title',$this->title,true);
-		$criteria->compare('parent_id',$this->parent_id,true);
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('changed',$this->changed,true);
 

@@ -4,6 +4,7 @@
  * @property Group[] $groups
  * @property Access[] $accesses
  * @property Project[] $projects
+ * @property AbstractSystemModule[] $systemModules
  */
 class User extends CUser {
 
@@ -27,8 +28,8 @@ class User extends CUser {
             'accesses' => array(self::MANY_MANY,'Access','user_access(user_id,access_id)'),
             'groups' => array(self::MANY_MANY,'Group','user_group(user_id,group_id)'),
             'projects' => array(self::MANY_MANY,'Project','user_access(user_id,project_id)'),
+            'systemModules' => array(self::MANY_MANY, 'SystemModule','user_system_module(user_id,system_module_id)', 'order' => 'systemModules.position ASC'),
         );
     }
-
 
 }

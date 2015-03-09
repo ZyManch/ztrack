@@ -10,11 +10,10 @@
 <div id="main-menu" role="navigation">
 <div id="main-menu-inner">
 <ul class="navigation">
-    <li>
-        <a href="/"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text">Dashboard</span></a>
-    </li>
-    <?php foreach ($this->projects as $project):?>
-        <?php $this->renderPartial('//layouts/_mainMenuItem',array('project'=>$project));?>
+    <?php foreach (Yii::app()->user->getUser()->systemModules as $systemModule):?>
+        <?php foreach ($systemModule->getMainMenuItems() as $menu):?>
+            <?php $this->renderPartial('//layouts/_mainMenuItem',array('menu'=>$menu));?>
+        <?php endforeach;?>
     <?php endforeach;?>
 </ul> <!-- / .navigation -->
 <div class="menu-content">

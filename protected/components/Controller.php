@@ -10,7 +10,6 @@ class Controller extends CController
 	 */
 	public $topMenu=array();
 
-    public $projects = array();
 	/**
 	 * @var array the breadcrumbs of the current page. The value of this property will
 	 * be assigned to {@link CBreadcrumbs::links}. Please refer to {@link CBreadcrumbs::links}
@@ -22,7 +21,6 @@ class Controller extends CController
         parent::init();
         $user = Yii::app()->user;
         $isGuest = $user->getIsGuest();
-        $this->projects = $this->_getProjectTree();
         $this->topMenu = array(
             array('label'=>'Главная', 'url'=>array('site/index')),
             array('label'=>'Аккаунт'.(!$isGuest ? ' ('.Yii::app()->user->name.')':''), 'items' => array(
@@ -33,43 +31,5 @@ class Controller extends CController
         );
     }
 
-    protected function _getProjectTree($id = null) {
-        if (Yii::app()->user->isGuest) {
-            return array();
-        }
-        $user = Yii::app()->user->getUser();
-        $projectIds = array();
-        foreach ($user->userAccesses as $access) {
-            $projectIds[] = $access->project_id;
-        }
-        foreach ($user->groups as $group) {
-            foreach ($group->groupAccesses as $access) {
-                $projectIds[] = $access->project_id;
-            }
-        }
-        /** @var Project[] $projects */
-        $projects = Project::model()->findAllByPk($projectIds);
-        $list = array();
-        $tree = array();
-        while (sizeof($projects) > 0) {
-            foreach ($projects as $key => $project) {
-                $item = array(
-                    'project' => $project,
-                    'items' => array()
-                );
-                $list[$project->id] = &$item;
-                if (!$project->parent_id) {
-                    $tree[] = &$item;
-                    unset($projects[$key]);
-                } else if (isset($list[$project->parent_id])) {
-                    $list[$project->parent_id]['items'][] = &$item;
-                    unset($projects[$key]);
-                }
-                unset($item);
-            }
-        }
-        return $tree;
-
-    }
 
 }

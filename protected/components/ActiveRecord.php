@@ -55,4 +55,21 @@ class ActiveRecord extends CActiveRecord {
     protected function _extendedRelations() {
         return array();
     }
+
+    public static function loadConstants() {
+        $cacheKey = 'constants_'.get_called_class();
+        if (!isset(Yii::app()->cache[$cacheKey])) {
+            $pageTypes = self::model()->findAll();
+            $constants = array();
+            foreach ($pageTypes as $pageType) {
+                $constants[$pageType->constant] = $pageType->id;
+            }
+            Yii::app()->cache[$cacheKey] = $constants;
+        } else {
+            $constants = Yii::app()->cache[$cacheKey];
+        }
+        foreach ($constants as $key => $value) {
+            define($key, $value);
+        }
+    }
 }

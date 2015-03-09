@@ -8,7 +8,7 @@
 return array(
     'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
     'name'=>'My Web Application',
-
+    'preload'=>array('constants'),
     'sourceLanguage' => 'en',
     'language' => 'ru',
     'import'=>array(
@@ -17,6 +17,8 @@ return array(
         'application.forms.*',
         'application.components.*',
         'application.controllers.*',
+        'application.modules.user.*',
+        'application.modules.project.*',
     ),
 
     // application components
@@ -27,8 +29,17 @@ return array(
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8',
+            'schemaCachingDuration' => 3600 * 24,
+            'enableParamLogging'    => true
         ),
-
+        'cache'=>array(
+            'class'=>'system.caching.CFileCache',
+            'directoryLevel' =>1,
+            'cachePath' => dirname(__FILE__).'/../../cache'
+        ),
+        'constants' => array(
+            'class'=>'Constants',
+        )
     ),
     'params'=>array(
         'adminEmail'=>'webmaster@example.com',

@@ -1,38 +1,38 @@
 <?php
 
 /**
- * This is the model class for table "project".
+ * This is the model class for table "system_module".
  *
- * The followings are the available columns in table 'project':
+ * The followings are the available columns in table 'system_module':
  * @property string $id
+ * @property string $name
  * @property string $title
- * @property string $parent_id
+ * @property string $description
+ * @property string $type
+ * @property integer $position
  * @property string $status
  * @property string $changed
  *
  * The followings are the available model relations:
- * @property GroupAccess[] $groupAccesses
- * @property Page[] $pages
- * @property CProject $parent
- * @property CProject[] $projects
  * @property ProjectSystemModule[] $projectSystemModules
- * @property UserAccess[] $userAccesses
+ * @property UserSystemModule[] $userSystemModules
  */
-class CProject extends ActiveRecord {
+class CSystemModule extends ActiveRecord {
 
 	public function tableName()	{
-		return 'project';
+		return 'system_module';
 	}
 
 	public function rules()	{
 		return array(
-			array('title, changed', 'required'),
+			array('name, title, description, position, changed', 'required'),
+			array('position', 'numerical', 'integerOnly'=>true),
+			array('name', 'length', 'max'=>32),
 			array('title', 'length', 'max'=>64),
-			array('parent_id', 'length', 'max'=>10),
-			array('status', 'length', 'max'=>7),
+			array('type, status', 'length', 'max'=>7),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, title, parent_id, status, changed', 'safe', 'on'=>'search'),
+			array('id, name, title, description, type, position, status, changed', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -43,20 +43,19 @@ class CProject extends ActiveRecord {
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'groupAccesses' => array(self::HAS_MANY, 'GroupAccess', 'project_id'),
-			'pages' => array(self::HAS_MANY, 'Page', 'project_id'),
-			'parent' => array(self::BELONGS_TO, 'CProject', 'parent_id'),
-			'projects' => array(self::HAS_MANY, 'CProject', 'parent_id'),
-			'projectSystemModules' => array(self::HAS_MANY, 'ProjectSystemModule', 'project_id'),
-			'userAccesses' => array(self::HAS_MANY, 'UserAccess', 'project_id'),
+			'projectSystemModules' => array(self::HAS_MANY, 'ProjectSystemModule', 'system_module_id'),
+			'userSystemModules' => array(self::HAS_MANY, 'UserSystemModule', 'system_module_id'),
 		);
 	}
 
 	public function attributeLabels() {
 		return array(
 			'id' => 'ID',
+			'name' => 'Name',
 			'title' => 'Title',
-			'parent_id' => 'Parent',
+			'description' => 'Description',
+			'type' => 'Type',
+			'position' => 'Position',
 			'status' => 'Status',
 			'changed' => 'Changed',
 		);
@@ -68,8 +67,11 @@ class CProject extends ActiveRecord {
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id,true);
+		$criteria->compare('name',$this->name,true);
 		$criteria->compare('title',$this->title,true);
-		$criteria->compare('parent_id',$this->parent_id,true);
+		$criteria->compare('description',$this->description,true);
+		$criteria->compare('type',$this->type,true);
+		$criteria->compare('position',$this->position);
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('changed',$this->changed,true);
 

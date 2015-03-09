@@ -5,31 +5,29 @@
  * Date: 08.03.2015
  * Time: 20:29
  * @var $this Controller
- * @var $project array
- * @var $model Project
+ * @var $menu array
  */
-$model = $project['project'];
-$url =  CHtml::normalizeUrl(array('project/view','id' => $model->id));
+$url =  CHtml::normalizeUrl($menu['url']);
 ?>
 
-<?php if (isset($project['items']) && $project['items']):?>
+<?php if (isset($menu['items']) && $menu['items']):?>
     <li class="mm-dropdown">
-        <a href="<?php echo CHtml::normalizeUrl($url);?>">
+        <a href="<?php echo CHtml::encode($url);?>">
             <i class="menu-icon fa fa-th"></i>
-            <span class="mm-text">Layouts</span>
+            <span class="mm-text"><?php echo CHtml::encode($menu['label']);?></span>
         </a>
         <ul>
-            <?php foreach ($project['items'] as $item):?>
-                <?php $this->renderPartial('//layouts/_mainMenuItem',array('project'=>$item));?>
+            <?php foreach ($menu['items'] as $item):?>
+                <?php $this->renderPartial('//layouts/_mainMenuItem',array('menu'=>$item));?>
             <?php endforeach;?>
         </ul>
     </li>
 <?php else:?>
     <li>
-        <a href="<?php echo CHtml::normalizeUrl($url);?>">
+        <a href="<?php echo CHtml::encode($url);?>">
             <i class="menu-icon fa fa-dashboard"></i>
             <span class="mm-text">
-                <?php echo CHtml::encode($model->title);?>
+                <?php echo CHtml::encode($menu['label']);?>
             </span>
         </a>
     </li>
