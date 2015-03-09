@@ -6,51 +6,36 @@
  * Time: 1:06
  * @var $this Controller
  */
-Yii::app()->clientScript->registerScript('initTopMenu','
-window.pixelInit.push(function () {
-    $("#main-navbar-notifications").slimScroll({ height: 250 });
-});
-window.pixelInit.push(function () {
-    $("#main-navbar-messages").slimScroll({ height: 250 });
-});
-',CClientScript::POS_HEAD);
 ?>
-<div id="main-navbar" class="navbar navbar-inverse" role="navigation">
-<button type="button" id="main-menu-toggle"><i class="navbar-icon fa fa-bars icon"></i><span class="hide-menu-text">HIDE MENU</span></button>
 
-<div class="navbar-inner">
-<!-- Main navbar header -->
-<div class="navbar-header">
+<div class="row border-bottom">
+    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
 
-    <!-- Logo -->
-    <a href="/" class="navbar-brand">
-        <?php $this->renderPartial('//layouts/_logo');?>
-    </a>
 
-    <!-- Main navbar toggle -->
-    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar-collapse"><i class="navbar-icon fa fa-bars"></i></button>
+        <div class="navbar-header">
+            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+            <?php foreach (Yii::app()->user->getSystemModules() as $systemModule):?>
+                <?php foreach ($systemModule->getMainMenuLeftItems() as $menu):?>
+                    <?php if (isset($menu['template'])):?>
+                        <?php $this->renderPartial($menu['template'],isset($menu['attributes']) ? $menu['attributes'] : array());?>
+                    <?php else:?>
+                        <?php echo $menu;?>
+                    <?php endif;?>
+                <?php endforeach;?>
+            <?php endforeach;?>
+        </div>
+        <ul class="nav navbar-top-links navbar-right">
+            <?php foreach (Yii::app()->user->getSystemModules() as $systemModule):?>
+                <?php foreach ($systemModule->getMainMenuRightItems() as $menu):?>
+                    <?php if (isset($menu['template'])):?>
+                        <?php $this->renderPartial($menu['template'],isset($menu['attributes']) ? $menu['attributes'] : array());?>
+                    <?php else:?>
+                        <?php echo $menu;?>
+                    <?php endif;?>
+                <?php endforeach;?>
+            <?php endforeach;?>
 
-</div> <!-- / .navbar-header -->
+        </ul>
 
-<div id="main-navbar-collapse" class="collapse navbar-collapse main-navbar-collapse">
-<div>
-<ul class="nav navbar-nav">
-    <?php foreach (Yii::app()->user->getUser()->systemModules as $systemModule):?>
-        <?php echo $systemModule->getMainMenuLeftHtml();?>
-    <?php endforeach;?>
-</ul> <!-- / .navbar-nav -->
-
-<div class="right clearfix">
-
-<ul class="nav navbar-nav pull-right right-navbar-nav">
-
-<?php foreach (Yii::app()->user->getUser()->systemModules as $systemModule):?>
-    <?php echo $systemModule->getMainMenuRightHtml();?>
-<?php endforeach;?>
-
-</ul> <!-- / .navbar-nav -->
-</div> <!-- / .right -->
+    </nav>
 </div>
-</div> <!-- / #main-navbar-collapse -->
-</div> <!-- / .navbar-inner -->
-</div> <!-- / #main-navbar -->

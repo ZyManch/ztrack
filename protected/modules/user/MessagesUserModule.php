@@ -7,8 +7,12 @@
  */
 class MessagesUserModule extends AbstractUserModule {
 
-    public function getMainMenuRightHtml() {
-        return Yii::app()->controller->renderPartial('//modules/user/_messages');
+    public function getMainMenuRightItems() {
+        return array(
+            array(
+                'template' => '//modules/user/_messages'
+            )
+        );
 
     }
 }

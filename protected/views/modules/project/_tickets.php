@@ -9,8 +9,8 @@
 ?>
 <div class="row">
     <div class="col-md-12">
-        <div class="panel colourable">
-            <div class="panel-body">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
                 asd
             </div>
         </div>
@@ -19,22 +19,22 @@
 
 <div class="row">
     <div class="col-md-6">
-        <div class="panel colourable">
-            <div class="panel-heading">
-                <span class="panel-title">Общие тикеты</span>
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Общие тикеты</h5>
             </div>
-            <div class="panel-body">
+            <div class="ibox-content">
 
             </div>
         </div>
     </div>
 
     <div class="col-md-6">
-        <div class="panel colourable">
-            <div class="panel-heading">
-                <span class="panel-title">Мои тикеты</span>
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Мои тикеты</h5>
             </div>
-            <div class="panel-body">
+            <div class="ibox-content">
 
             </div>
         </div>

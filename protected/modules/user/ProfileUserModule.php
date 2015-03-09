@@ -7,8 +7,17 @@
  */
 class ProfileUserModule extends AbstractUserModule {
 
-    public function getMainMenuRightHtml() {
-        return Yii::app()->controller->renderPartial('//modules/user/_profile');
+    public function getMainMenuItems() {
+        return array(
+            array(
+                'template' => '//modules/user/_profileMain'
+            )
+        );
+    }
 
+    public function getMainMenuRightItems() {
+        return array(
+            //array('template' => '//modules/user/_profileTop')
+        );
     }
 }

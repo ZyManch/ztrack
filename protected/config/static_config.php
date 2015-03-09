@@ -19,6 +19,7 @@ return array(
         'application.controllers.*',
         'application.modules.user.*',
         'application.modules.project.*',
+        'application.models.editor.*',
     ),
 
     // application components
@@ -39,7 +40,7 @@ return array(
         ),
         'constants' => array(
             'class'=>'Constants',
-        )
+        ),
     ),
     'params'=>array(
         'adminEmail'=>'webmaster@example.com',

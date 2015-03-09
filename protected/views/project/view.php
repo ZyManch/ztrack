@@ -4,6 +4,7 @@
 
 
 $currentModule = Yii::app()->request->getParam('module');
+$currentAction = Yii::app()->request->getParam('action');
 $activeSystemModule = null;
 ?>
 <div class="row">
@@ -21,17 +22,20 @@ $activeSystemModule = null;
                 <?php foreach ($systemModule->getTabs() as $tab):?>
                     <?php
                     if (!$currentModule) {
-                        $currentModule = $tab['module'];
+                        $currentModule = $systemModule->getModuleName();
                     }
-                    $isActive = ($currentModule==$tab['module']);
+                    $isActive = ($currentModule==$systemModule->getModuleName());
                     if ($isActive) {
                         $activeSystemModule = $systemModule;
+                        if (!$currentAction) {
+                            $currentAction = $activeSystemModule->defaultAction;
+                        }
                     }
                     ?>
                     <li<?php if($isActive):?> class="active" <?php endif;?>>
                         <?php echo CHtml::link(
                             $tab['label'],
-                            array('project/view','id'=>$model->id,'module' => $tab['module'])
+                            array('project/view','id'=>$model->id,'module' => $systemModule->getModuleName())
                         );?>
                     </li>
                 <?php endforeach;?>
@@ -39,15 +43,14 @@ $activeSystemModule = null;
         </ul>
     </div>
 </div>
-
-<?php if ($activeSystemModule && $activeSystemModule->hasAccess($currentModule)):?>
-    <?php $activeSystemModule->run($currentModule);?>
+<?php if ($activeSystemModule && $activeSystemModule->hasAccess($currentAction)):?>
+    <?php $activeSystemModule->run($currentAction);?>
 <?php else:?>
     <div class="row">
         <div class="col-xs-12">
             <div class="panel colourable">
                 <div class="panel-body">
-                    <div class="alert alert-page alert-danger alert-dark">Action not found</div>
+                    <div class="alert alert-danger">Action not found</div>
                 </div>
             </div>
         </div>

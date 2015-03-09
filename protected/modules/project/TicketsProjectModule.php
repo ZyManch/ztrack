@@ -7,11 +7,14 @@
  */
 class TicketsProjectModule extends AbstractProjectModule {
 
+    public function getModuleName() {
+        return 'tickets';
+    }
+
     public function getTabs() {
         return array(
             array(
                 'label' => 'Tickets',
-                'module' => 'tickets'
             )
         );
     }
@@ -20,7 +23,7 @@ class TicketsProjectModule extends AbstractProjectModule {
         return  array_merge(
             array(
                 array('allow',
-                    'actions' => array('tickets'),
+                    'actions' => array('index'),
                     'users'=>array('*'),
                 )
             ),
@@ -28,7 +31,7 @@ class TicketsProjectModule extends AbstractProjectModule {
         );
     }
 
-    public function actionTickets() {
+    public function actionIndex() {
         Yii::app()->controller->renderPartial(
             '//modules/project/_tickets',
             array(

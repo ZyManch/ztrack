@@ -7,8 +7,12 @@
  */
 class SearchUserModule extends AbstractUserModule {
 
-    public function getMainMenuRightHtml() {
-        return Yii::app()->controller->renderPartial('//modules/user/_search');
+    public function getMainMenuLeftItems() {
+        return array(
+            array(
+                'template' => '//modules/user/_search'
+            )
+        );
 
     }
 }

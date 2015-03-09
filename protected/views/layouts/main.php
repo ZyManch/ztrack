@@ -7,17 +7,20 @@
     <?php
     // http://infinite-woodland-5276.herokuapp.com/index.html
     $clientScript = Yii::app()->clientScript;
-    $clientScript->registerCssFile('/css/styles.css');
     $clientScript->registerCssFile('/css/bootstrap.min.css');
-    $clientScript->registerCssFile('/css/pixel-admin.min.css');
-    $clientScript->registerCssFile('/css/widgets.min.css');
-    $clientScript->registerCssFile('/css/rtl.min.css');
-    $clientScript->registerCssFile('/css/themes.min.css');
+    $clientScript->registerCssFile('/css/font-awesome.css');
+    $clientScript->registerCssFile('/css/animate.css');
+    $clientScript->registerCssFile('/css/styles.css');
+    $clientScript->registerCssFile('/css/style.css');
+
+
     $clientScript->registerCoreScript('jquery');
     $clientScript->registerScriptFile('/js/bootstrap.min.js');
-    $clientScript->registerScriptFile('/js/pixel-admin.min.js');
-    $clientScript->registerScript('pixelAdminStart','window.pixelInit = [];',CClientScript::POS_HEAD);
-    $clientScript->registerScript('pixelAdminFinish','window.PixelAdmin.start(window.pixelInit);',CClientScript::POS_END);
+    $clientScript->registerScriptFile('/js/jquery.metisMenu.js');
+    $clientScript->registerScriptFile('/js/jquery.slimscroll.min.js');
+    $clientScript->registerScriptFile('/js/jquery.nestable.js');
+    $clientScript->registerScriptFile('/js/inspinia.js');
+    $clientScript->registerScriptFile('/js/pace.min.js');
     ?>
     <!--[if lt IE 9]>
     <script src="/js/ie.min.js"></script>
@@ -26,40 +29,25 @@
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 
-<body class="theme-silver main-menu-animated animate-mm-sm animate-mm-md animate-mm-lg">
-<div id="main-wrapper">
-    <?php $this->renderPartial('//layouts/_topMenu');?>
-    <?php if (!Yii::app()->user->isGuest):?>
-        <?php $this->renderPartial('//layouts/_mainMenu');?>
-    <?php endif;?>
+<body class="skin-3">
+    <div id="wrapper">
 
+        <?php if (!Yii::app()->user->isGuest):?>
+            <?php $this->renderPartial('//layouts/_mainMenu');?>
+        <?php endif;?>
+        <div id="page-wrapper" class="gray-bg">
+            <?php $this->renderPartial('//layouts/_topMenu');?>
 
-    <div id="content-wrapper">
+            <?php if (Yii::app()->user->hasFlash('error')):?>
+            <div class="alert alert-danger"><?php echo Yii::app()->user->getFlash('error');?></div>
+            <?php endif;?>
+            <?php if (Yii::app()->user->hasFlash('success')):?>
+                <div class="alert alert-danger"><?php echo Yii::app()->user->getFlash('success');?></div>
+            <?php endif;?>
 
-        <?php echo $content; ?>
-    </div>
-    <?php if (!Yii::app()->user->isGuest):?>
-    <div id="main-menu-bg"></div>
-    <?php endif;?>
-</div>
-
-
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Ошибка</h4>
-            </div>
-            <div class="modal-body" id="myModalBody">
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
+            <?php echo $content; ?>
         </div>
-    </div>
-</div>
 
+    </div>
 </body>
 </html>

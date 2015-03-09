@@ -14,6 +14,7 @@
  * @property string $changed
  *
  * The followings are the available model relations:
+ * @property GuestSystemModule[] $guestSystemModules
  * @property ProjectSystemModule[] $projectSystemModules
  * @property UserSystemModule[] $userSystemModules
  */
@@ -43,6 +44,7 @@ class CSystemModule extends ActiveRecord {
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'guestSystemModules' => array(self::HAS_MANY, 'GuestSystemModule', 'system_module_id'),
 			'projectSystemModules' => array(self::HAS_MANY, 'ProjectSystemModule', 'system_module_id'),
 			'userSystemModules' => array(self::HAS_MANY, 'UserSystemModule', 'system_module_id'),
 		);

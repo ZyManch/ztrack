@@ -6,12 +6,14 @@
  * The followings are the available columns in table 'company':
  * @property string $id
  * @property string $title
+ * @property string $editor_id
  * @property string $status
  * @property string $changed
  *
  * The followings are the available model relations:
  * @property Access[] $accesses
  * @property Branch[] $branches
+ * @property Editor $editor
  * @property Group[] $groups
  * @property Level[] $levels
  * @property Server[] $servers
@@ -25,12 +27,13 @@ class CCompany extends ActiveRecord {
 
 	public function rules()	{
 		return array(
-			array('title, changed', 'required'),
+			array('title, editor_id, changed', 'required'),
 			array('title', 'length', 'max'=>64),
+			array('editor_id', 'length', 'max'=>10),
 			array('status', 'length', 'max'=>7),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, title, status, changed', 'safe', 'on'=>'search'),
+			array('id, title, editor_id, status, changed', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -43,6 +46,7 @@ class CCompany extends ActiveRecord {
 		return array(
 			'accesses' => array(self::HAS_MANY, 'Access', 'company_id'),
 			'branches' => array(self::HAS_MANY, 'Branch', 'company_id'),
+			'editor' => array(self::BELONGS_TO, 'Editor', 'editor_id'),
 			'groups' => array(self::HAS_MANY, 'Group', 'company_id'),
 			'levels' => array(self::HAS_MANY, 'Level', 'company_id'),
 			'servers' => array(self::HAS_MANY, 'Server', 'company_id'),
@@ -54,6 +58,7 @@ class CCompany extends ActiveRecord {
 		return array(
 			'id' => 'ID',
 			'title' => 'Title',
+			'editor_id' => 'Editor',
 			'status' => 'Status',
 			'changed' => 'Changed',
 		);
@@ -66,6 +71,7 @@ class CCompany extends ActiveRecord {
 
 		$criteria->compare('id',$this->id,true);
 		$criteria->compare('title',$this->title,true);
+		$criteria->compare('editor_id',$this->editor_id,true);
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('changed',$this->changed,true);
 

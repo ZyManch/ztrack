@@ -7,8 +7,12 @@
  */
 class NotificationUserModule extends AbstractUserModule {
 
-    public function getMainMenuRightHtml() {
-        return Yii::app()->controller->renderPartial('//modules/user/_notification');
+    public function getMainMenuRightItems() {
+        return array(
+            array(
+                'template' => '//modules/user/_notification'
+            )
+        );
     }
 
 }

@@ -4,7 +4,7 @@
  * @property Group[] $groups
  * @property Access[] $accesses
  * @property Project[] $projects
- * @property AbstractSystemModule[] $systemModules
+ * @property AbstractUserModule[] $systemModules
  */
 class User extends CUser {
 

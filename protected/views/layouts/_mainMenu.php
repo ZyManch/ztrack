@@ -7,17 +7,15 @@
  * @var $this Controller
  */
 ?>
-<div id="main-menu" role="navigation">
-<div id="main-menu-inner">
-<ul class="navigation">
-    <?php foreach (Yii::app()->user->getUser()->systemModules as $systemModule):?>
-        <?php foreach ($systemModule->getMainMenuItems() as $menu):?>
-            <?php $this->renderPartial('//layouts/_mainMenuItem',array('menu'=>$menu));?>
-        <?php endforeach;?>
-    <?php endforeach;?>
-</ul> <!-- / .navigation -->
-<div class="menu-content">
-    <a href="pages-invoice.html" class="btn btn-primary btn-block btn-outline dark">Create Invoice</a>
-</div>
-</div> <!-- / #main-menu-inner -->
-</div> <!-- / #main-menu -->
+
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav" id="side-menu">
+            <?php foreach (Yii::app()->user->getSystemModules() as $systemModule):?>
+                <?php foreach ($systemModule->getMainMenuItems() as $menu):?>
+                    <?php $this->renderPartial('//layouts/_mainMenuItem',array('menu'=>$menu));?>
+                <?php endforeach;?>
+            <?php endforeach;?>
+        </ul>
+    </div>
+</nav>

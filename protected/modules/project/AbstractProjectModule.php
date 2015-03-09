@@ -5,8 +5,11 @@
  * Date: 09.03.2015
  * Time: 11:58
  */
-class AbstractProjectModule extends SystemModule {
+abstract class AbstractProjectModule extends SystemModule {
 
+    public $defaultAction = 'index';
+
+    abstract function getModuleName();
 
     public function getTabs() {
         return array();

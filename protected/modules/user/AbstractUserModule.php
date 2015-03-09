@@ -8,12 +8,12 @@
 abstract class AbstractUserModule extends SystemModule{
 
 
-    public function getMainMenuRightHtml() {
-        return '';
+    public function getMainMenuRightItems() {
+        return array();
     }
 
-    public function getMainMenuLeftHtml() {
-        return '';
+    public function getMainMenuLeftItems() {
+        return array();
     }
 
     public function getMainMenuItems() {

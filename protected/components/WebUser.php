@@ -11,6 +11,8 @@ class WebUser extends CWebUser {
 
     public $guestName='Гость';
 
+    protected $_systemModules;
+
     /**
      * @return User
      */
@@ -24,5 +26,37 @@ class WebUser extends CWebUser {
         $this->_user = User::model()->findByPk($this->id);
         return $this->_user;
     }
+
+    /**
+     * @return AbstractUserModule[]
+     */
+    public function getSystemModules() {
+        if ($this->isGuest) {
+            return $this->_getGuestSystemModules();
+        } else {
+            return $this->getUser()->systemModules;
+        }
+    }
+
+    /**
+     * @return AbstractEditor
+     */
+    public function getEditor() {
+        if ($this->isGuest) {
+            return Editor::model()->findByPk(EDitor::DEFAULT_EDITOR_ID);
+        }
+        return $this->getUser()->company->editor;
+    }
+
+    protected function _getGuestSystemModules() {
+        if (is_null($this->_systemModules)) {
+            $this->_systemModules =  SystemModule::model()->with(
+                array('guestSystemModules' => array('joinType'=>'INNER JOIN'))
+            )->findAll(array('condition'=>'type="user"','order'=>'position DESC'));
+        }
+        return $this->_systemModules;
+    }
+
+
 
 }

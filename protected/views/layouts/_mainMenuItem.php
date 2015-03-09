@@ -9,14 +9,16 @@
  */
 $url =  CHtml::normalizeUrl($menu['url']);
 ?>
-
-<?php if (isset($menu['items']) && $menu['items']):?>
-    <li class="mm-dropdown">
+<?php if (isset($menu['template'])):?>
+    <?php $this->renderPartial($menu['template'],isset($menu['attributes']) ? $menu['attributes'] : array());?>
+<?php elseif (isset($menu['items']) && $menu['items']):?>
+    <li>
         <a href="<?php echo CHtml::encode($url);?>">
-            <i class="menu-icon fa fa-th"></i>
-            <span class="mm-text"><?php echo CHtml::encode($menu['label']);?></span>
+            <i class="fa fa-th-large"></i>
+            <span class="nav-label"><?php echo CHtml::encode($menu['label']);?></span>
+            <span class="fa arrow"></span>
         </a>
-        <ul>
+        <ul class="nav nav-second-level">
             <?php foreach ($menu['items'] as $item):?>
                 <?php $this->renderPartial('//layouts/_mainMenuItem',array('menu'=>$item));?>
             <?php endforeach;?>
@@ -25,10 +27,8 @@ $url =  CHtml::normalizeUrl($menu['url']);
 <?php else:?>
     <li>
         <a href="<?php echo CHtml::encode($url);?>">
-            <i class="menu-icon fa fa-dashboard"></i>
-            <span class="mm-text">
-                <?php echo CHtml::encode($menu['label']);?>
-            </span>
+            <i class="fa fa-diamond"></i>
+            <span class="nav-label"><?php echo CHtml::encode($menu['label']);?></span>
         </a>
     </li>
 <?php endif;?>

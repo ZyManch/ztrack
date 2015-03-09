@@ -7,8 +7,12 @@
  */
 class Constants extends CComponent {
 
+    public $enabled = true;
+
     public function init() {
-        $this->_loadConstants();
+        if ($this->enabled) {
+            $this->_loadConstants();
+        }
     }
 
     protected function _loadConstants() {

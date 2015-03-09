@@ -6,120 +6,56 @@
  * Time: 11:08
  */
 ?>
-<li class="nav-icon-btn nav-icon-btn-success dropdown">
-    <a href="#messages" class="dropdown-toggle" data-toggle="dropdown">
-        <span class="label">10</span>
-        <i class="nav-icon fa fa-envelope"></i>
-        <span class="small-screen-text">Income messages</span>
+<li class="dropdown">
+    <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+        <i class="fa fa-envelope"></i>  <span class="label label-warning">16</span>
     </a>
-
-    <!-- MESSAGES -->
-
-
-    <div class="dropdown-menu widget-messages-alt no-padding" style="width: 300px;">
-        <div class="messages-list" id="main-navbar-messages">
-
-            <div class="message">
-                <img src="assets/demo/avatars/2.jpg" alt="" class="message-avatar">
-                <a href="#" class="message-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a>
-                <div class="message-description">
-                    from <a href="#">Robert Jang</a>
-                    &nbsp;&nbsp;·&nbsp;&nbsp;
-                    2h ago
+    <ul class="dropdown-menu dropdown-messages">
+        <li>
+            <div class="dropdown-messages-box">
+                <a href="profile.html" class="pull-left">
+                    <img alt="image" class="img-circle" src="img/a7.jpg">
+                </a>
+                <div class="media-body">
+                    <small class="pull-right">46h ago</small>
+                    <strong>Mike Loreipsum</strong> started following <strong>Monica Smith</strong>. <br>
+                    <small class="text-muted">3 days ago at 7:58 pm - 10.06.2014</small>
                 </div>
-            </div> <!-- / .message -->
-
-            <div class="message">
-                <img src="assets/demo/avatars/3.jpg" alt="" class="message-avatar">
-                <a href="#" class="message-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</a>
-                <div class="message-description">
-                    from <a href="#">Michelle Bortz</a>
-                    &nbsp;&nbsp;·&nbsp;&nbsp;
-                    2h ago
+            </div>
+        </li>
+        <li class="divider"></li>
+        <li>
+            <div class="dropdown-messages-box">
+                <a href="profile.html" class="pull-left">
+                    <img alt="image" class="img-circle" src="img/a4.jpg">
+                </a>
+                <div class="media-body ">
+                    <small class="pull-right text-navy">5h ago</small>
+                    <strong>Chris Johnatan Overtunk</strong> started following <strong>Monica Smith</strong>. <br>
+                    <small class="text-muted">Yesterday 1:21 pm - 11.06.2014</small>
                 </div>
-            </div> <!-- / .message -->
-
-            <div class="message">
-                <img src="assets/demo/avatars/4.jpg" alt="" class="message-avatar">
-                <a href="#" class="message-subject">Lorem ipsum dolor sit amet.</a>
-                <div class="message-description">
-                    from <a href="#">Timothy Owens</a>
-                    &nbsp;&nbsp;·&nbsp;&nbsp;
-                    2h ago
+            </div>
+        </li>
+        <li class="divider"></li>
+        <li>
+            <div class="dropdown-messages-box">
+                <a href="profile.html" class="pull-left">
+                    <img alt="image" class="img-circle" src="img/profile.jpg">
+                </a>
+                <div class="media-body ">
+                    <small class="pull-right">23h ago</small>
+                    <strong>Monica Smith</strong> love <strong>Kim Smith</strong>. <br>
+                    <small class="text-muted">2 days ago at 2:30 am - 11.06.2014</small>
                 </div>
-            </div> <!-- / .message -->
-
-            <div class="message">
-                <img src="assets/demo/avatars/5.jpg" alt="" class="message-avatar">
-                <a href="#" class="message-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</a>
-                <div class="message-description">
-                    from <a href="#">Denise Steiner</a>
-                    &nbsp;&nbsp;·&nbsp;&nbsp;
-                    2h ago
-                </div>
-            </div> <!-- / .message -->
-
-            <div class="message">
-                <img src="assets/demo/avatars/2.jpg" alt="" class="message-avatar">
-                <a href="#" class="message-subject">Lorem ipsum dolor sit amet.</a>
-                <div class="message-description">
-                    from <a href="#">Robert Jang</a>
-                    &nbsp;&nbsp;·&nbsp;&nbsp;
-                    2h ago
-                </div>
-            </div> <!-- / .message -->
-
-            <div class="message">
-                <img src="assets/demo/avatars/2.jpg" alt="" class="message-avatar">
-                <a href="#" class="message-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a>
-                <div class="message-description">
-                    from <a href="#">Robert Jang</a>
-                    &nbsp;&nbsp;·&nbsp;&nbsp;
-                    2h ago
-                </div>
-            </div> <!-- / .message -->
-
-            <div class="message">
-                <img src="assets/demo/avatars/3.jpg" alt="" class="message-avatar">
-                <a href="#" class="message-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</a>
-                <div class="message-description">
-                    from <a href="#">Michelle Bortz</a>
-                    &nbsp;&nbsp;·&nbsp;&nbsp;
-                    2h ago
-                </div>
-            </div> <!-- / .message -->
-
-            <div class="message">
-                <img src="assets/demo/avatars/4.jpg" alt="" class="message-avatar">
-                <a href="#" class="message-subject">Lorem ipsum dolor sit amet.</a>
-                <div class="message-description">
-                    from <a href="#">Timothy Owens</a>
-                    &nbsp;&nbsp;·&nbsp;&nbsp;
-                    2h ago
-                </div>
-            </div> <!-- / .message -->
-
-            <div class="message">
-                <img src="assets/demo/avatars/5.jpg" alt="" class="message-avatar">
-                <a href="#" class="message-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</a>
-                <div class="message-description">
-                    from <a href="#">Denise Steiner</a>
-                    &nbsp;&nbsp;·&nbsp;&nbsp;
-                    2h ago
-                </div>
-            </div> <!-- / .message -->
-
-            <div class="message">
-                <img src="assets/demo/avatars/2.jpg" alt="" class="message-avatar">
-                <a href="#" class="message-subject">Lorem ipsum dolor sit amet.</a>
-                <div class="message-description">
-                    from <a href="#">Robert Jang</a>
-                    &nbsp;&nbsp;·&nbsp;&nbsp;
-                    2h ago
-                </div>
-            </div> <!-- / .message -->
-
-        </div> <!-- / .messages-list -->
-        <a href="#" class="messages-link">MORE MESSAGES</a>
-    </div> <!-- / .dropdown-menu -->
+            </div>
+        </li>
+        <li class="divider"></li>
+        <li>
+            <div class="text-center link-block">
+                <a href="mailbox.html">
+                    <i class="fa fa-envelope"></i> <strong>Read All Messages</strong>
+                </a>
+            </div>
+        </li>
+    </ul>
 </li>
