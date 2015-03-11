@@ -17,28 +17,31 @@
 <div class="row">
     <div class="col-md-12">
         <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <div class="form-group col-xs-5 navbar-form-custom">
-                    <?php echo $form->textField($model,'title',array('placeholder'=>'Введите заголовок','class'=>'form-control'));?>
-                </div>
-                <div class="ibox-tools">
-                    <input type="submit" value="Submit" class="btn btn-primary btn-xs">
-                    <?php echo CHtml::link(
-                        'Cancel',
-                        array(
-                            'project/view',
-                            'id'=>Yii::app()->request->getParam('id'),
-                            'module'=>'wiki',
-                            'action' => 'view'
-                        ),
-                        array('class'=>'btn btn-white btn-xs')
-                    );?>
-                </div>
-            </div>
             <div class="ibox-content">
-
-                <?php echo Yii::app()->user->getEditor()->getHtmlEditor($model,'body');?>
-
+                <div class="row">
+                    <div class="form-group col-xs-6">
+                        <?php echo $form->textField($model,'title',array('placeholder'=>'Введите заголовок','class'=>'form-control'));?>
+                    </div>
+                    <div class="col-xs-6 text-right">
+                        <input type="submit" value="Submit" class="btn btn-primary btn-xs">
+                        <?php echo CHtml::link(
+                            'Cancel',
+                            array(
+                                'project/view',
+                                'id'=>Yii::app()->request->getParam('id'),
+                                'module'=>'wiki',
+                                'action' => 'view',
+                                'wiki' => Yii::app()->request->getParam('wiki','')
+                            ),
+                            array('class'=>'btn btn-white btn-xs')
+                        );?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <?php echo Yii::app()->user->getEditor()->getHtmlEditor($model,'body');?>
+                    </div>
+                </div>
 
             </div>
         </div>

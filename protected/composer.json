@@ -1,0 +1,37 @@
+{
+    "name": "zymanch/ztrack",
+    "description": "zTrack",
+    "version":"1.0-dev",
+
+    "require": {
+        "php": ">=5.3.2",
+        "yiisoft/yii": "dev-master",
+        "yiiext/migrate-command": "dev-master"
+    },
+
+    "autoload": {
+        "psr-0": {
+            "components": "./",
+            "WikiParser":"./extensions/php-wiki-parser"
+        }
+    },
+    "scripts": {
+        "pre-install-cmd": "components\\ComposerCallback::preInstall",
+        "post-install-cmd": "components\\ComposerCallback::postInstall",
+        "pre-update-cmd": "components\\ComposerCallback::preUpdate",
+        "post-update-cmd": "components\\ComposerCallback::postUpdate"
+    },
+    "repositories": [
+        {
+            "packagist": false
+        },
+        {
+            "type":"composer",
+            "url": "http://packages.phundament.com"
+        },
+        {
+            "type":"composer",
+            "url": "https://packagist.org"
+        }
+    ]
+}

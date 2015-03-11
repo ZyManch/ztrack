@@ -8,7 +8,7 @@
 return array(
     'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
     'name'=>'My Web Application',
-    'preload'=>array('constants'),
+    'preload'=>array('loader'),
     'sourceLanguage' => 'en',
     'language' => 'ru',
     'import'=>array(
@@ -38,12 +38,13 @@ return array(
             'directoryLevel' =>1,
             'cachePath' => dirname(__FILE__).'/../../cache'
         ),
-        'constants' => array(
-            'class'=>'Constants',
+        'loader' => array(
+            'class'=>'Loader',
         ),
     ),
     'params'=>array(
         'adminEmail'=>'webmaster@example.com',
         'salt' => 'salt',
+
     ),
 );

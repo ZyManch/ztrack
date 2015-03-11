@@ -61,6 +61,14 @@ class WikiProjectModule extends AbstractProjectModule {
             }
             if (!$wiki->save()) {
                 Yii::app()->user->setFlash('error',$wiki->getErrorsAsText());
+            } else {
+                Yii::app()->controller->redirect(array(
+                    'project/view',
+                    'id' => $projectId,
+                    'module'=>'wiki',
+                    'action'=>'view',
+                    'wiki' => $request->getParam('wiki','')
+                ));
             }
         }
         Yii::app()->controller->renderPartial(
@@ -75,13 +83,15 @@ class WikiProjectModule extends AbstractProjectModule {
         $request = Yii::app()->request;
         $projectId = $request->getParam('id');
         $url = $request->getParam('wiki','');
-        $wiki = CPage::model()->findByAttributes(array(
+        $wiki = Page::model()->findByAttributes(array(
             'page_type_id' => PAGE_TYPE_WIKI,
             'url' => $url,
             'project_id' => $projectId
         ));
         if (!$wiki) {
+            $url = $request->getParam('wiki','');
             $wiki = new Page();
+            $wiki->url = $url;;
         }
         return $wiki;
     }

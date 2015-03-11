@@ -5,6 +5,7 @@
  *
  * The followings are the available columns in table 'page':
  * @property string $id
+ * @property string $parent_page_id
  * @property string $author_user_id
  * @property string $assign_user_id
  * @property string $page_type_id
@@ -16,11 +17,13 @@
  * @property string $changed
  *
  * The followings are the available model relations:
- * @property Project $project
+ * @property CPage $parentPage
+ * @property CPage[] $pages
  * @property User $authorUser
  * @property User $assignUser
  * @property PageType $pageType
- * @property Page[] $childPages
+ * @property Project $project
+ * @property PageLabel[] $pageLabels
  */
 class CPage extends ActiveRecord {
 
@@ -31,13 +34,13 @@ class CPage extends ActiveRecord {
 	public function rules()	{
 		return array(
 			array('author_user_id, page_type_id, body, changed', 'required'),
-			array('author_user_id, assign_user_id, page_type_id, project_id', 'length', 'max'=>10),
-			array('url,parent_page_id', 'length', 'max'=>64),
+			array('parent_page_id, author_user_id, assign_user_id, page_type_id, project_id', 'length', 'max'=>10),
+			array('url', 'length', 'max'=>64),
 			array('title', 'length', 'max'=>128),
 			array('status', 'length', 'max'=>7),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, author_user_id, assign_user_id, page_type_id, project_id, url, title, body, status, changed', 'safe', 'on'=>'search'),
+			array('id, parent_page_id, author_user_id, assign_user_id, page_type_id, project_id, url, title, body, status, changed', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -48,17 +51,20 @@ class CPage extends ActiveRecord {
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
+			'parentPage' => array(self::BELONGS_TO, 'CPage', 'parent_page_id'),
+			'pages' => array(self::HAS_MANY, 'CPage', 'parent_page_id'),
 			'authorUser' => array(self::BELONGS_TO, 'User', 'author_user_id'),
 			'assignUser' => array(self::BELONGS_TO, 'User', 'assign_user_id'),
 			'pageType' => array(self::BELONGS_TO, 'PageType', 'page_type_id'),
-			'childPages' => array(self::HAS_MANY, 'Page', 'parent_page_id'),
+			'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
+			'pageLabels' => array(self::HAS_MANY, 'PageLabel', 'page_id'),
 		);
 	}
 
 	public function attributeLabels() {
 		return array(
 			'id' => 'ID',
+			'parent_page_id' => 'Parent Page',
 			'author_user_id' => 'Author User',
 			'assign_user_id' => 'Assign User',
 			'page_type_id' => 'Page Type',
@@ -77,6 +83,7 @@ class CPage extends ActiveRecord {
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id,true);
+		$criteria->compare('parent_page_id',$this->parent_page_id,true);
 		$criteria->compare('author_user_id',$this->author_user_id,true);
 		$criteria->compare('assign_user_id',$this->assign_user_id,true);
 		$criteria->compare('page_type_id',$this->page_type_id,true);

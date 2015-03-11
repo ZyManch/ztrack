@@ -1,0 +1,9 @@
+.todo-list li.level {
+    border: 0;
+    background-color: transparent;
+    padding: 0;
+    padding-left: 40px;
+}
+.todo-list li.level > ul{
+    margin: 0;
+}

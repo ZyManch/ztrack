@@ -16,6 +16,9 @@ $clientScript->registerScript('nest',
         <div class="page-header">
             <h2>My notes</h2>
         </div>
+        <div class="text-right">
+            <?php echo CHtml::link('Cancel',array('notes/index'),array('class'=>'btn btn-primary'));?>
+        </div>
     </div>
 </div>
 
@@ -27,7 +30,7 @@ $clientScript->registerScript('nest',
                 <div class="dd" id="nestable">
                     <ol class="dd-list">
                         <?php foreach ($notes as $note):?>
-                            <?php $this->renderPartial('_update', array('data'=>$note));?>
+                            <?php $this->renderPartial('_sort', array('data'=>$note,'with_body'=>false));?>
                         <?php endforeach;?>
                     </ol>
                 </div>

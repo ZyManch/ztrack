@@ -20,14 +20,15 @@
                             'project/view',
                             'id'=>Yii::app()->request->getParam('id'),
                             'module'=>'wiki',
-                            'action' => 'update'
+                            'action' => 'update',
+                            'wiki' => Yii::app()->request->getParam('wiki','')
                         ),
                         array('class'=>'btn btn-primary btn-xs')
                     );?>
                 </div>
             </div>
             <div class="ibox-content">
-                <?php echo CHtml::encode($model->body);?>
+                <?php echo $model->getBodyAsHtml();?>
             </div>
         </div>
     </div>

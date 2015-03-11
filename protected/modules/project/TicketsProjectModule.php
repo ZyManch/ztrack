@@ -35,9 +35,27 @@ class TicketsProjectModule extends AbstractProjectModule {
         Yii::app()->controller->renderPartial(
             '//modules/project/_tickets',
             array(
-
+                'tickets_all_provider' => $this->_getAllTicketsProvider(),
+                'tickets_my_provider' => $this->_getMyTicketsProvider(),
             )
         );
+    }
+
+    protected function _getAllTicketsProvider() {
+        $projectId = Yii::app()->request->getParam('id');
+        $search = new Page('search');
+        $search->page_type_id = PAGE_TYPE_TICKETS;
+        $search->project_id = $projectId;
+        return $search->search();
+    }
+
+    protected function _getMyTicketsProvider() {
+        $projectId = Yii::app()->request->getParam('id');
+        $search = new Page('search');
+        $search->page_type_id = PAGE_TYPE_TICKETS;
+        $search->project_id = $projectId;
+        $search->assign_user_id = Yii::app()->user->id;
+        return $search->search();
     }
 
 }

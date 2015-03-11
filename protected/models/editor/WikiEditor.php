@@ -5,19 +5,21 @@
  * Date: 09.03.2015
  * Time: 17:32
  */
-Yii::import('app.extensions.php-wiki-parser.WikiParser.*',true);
-
+Yii::import('application.extensions.wiky.wiky',true);
 class WikiEditor extends AbstractEditor {
 
     public function getHtmlEditor($model,$attribute,$htmlOptions = array()) {
         if (!isset($htmlOptions['class'])) {
             $htmlOptions['class'] = 'form-control';
         }
+        if (!isset($htmlOptions['rows'])) {
+            $htmlOptions['rows'] = 18;
+        }
         return CHtml::activeTextArea($model, $attribute, $htmlOptions);
     }
 
     public function parse($content) {
-        $parser = new WikiParser_WikiParser();
+        $parser = new wiky();
         return $parser->parse($content);
     }
 
