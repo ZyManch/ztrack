@@ -33,7 +33,7 @@ class ArCommand extends CConsoleCommand {
             $model->template = 'default';
             $model->tableName = $table;
             $model->modelPath = 'application.models.original';
-            $model->modelClass = 'C'.$className;
+            $model->modelClass = $className;
             $model->prepare();
             foreach ($model->files as $file) {
                 $model->answers[md5($file->path)] = true;

@@ -10,7 +10,6 @@ class NotesController extends Controller
 	public function filters() {
 		return array(
 			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
 
@@ -49,11 +48,17 @@ class NotesController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate() {
+	public function actionCreate($id = null) {
 		$model=new Page;
-
+        $parent = null;
+        $topPage = null;
+        if ($id) {
+            $parent = $this->loadModel($id);
+            $topPage = $parent->getTopPage();
+        }
 		if(isset($_POST['Page'])) {
 			$model->attributes=$_POST['Page'];
+            $model->parent_page_id = ($parent ? $parent->id : null);
 			if($model->save()) {
 				$this->redirect(array('view','id'=>$model->id));
             }
@@ -61,6 +66,7 @@ class NotesController extends Controller
 
 		$this->render('create',array(
 			'model'=>$model,
+            'top_id' => $topPage ? $topPage->id: null
 		));
 	}
 
@@ -90,29 +96,48 @@ class NotesController extends Controller
 	 * @param integer $id the ID of the model to be deleted
 	 */
 	public function actionDelete($id) {
-		$this->loadModel($id)->delete();
-
-		if(!isset($_GET['ajax'])) {
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+        $model = $this->loadModel($id);
+        $parent = $model->getTopPage();
+        $parentId = $parent->id != $model->id ? $parent->id : null;
+        if (Yii::app()->request->isPostRequest) {
+            $model->delete();
+            $this->redirect(array('notes/index','id'=>$parentId));
         }
+
+		$this->render('delete',array('model'=>$model,'parentId'=>$parentId));
 	}
 
 	/**
 	 * Lists all models.
 	 */
-	public function actionIndex() {
+	public function actionIndex($id = null) {
+        $notes = Yii::app()->user->getUser()->mainNotes;
+        if (!$notes) {
+            $this->redirect(array('notes/create'));
+        }
+        if (!$id) {
+            $id = $notes[0]->id;
+        }
 		$this->render('index',array(
-			'notes'=>Yii::app()->user->getUser()->mainNotes,
+            'id' => $id,
+			'notes'=>$notes,
 		));
 	}
 
 	/**
 	 * Manages all models.
 	 */
-	public function actionAdmin() {
-
+	public function actionAdmin($id = null) {
+        $notes = Yii::app()->user->getUser()->mainNotes;
+        if (!$notes) {
+            $this->redirect(array('notes/create'));
+        }
+        if (!$id) {
+            $id = $notes[0]->id;
+        }
 		$this->render('admin',array(
-            'notes'=>Yii::app()->user->getUser()->mainNotes,
+            'id' => $id,
+            'notes' => $notes,
 		));
 	}
 

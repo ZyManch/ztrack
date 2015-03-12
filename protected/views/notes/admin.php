@@ -1,6 +1,8 @@
 <?php
 /* @var $this NotesController */
 /* @var $model Page */
+/* @var $id int */
+/* @var $notes Page[] */
 $clientScript = Yii::app()->clientScript;
 $clientScript->registerScript('nest',
     '$("#nestable").nestable({
@@ -8,7 +10,8 @@ $clientScript->registerScript('nest',
      }).on("change", function() {
 
      });',
-    CClientScript::POS_READY)
+    CClientScript::POS_READY);
+$mainNote = null;
 ?>
 
 <div class="row wrapper border-bottom white-bg page-heading">
@@ -16,8 +19,24 @@ $clientScript->registerScript('nest',
         <div class="page-header">
             <h2>My notes</h2>
         </div>
-        <div class="text-right">
-            <?php echo CHtml::link('Cancel',array('notes/index'),array('class'=>'btn btn-primary'));?>
+        <?php foreach ($notes as $note):?>
+            <?php if($note->id==$id):?>
+                <?php $mainNote = $note;?>
+            <?php endif;?>
+            <?php echo CHtml::link(
+                $note->title,
+                array('notes/admin','id'=>$note->id),
+                array('class'=>'btn btn-success'.($note->id == $id ? ' active':''))
+            );?>
+        <?php endforeach;?>
+        <?php echo CHtml::link(
+            '+',
+            array('notes/create'),
+            array('class'=>'btn btn-success')
+        );?>
+        <div class="ibox-tools">
+            <?php echo CHtml::link('Add',array('notes/create','id'=>$id),array('class'=>'btn btn-primary'));?>
+            <?php echo CHtml::link('Cancel',array('notes/index','id'=>$id),array('class'=>'btn btn-white'));?>
         </div>
     </div>
 </div>
@@ -29,9 +48,11 @@ $clientScript->registerScript('nest',
 
                 <div class="dd" id="nestable">
                     <ol class="dd-list">
-                        <?php foreach ($notes as $note):?>
-                            <?php $this->renderPartial('_sort', array('data'=>$note,'with_body'=>false));?>
-                        <?php endforeach;?>
+                        <?php if ($mainNote):?>
+                            <?php foreach ($mainNote->pages as $subNote):?>
+                                <?php $this->renderPartial('_sort', array('data'=>$subNote));?>
+                            <?php endforeach;?>
+                        <?php endif;?>
                     </ol>
                 </div>
             </div>

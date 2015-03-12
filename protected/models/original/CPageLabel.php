@@ -1,33 +1,33 @@
 <?php
 
 /**
- * This is the model class for table "project_system_module".
+ * This is the model class for table "page_label".
  *
- * The followings are the available columns in table 'project_system_module':
+ * The followings are the available columns in table 'page_label':
  * @property string $id
- * @property string $project_id
- * @property string $system_module_id
+ * @property string $page_id
+ * @property string $label_id
  * @property string $status
  * @property string $changed
  *
  * The followings are the available model relations:
- * @property Project $project
- * @property SystemModule $systemModule
+ * @property Page $page
+ * @property Label $label
  */
-class CProjectSystemModule extends ActiveRecord {
+class CPageLabel extends ActiveRecord {
 
 	public function tableName()	{
-		return 'project_system_module';
+		return 'page_label';
 	}
 
 	public function rules()	{
 		return array(
-			array('project_id, system_module_id, changed', 'required'),
-			array('project_id, system_module_id', 'length', 'max'=>10),
+			array('page_id, label_id, changed', 'required'),
+			array('page_id, label_id', 'length', 'max'=>10),
 			array('status', 'length', 'max'=>7),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, project_id, system_module_id, status, changed', 'safe', 'on'=>'search'),
+			array('id, page_id, label_id, status, changed', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -38,16 +38,16 @@ class CProjectSystemModule extends ActiveRecord {
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
-			'systemModule' => array(self::BELONGS_TO, 'SystemModule', 'system_module_id'),
+			'page' => array(self::BELONGS_TO, 'Page', 'page_id'),
+			'label' => array(self::BELONGS_TO, 'Label', 'label_id'),
 		);
 	}
 
 	public function attributeLabels() {
 		return array(
 			'id' => 'ID',
-			'project_id' => 'Project',
-			'system_module_id' => 'System Module',
+			'page_id' => 'Page',
+			'label_id' => 'Label',
 			'status' => 'Status',
 			'changed' => 'Changed',
 		);
@@ -59,8 +59,8 @@ class CProjectSystemModule extends ActiveRecord {
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id,true);
-		$criteria->compare('project_id',$this->project_id,true);
-		$criteria->compare('system_module_id',$this->system_module_id,true);
+		$criteria->compare('page_id',$this->page_id,true);
+		$criteria->compare('label_id',$this->label_id,true);
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('changed',$this->changed,true);
 

@@ -1,40 +1,36 @@
 <?php
 
 /**
- * This is the model class for table "company".
+ * This is the model class for table "label".
  *
- * The followings are the available columns in table 'company':
+ * The followings are the available columns in table 'label':
  * @property string $id
+ * @property string $company_id
  * @property string $title
- * @property string $editor_id
+ * @property string $color
  * @property string $status
  * @property string $changed
  *
  * The followings are the available model relations:
- * @property Access[] $accesses
- * @property Branch[] $branches
- * @property Editor $editor
- * @property Group[] $groups
- * @property Label[] $labels
- * @property Level[] $levels
- * @property Server[] $servers
- * @property User[] $users
+ * @property Company $company
+ * @property PageLabel[] $pageLabels
  */
-class CCompany extends ActiveRecord {
+class CLabel extends ActiveRecord {
 
 	public function tableName()	{
-		return 'company';
+		return 'label';
 	}
 
 	public function rules()	{
 		return array(
-			array('title, editor_id, changed', 'required'),
-			array('title', 'length', 'max'=>64),
-			array('editor_id', 'length', 'max'=>10),
+			array('company_id, title, changed', 'required'),
+			array('company_id', 'length', 'max'=>10),
+			array('title', 'length', 'max'=>32),
+			array('color', 'length', 'max'=>6),
 			array('status', 'length', 'max'=>7),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, title, editor_id, status, changed', 'safe', 'on'=>'search'),
+			array('id, company_id, title, color, status, changed', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -45,22 +41,17 @@ class CCompany extends ActiveRecord {
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'accesses' => array(self::HAS_MANY, 'Access', 'company_id'),
-			'branches' => array(self::HAS_MANY, 'Branch', 'company_id'),
-			'editor' => array(self::BELONGS_TO, 'Editor', 'editor_id'),
-			'groups' => array(self::HAS_MANY, 'Group', 'company_id'),
-			'labels' => array(self::HAS_MANY, 'Label', 'company_id'),
-			'levels' => array(self::HAS_MANY, 'Level', 'company_id'),
-			'servers' => array(self::HAS_MANY, 'Server', 'company_id'),
-			'users' => array(self::HAS_MANY, 'User', 'company_id'),
+			'company' => array(self::BELONGS_TO, 'Company', 'company_id'),
+			'pageLabels' => array(self::HAS_MANY, 'PageLabel', 'label_id'),
 		);
 	}
 
 	public function attributeLabels() {
 		return array(
 			'id' => 'ID',
+			'company_id' => 'Company',
 			'title' => 'Title',
-			'editor_id' => 'Editor',
+			'color' => 'Color',
 			'status' => 'Status',
 			'changed' => 'Changed',
 		);
@@ -72,8 +63,9 @@ class CCompany extends ActiveRecord {
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id,true);
+		$criteria->compare('company_id',$this->company_id,true);
 		$criteria->compare('title',$this->title,true);
-		$criteria->compare('editor_id',$this->editor_id,true);
+		$criteria->compare('color',$this->color,true);
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('changed',$this->changed,true);
 

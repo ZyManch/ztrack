@@ -16,6 +16,6 @@
 <div class="row">
     <div class="col-xs-12">
 
-        <?php $this->renderPartial('_form', array('model'=>$model)); ?>
+        <?php $this->renderPartial('_form', array('model'=>$model,'top_id'=>$top_id)); ?>
     </div>
 </div>

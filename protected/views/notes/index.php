@@ -3,7 +3,7 @@
 /* @var $notes Page[] */
 /* @var $clientScript CClientScript */
 $clientScript = Yii::app()->clientScript;
-
+$mainNote = null;
 ?>
 
 <div class="row wrapper border-bottom white-bg page-heading">
@@ -11,8 +11,24 @@ $clientScript = Yii::app()->clientScript;
         <div class="page-header">
             <h2>My notes</h2>
         </div>
-        <div class="text-right">
-            <?php echo CHtml::link('Sort',array('notes/admin'),array('class'=>'btn btn-primary'));?>
+        <?php foreach ($notes as $note):?>
+            <?php if($note->id==$id):?>
+                <?php $mainNote = $note;?>
+            <?php endif;?>
+            <?php echo CHtml::link(
+                $note->title,
+                array('notes/index','id'=>$note->id),
+                array('class'=>'btn btn-success'.($note->id == $id ? ' active':''))
+            );?>
+        <?php endforeach;?>
+        <?php echo CHtml::link(
+            '+',
+            array('notes/create'),
+            array('class'=>'btn btn-success')
+        );?>
+        <div class="ibox-tools">
+            <?php echo CHtml::link('Add',array('notes/create','id'=>$id),array('class'=>'btn btn-primary'));?>
+            <?php echo CHtml::link('Sort',array('notes/admin','id'=>$id),array('class'=>'btn btn-white'));?>
         </div>
     </div>
 </div>
@@ -23,9 +39,11 @@ $clientScript = Yii::app()->clientScript;
             <div class="ibox-content">
 
                 <ul class="todo-list m-t ui-sortable">
-                    <?php foreach ($notes as $note):?>
-                        <?php $this->renderPartial('_view', array('data'=>$note,'with_body'=>true));?>
-                    <?php endforeach;?>
+                    <?php if ($mainNote):?>
+                        <?php foreach ($mainNote->pages as $note):?>
+                            <?php $this->renderPartial('_view', array('data'=>$note,'with_body'=>true));?>
+                        <?php endforeach;?>
+                    <?php endif;?>
                 </ul>
             </div>
         </div>

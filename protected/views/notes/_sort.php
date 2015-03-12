@@ -6,9 +6,9 @@
     <div class="dd-item ">
         <div class="dd-handle"><?php echo CHtml::encode($data->title);?></div>
     </div>
-    <?php if ($data->childPages):?>
+    <?php if ($data->pages):?>
         <ol class="dd-list">
-            <?php foreach ($data->childPages as $childPage):?>
+            <?php foreach ($data->pages as $childPage):?>
                 <?php $this->renderPartial('_sort',array('data'=>$childPage));?>
             <?php endforeach;?>
         </ol>

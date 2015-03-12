@@ -31,17 +31,21 @@ foreach($this->tableSchema->columns as $column)
 	if($column->autoIncrement)
 		continue;
 ?>
-	<div class="row">
+	<div class="form-group">
 		<?php echo "<?php echo ".$this->generateActiveLabel($this->modelClass,$column)."; ?>\n"; ?>
-		<?php echo "<?php echo ".$this->generateActiveField($this->modelClass,$column)."; ?>\n"; ?>
+        <div class="col-sm-10">
+		    <?php echo "<?php echo ".$this->generateActiveField($this->modelClass,$column)."; ?>\n"; ?>
+        </div>
 		<?php echo "<?php echo \$form->error(\$model,'{$column->name}'); ?>\n"; ?>
 	</div>
 
 <?php
 }
 ?>
-	<div class="row buttons">
-		<?php echo "<?php echo CHtml::submitButton(\$model->isNewRecord ? 'Create' : 'Save'); ?>\n"; ?>
+	<div class="form-group">
+        <div class="col-sm-4 col-sm-offset-2">
+		    <?php echo "<?php echo CHtml::submitButton(\$model->isNewRecord ? 'Create' : 'Save'); ?>\n"; ?>
+        </div>
 	</div>
 
 <?php echo "<?php \$this->endWidget(); ?>\n"; ?>

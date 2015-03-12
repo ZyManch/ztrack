@@ -113,7 +113,7 @@ class TrackmodelCode extends CCodeModel
 				'connectionId'=>$this->connectionId,
 			);
 			$this->files[]=new CCodeFile(
-				Yii::getPathOfAlias($this->modelPath).'/'.$className.'.php',
+				Yii::getPathOfAlias($this->modelPath).'/C'.$className.'.php',
 				$this->render($templatePath.'/model.php', $params)
 			);
 		}

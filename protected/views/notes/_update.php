@@ -7,9 +7,9 @@
         <?php echo CHtml::encode($data->title);?>
         
     </div>
-    <?php if ($data->childPages):?>
+    <?php if ($data->pages):?>
         <ol class="dd-list">
-            <?php foreach ($data->childPages as $childPage):?>
+            <?php foreach ($data->pages as $childPage):?>
                 <?php $this->renderPartial('_view',array('data'=>$childPage));?>
             <?php endforeach;?>
         </ol>

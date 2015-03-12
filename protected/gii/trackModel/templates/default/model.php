@@ -50,7 +50,7 @@
 <?php endforeach; ?>
 <?php endif; ?>
  */
-class <?php echo $modelClass; ?> extends <?php echo $this->baseClass; ?> {
+class C<?php echo $modelClass; ?> extends <?php echo $this->baseClass; ?> {
 
 	public function tableName()	{
 		return '<?php echo $tableName; ?>';
