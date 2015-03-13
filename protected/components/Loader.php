@@ -17,7 +17,11 @@ class Loader extends CComponent {
     }
 
     protected function _loadConstants() {
+        if (!class_exists('CPageType',false)) {
+            return false;
+        }
         PageType::loadConstants();
+        return true;
     }
 
     protected function _loadComposer() {

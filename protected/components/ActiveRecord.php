@@ -12,8 +12,14 @@ class ActiveRecord extends CActiveRecord {
     const STATUS_DELETED = 'Deleted';
 
 
+    protected function _hasStatus() {
+        return isset($this->tableSchema->columnNames['status']);
+    }
 
     public function defaultScope() {
+        if (!$this->_hasStatus()) {
+            return array();
+        }
         $t = $this->getTableAlias(false, false);
         return array(
             'condition' => $t.'.status  = "'.self::STATUS_ACTIVE.'"',
@@ -37,6 +43,9 @@ class ActiveRecord extends CActiveRecord {
     }
 
     public function delete() {
+        if (!$this->_hasStatus()) {
+            return parent::delete();
+        }
         $this->status = self::STATUS_DELETED;
         return $this->save(false);
     }

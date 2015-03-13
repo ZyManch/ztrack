@@ -34,7 +34,7 @@ class WebUser extends CWebUser {
         if ($this->isGuest) {
             return $this->_getGuestSystemModules();
         } else {
-            return $this->getUser()->systemModules;
+            return $this->getUser()->getEnabledUserModules();
         }
     }
 

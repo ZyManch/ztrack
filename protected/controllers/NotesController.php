@@ -20,28 +20,14 @@ class NotesController extends Controller
 	 */
 	public function accessRules() {
 		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','admin','delete'),
+				'actions'=>array('index','create','update','admin','delete'),
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
 			),
 		);
-	}
-
-	/**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
-	 */
-	public function actionView($id) {
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
 	}
 
 	/**
@@ -60,7 +46,7 @@ class NotesController extends Controller
 			$model->attributes=$_POST['Page'];
             $model->parent_page_id = ($parent ? $parent->id : null);
 			if($model->save()) {
-				$this->redirect(array('view','id'=>$model->id));
+                $this->redirect(array('index','id'=>$model->getTopPage()->id));
             }
 		}
 
@@ -81,7 +67,7 @@ class NotesController extends Controller
 		if(isset($_POST['Page'])) {
 			$model->attributes=$_POST['Page'];
 			if($model->save()) {
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array('index','id'=>$model->getTopPage()->id));
             }
 		}
 
@@ -152,6 +138,12 @@ class NotesController extends Controller
 		$model=Page::model()->findByPk($id);
 		if($model===null) {
 			throw new CHttpException(404,'The requested page does not exist.');
+        }
+        if ($model->author_user_id != Yii::app()->user->id) {
+            throw new CHttpException(404,'The requested page does not exist.');
+        }
+        if ($model->page_type_id != PAGE_TYPE_NOTES) {
+            throw new CHttpException(404,'The requested page does not exist.');
         }
 		return $model;
 	}

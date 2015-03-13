@@ -9,6 +9,7 @@
  * @property string $title
  * @property string $description
  * @property string $type
+ * @property string $installation
  * @property integer $position
  * @property string $status
  * @property string $changed
@@ -31,9 +32,10 @@ class CSystemModule extends ActiveRecord {
 			array('name', 'length', 'max'=>32),
 			array('title', 'length', 'max'=>64),
 			array('type, status', 'length', 'max'=>7),
+			array('installation', 'length', 'max'=>11),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, title, description, type, position, status, changed', 'safe', 'on'=>'search'),
+			array('id, name, title, description, type, installation, position, status, changed', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,6 +59,7 @@ class CSystemModule extends ActiveRecord {
 			'title' => 'Title',
 			'description' => 'Description',
 			'type' => 'Type',
+			'installation' => 'Installation',
 			'position' => 'Position',
 			'status' => 'Status',
 			'changed' => 'Changed',
@@ -73,6 +76,7 @@ class CSystemModule extends ActiveRecord {
 		$criteria->compare('title',$this->title,true);
 		$criteria->compare('description',$this->description,true);
 		$criteria->compare('type',$this->type,true);
+		$criteria->compare('installation',$this->installation,true);
 		$criteria->compare('position',$this->position);
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('changed',$this->changed,true);

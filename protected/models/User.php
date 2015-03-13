@@ -29,9 +29,38 @@ class User extends CUser {
             'accesses' => array(self::MANY_MANY,'Access','user_access(user_id,access_id)'),
             'groups' => array(self::MANY_MANY,'Group','user_group(user_id,group_id)'),
             'projects' => array(self::MANY_MANY,'Project','user_access(user_id,project_id)'),
-            'systemModules' => array(self::MANY_MANY, 'SystemModule','user_system_module(user_id,system_module_id)', 'order' => 'systemModules.position ASC'),
+            'systemModules' => array(self::MANY_MANY, 'SystemModule','user_system_module(user_id,system_module_id)', 'order' => 'systemModules.position ASC','index'=>'id'),
             'mainNotes' => array(self::HAS_MANY, 'Page','author_user_id', 'on' => 'mainNotes.page_type_id='.PAGE_TYPE_NOTES.' AND mainNotes.parent_page_id IS  null'),
         );
+    }
+
+    public  function getEnabledUserModules() {
+        $result = $this->systemModules;
+        foreach (SystemModule::getForceInstalledSystemModules(SystemModule::TYPE_USER) as $module) {
+            $result[$module->id] = $module;
+        }
+        return SystemModule::sort($result);
+    }
+
+    public function addUserModule(SystemModule $module) {
+        if($module->type != SystemModule::TYPE_USER) {
+            return false;
+        }
+        $link = new UserSystemModule();
+        $link->user_id = $this->id;
+        $link->system_module_id = $module->id;
+        $link->save(false);
+        return true;
+    }
+
+    public function removeUserModule(SystemModule $module) {
+        $link = UserSystemModule::model()->findByAttributes(array(
+            'user_id'=>$this->id,
+            'system_module_id' => $module->id
+        ));
+        if ($link && $module->type == SystemModule::TYPE_USER) {
+            $link->delete();
+        }
     }
 
 }

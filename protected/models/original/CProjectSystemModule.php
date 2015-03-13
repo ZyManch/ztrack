@@ -7,7 +7,6 @@
  * @property string $id
  * @property string $project_id
  * @property string $system_module_id
- * @property string $status
  * @property string $changed
  *
  * The followings are the available model relations:
@@ -24,10 +23,9 @@ class CProjectSystemModule extends ActiveRecord {
 		return array(
 			array('project_id, system_module_id, changed', 'required'),
 			array('project_id, system_module_id', 'length', 'max'=>10),
-			array('status', 'length', 'max'=>7),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, project_id, system_module_id, status, changed', 'safe', 'on'=>'search'),
+			array('id, project_id, system_module_id, changed', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -48,7 +46,6 @@ class CProjectSystemModule extends ActiveRecord {
 			'id' => 'ID',
 			'project_id' => 'Project',
 			'system_module_id' => 'System Module',
-			'status' => 'Status',
 			'changed' => 'Changed',
 		);
 	}
@@ -61,7 +58,6 @@ class CProjectSystemModule extends ActiveRecord {
 		$criteria->compare('id',$this->id,true);
 		$criteria->compare('project_id',$this->project_id,true);
 		$criteria->compare('system_module_id',$this->system_module_id,true);
-		$criteria->compare('status',$this->status,true);
 		$criteria->compare('changed',$this->changed,true);
 
 		return new CActiveDataProvider($this, array(
