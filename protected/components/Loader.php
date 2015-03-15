@@ -17,7 +17,7 @@ class Loader extends CComponent {
     }
 
     protected function _loadConstants() {
-        if (!class_exists('CPageType',false)) {
+        if (!file_exists(Yii::getPathOfAlias('application.models.original.CPageType').'.php')) {
             return false;
         }
         PageType::loadConstants();
@@ -25,8 +25,9 @@ class Loader extends CComponent {
     }
 
     protected function _loadComposer() {
+        $composerLoaderFile = dirname(__FILE__).'/../vendor/autoload.php';
         spl_autoload_unregister(array('YiiBase','autoload'));
-        require_once dirname(__FILE__).'/../vendor/autoload.php';
+        require_once $composerLoaderFile;
         spl_autoload_register(array('YiiBase','autoload'), false,false);
     }
 }

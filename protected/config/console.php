@@ -11,7 +11,10 @@ return array(
     'commandMap' => array(
         'migrate' => array(
             'modulePaths' => array(
-                'user' => 'application.vendor.mishamx.yii-user.migrations',
+                'class' => 'application.vendor.yiiext.migrate-commands.EMigrateCommand',
+                'migrationTable' => 'migration',
+                'applicationModuleName' => 'core',
+                'migrationPath' => 'application.migrations',
             ),
         )
     ),

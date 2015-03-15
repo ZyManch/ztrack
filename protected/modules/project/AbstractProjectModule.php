@@ -72,4 +72,8 @@ abstract class AbstractProjectModule extends SystemModule {
         return $rules;
     }
 
+    public function renderPartial($file,$attributes = array()) {
+        Yii::app()->controller->renderPartial($file,$attributes);
+    }
+
 }

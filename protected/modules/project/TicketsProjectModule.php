@@ -32,30 +32,36 @@ class TicketsProjectModule extends AbstractProjectModule {
     }
 
     public function actionIndex() {
-        Yii::app()->controller->renderPartial(
+        $this->renderPartial(
             '//modules/project/_tickets',
             array(
-                'tickets_all_provider' => $this->_getAllTicketsProvider(),
-                'tickets_my_provider' => $this->_getMyTicketsProvider(),
+                'my_tickets_widget' => $this->_getMyTicketsWidget(),
+                'second_widget' => $this->_getSecondWidget()
             )
         );
     }
 
-    protected function _getAllTicketsProvider() {
+
+    protected function  _getSecondWidget() {
         $projectId = Yii::app()->request->getParam('id');
-        $search = new Page('search');
-        $search->page_type_id = PAGE_TYPE_TICKETS;
-        $search->project_id = $projectId;
-        return $search->search();
+        $widget = new LastReleaseWidgetModule();
+        $widget->configure($projectId);
+        if ($widget->haveItems()) {
+            return $widget;
+        }
+        $widget = new ProjectTicketsWidgetModule();
+        $widget->configure($projectId);
+        return $widget;
     }
 
-    protected function _getMyTicketsProvider() {
-        $projectId = Yii::app()->request->getParam('id');
-        $search = new Page('search');
-        $search->page_type_id = PAGE_TYPE_TICKETS;
-        $search->project_id = $projectId;
-        $search->assign_user_id = Yii::app()->user->id;
-        return $search->search();
+
+    protected function _getMyTicketsWidget() {
+        $widget = new UserTicketsWidgetModule();
+        $widget->configure(
+            Yii::app()->user->id,
+            Yii::app()->request->getParam('id')
+        );
+        return $widget;
     }
 
 }

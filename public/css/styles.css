@@ -7,3 +7,19 @@
 .todo-list li.level > ul{
     margin: 0;
 }
+tr.low td {
+    background-color: #b6c7ef;
+}
+tr.normal td {
+
+}
+tr.high td {
+    background-color: #efcd90;
+}
+tr.urgent td {
+    background-color: #ef9179;
+}
+tr.immediately td {
+    background-color: #ef492a;
+    color: #ffffff;
+}

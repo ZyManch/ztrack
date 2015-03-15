@@ -55,7 +55,7 @@ class TrackmodelCode extends CCodeModel
 	public function requiredTemplates()
 	{
 		return array(
-			'model.php',
+			'model.php'
 		);
 	}
 
@@ -113,9 +113,17 @@ class TrackmodelCode extends CCodeModel
 				'connectionId'=>$this->connectionId,
 			);
 			$this->files[]=new CCodeFile(
-				Yii::getPathOfAlias($this->modelPath).'/C'.$className.'.php',
+				Yii::getPathOfAlias($this->modelPath).'/original/C'.$className.'.php',
 				$this->render($templatePath.'/model.php', $params)
 			);
+            $this->files[]=new CCodeFile(
+                Yii::getPathOfAlias($this->modelPath).'/'.$className.'.php',
+                $this->render($templatePath.'/main.php', $params)
+            );
+            $this->files[]=new CCodeFile(
+                Yii::getPathOfAlias($this->modelPath).'/search/Search'.$className.'.php',
+                $this->render($templatePath.'/search.php', $params)
+            );
 		}
 	}
 

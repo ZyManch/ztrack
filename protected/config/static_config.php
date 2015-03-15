@@ -13,12 +13,14 @@ return array(
     'language' => 'ru',
     'import'=>array(
         'application.models.original.*',
+        'application.models.page.*',
         'application.models.*',
         'application.forms.*',
         'application.components.*',
         'application.controllers.*',
         'application.modules.user.*',
         'application.modules.project.*',
+        'application.modules.widget.*',
         'application.models.editor.*',
     ),
 

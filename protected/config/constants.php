@@ -5,3 +5,4 @@
 define('PAGE_TYPE_TICKETS',1);
 define('PAGE_TYPE_WIKI',2);
 define('PAGE_TYPE_NOTES',3);
+define('PAGE_TYPE_RELEASE',4);

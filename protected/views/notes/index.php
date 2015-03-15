@@ -41,7 +41,7 @@ $mainNote = null;
                 <ul class="todo-list m-t ui-sortable">
                     <?php if ($mainNote):?>
                         <?php foreach ($mainNote->pages as $note):?>
-                            <?php $this->renderPartial('_view', array('data'=>$note,'with_body'=>true));?>
+                            <?php $this->renderPartial('_view', array('data'=>$note));?>
                         <?php endforeach;?>
                     <?php endif;?>
                 </ul>
