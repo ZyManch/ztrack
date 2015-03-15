@@ -84,29 +84,5 @@ class CPage extends ActiveRecord {
 		);
 	}
 
-	public function search() {
-		// @todo Please modify the following code to remove attributes that should not be searched.
-
-		$criteria=new CDbCriteria;
-
-		$criteria->compare('id',$this->id,true);
-		$criteria->compare('parent_page_id',$this->parent_page_id,true);
-		$criteria->compare('author_user_id',$this->author_user_id,true);
-		$criteria->compare('assign_user_id',$this->assign_user_id,true);
-		$criteria->compare('page_type_id',$this->page_type_id,true);
-		$criteria->compare('project_id',$this->project_id,true);
-		$criteria->compare('url',$this->url,true);
-		$criteria->compare('title',$this->title,true);
-		$criteria->compare('body',$this->body,true);
-		$criteria->compare('progress',$this->progress);
-		$criteria->compare('level_id',$this->level_id,true);
-		$criteria->compare('status',$this->status,true);
-		$criteria->compare('changed',$this->changed,true);
-
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
-
 
 }

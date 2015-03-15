@@ -69,25 +69,5 @@ class CTrace extends ActiveRecord {
 		);
 	}
 
-	public function search() {
-		// @todo Please modify the following code to remove attributes that should not be searched.
-
-		$criteria=new CDbCriteria;
-
-		$criteria->compare('id',$this->id,true);
-		$criteria->compare('request_id',$this->request_id,true);
-		$criteria->compare('parent_id',$this->parent_id,true);
-		$criteria->compare('filename',$this->filename,true);
-		$criteria->compare('line',$this->line);
-		$criteria->compare('method',$this->method);
-		$criteria->compare('position',$this->position,true);
-		$criteria->compare('status',$this->status,true);
-		$criteria->compare('changed',$this->changed,true);
-
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
-
 
 }

@@ -57,22 +57,5 @@ class CGroupAccess extends ActiveRecord {
 		);
 	}
 
-	public function search() {
-		// @todo Please modify the following code to remove attributes that should not be searched.
-
-		$criteria=new CDbCriteria;
-
-		$criteria->compare('id',$this->id,true);
-		$criteria->compare('group_id',$this->group_id,true);
-		$criteria->compare('access_id',$this->access_id,true);
-		$criteria->compare('project_id',$this->project_id,true);
-		$criteria->compare('status',$this->status,true);
-		$criteria->compare('changed',$this->changed,true);
-
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
-
 
 }

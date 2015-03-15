@@ -54,22 +54,5 @@ class CBrowser extends ActiveRecord {
 		);
 	}
 
-	public function search() {
-		// @todo Please modify the following code to remove attributes that should not be searched.
-
-		$criteria=new CDbCriteria;
-
-		$criteria->compare('id',$this->id,true);
-		$criteria->compare('browser',$this->browser,true);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('version',$this->version,true);
-		$criteria->compare('status',$this->status,true);
-		$criteria->compare('changed',$this->changed,true);
-
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
-
 
 }

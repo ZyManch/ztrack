@@ -59,24 +59,5 @@ class CProjectException extends ActiveRecord {
 		);
 	}
 
-	public function search() {
-		// @todo Please modify the following code to remove attributes that should not be searched.
-
-		$criteria=new CDbCriteria;
-
-		$criteria->compare('id',$this->id,true);
-		$criteria->compare('title',$this->title);
-		$criteria->compare('level_id',$this->level_id,true);
-		$criteria->compare('total_count',$this->total_count,true);
-		$criteria->compare('trace_file',$this->trace_file,true);
-		$criteria->compare('trace_line',$this->trace_line);
-		$criteria->compare('status',$this->status,true);
-		$criteria->compare('changed',$this->changed,true);
-
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
-
 
 }

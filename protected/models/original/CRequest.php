@@ -83,28 +83,5 @@ class CRequest extends ActiveRecord {
 		);
 	}
 
-	public function search() {
-		// @todo Please modify the following code to remove attributes that should not be searched.
-
-		$criteria=new CDbCriteria;
-
-		$criteria->compare('id',$this->id,true);
-		$criteria->compare('browser_id',$this->browser_id,true);
-		$criteria->compare('os_id',$this->os_id,true);
-		$criteria->compare('user_ip',$this->user_ip,true);
-		$criteria->compare('code',$this->code,true);
-		$criteria->compare('method_id',$this->method_id,true);
-		$criteria->compare('url_id',$this->url_id,true);
-		$criteria->compare('referer_url_id',$this->referer_url_id,true);
-		$criteria->compare('server_id',$this->server_id,true);
-		$criteria->compare('branch_id',$this->branch_id,true);
-		$criteria->compare('status',$this->status,true);
-		$criteria->compare('changed',$this->changed,true);
-
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
-
 
 }
