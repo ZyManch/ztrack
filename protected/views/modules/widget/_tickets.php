@@ -35,9 +35,10 @@
             }
         ),
         array(
-            'name' => 'title',
+            'name' => 'author_user_id',
+            'htmlOptions' => array('class'=>'project-people'),
             'value' => function(Page $page) {
-                return $page->title;
+                return $page->author_user_id;
             }
         ),
     )
