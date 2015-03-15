@@ -32,27 +32,16 @@ class ArCommand extends CConsoleCommand {
             $model->baseClass = 'ActiveRecord';
             $model->template = 'default';
             $model->tableName = $table;
-            $model->modelPath = 'application.models.original';
             $model->modelClass = $className;
             $model->prepare();
             foreach ($model->files as $file) {
                 $model->answers[md5($file->path)] = true;
             }
             $model->save();
-            $modelPath = Yii::getPathOfAlias('application.models.'.$className).'.php';
-            if (!file_exists($modelPath)) {
-                file_put_contents($modelPath,$this->_getModelCode($className));
-            }
         }
 
     }
 
-    protected function _getModelCode($className) {
-        return sprintf('<?php
-class %s extends %s {
-
-}',$className,'C'.$className);
-    }
 
     protected function _getTables() {
         $tables = Yii::app()->db->schema->getTables();

@@ -13,10 +13,13 @@
  * @property string $url
  * @property string $title
  * @property string $body
+ * @property integer $progress
+ * @property string $level_id
  * @property string $status
  * @property string $changed
  *
  * The followings are the available model relations:
+ * @property Level $level
  * @property User $authorUser
  * @property User $assignUser
  * @property PageType $pageType
@@ -34,13 +37,14 @@ class CPage extends ActiveRecord {
 	public function rules()	{
 		return array(
 			array('author_user_id, page_type_id, body, changed', 'required'),
-			array('parent_page_id, author_user_id, assign_user_id, page_type_id, project_id', 'length', 'max'=>10),
+			array('progress', 'numerical', 'integerOnly'=>true),
+			array('parent_page_id, author_user_id, assign_user_id, page_type_id, project_id, level_id', 'length', 'max'=>10),
 			array('url', 'length', 'max'=>64),
 			array('title', 'length', 'max'=>128),
 			array('status', 'length', 'max'=>7),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, parent_page_id, author_user_id, assign_user_id, page_type_id, project_id, url, title, body, status, changed', 'safe', 'on'=>'search'),
+			array('id, parent_page_id, author_user_id, assign_user_id, page_type_id, project_id, url, title, body, progress, level_id, status, changed', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -51,6 +55,7 @@ class CPage extends ActiveRecord {
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'level' => array(self::BELONGS_TO, 'Level', 'level_id'),
 			'authorUser' => array(self::BELONGS_TO, 'User', 'author_user_id'),
 			'assignUser' => array(self::BELONGS_TO, 'User', 'assign_user_id'),
 			'pageType' => array(self::BELONGS_TO, 'PageType', 'page_type_id'),
@@ -72,6 +77,8 @@ class CPage extends ActiveRecord {
 			'url' => 'Url',
 			'title' => 'Title',
 			'body' => 'Body',
+			'progress' => 'Progress',
+			'level_id' => 'Level',
 			'status' => 'Status',
 			'changed' => 'Changed',
 		);
@@ -91,6 +98,8 @@ class CPage extends ActiveRecord {
 		$criteria->compare('url',$this->url,true);
 		$criteria->compare('title',$this->title,true);
 		$criteria->compare('body',$this->body,true);
+		$criteria->compare('progress',$this->progress);
+		$criteria->compare('level_id',$this->level_id,true);
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('changed',$this->changed,true);
 
