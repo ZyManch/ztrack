@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 15, 2015 at 06:03 PM
+-- Generation Time: Mar 15, 2015 at 09:24 PM
 -- Server version: 5.1.40
 -- PHP Version: 5.3.3
 
@@ -576,8 +576,7 @@ INSERT INTO `system_module` (`id`, `name`, `title`, `description`, `type`, `inst
 (8, 'wiki', 'Wiki', 'Add wiki to project', 'project', 'not_install', 1, 'Active', '2015-03-13 17:08:38'),
 (9, 'notes', 'Notes', '', 'user', 'not_install', 15, 'Active', '2015-03-13 17:08:35'),
 (10, 'settings', 'Settings', 'Project setting', 'project', 'force', 1000, 'Active', '2015-03-13 17:08:31'),
-(11, 'userTickets', 'User tickets', '', 'widget', 'manual', 0, 'Active', '2015-03-14 22:13:03'),
-(12, 'projectTickets', 'Project tickets', '', 'widget', 'manual', 0, 'Active', '2015-03-14 22:42:13'),
+(11, 'tickets', 'Ticket list', '', 'widget', 'manual', 0, 'Active', '2015-03-15 18:11:33'),
 (13, 'lastRelease', 'Current Release', '', 'widget', 'manual', 0, 'Active', '2015-03-14 22:42:54');
 
 -- --------------------------------------------------------
