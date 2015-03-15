@@ -16,6 +16,10 @@
     */
 class SearchProjectSystemModule extends CProjectSystemModule {
 
+    public function __construct($scenario = 'search') {
+        parent::__construct($scenario);
+    }
+
     public function rules()	{
         return array(
             array('id, project_id, system_module_id, params, changed', 'safe', 'on'=>'search'),
@@ -32,7 +36,7 @@ class SearchProjectSystemModule extends CProjectSystemModule {
 		$criteria->compare('params',$this->params,true);
 		$criteria->compare('changed',$this->changed,true);
 
-        return new CActiveDataProvider($this, array(
+        return new CActiveDataProvider('ProjectSystemModule', array(
             'criteria'=>$criteria,
             'pagination'=>array('pageSize'=>40)
         ));

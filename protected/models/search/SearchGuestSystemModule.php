@@ -14,6 +14,10 @@
     */
 class SearchGuestSystemModule extends CGuestSystemModule {
 
+    public function __construct($scenario = 'search') {
+        parent::__construct($scenario);
+    }
+
     public function rules()	{
         return array(
             array('id, system_module_id, status, changed', 'safe', 'on'=>'search'),
@@ -29,7 +33,7 @@ class SearchGuestSystemModule extends CGuestSystemModule {
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('changed',$this->changed,true);
 
-        return new CActiveDataProvider($this, array(
+        return new CActiveDataProvider('GuestSystemModule', array(
             'criteria'=>$criteria,
             'pagination'=>array('pageSize'=>40)
         ));

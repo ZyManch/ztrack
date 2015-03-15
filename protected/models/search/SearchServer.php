@@ -16,6 +16,10 @@
     */
 class SearchServer extends CServer {
 
+    public function __construct($scenario = 'search') {
+        parent::__construct($scenario);
+    }
+
     public function rules()	{
         return array(
             array('id, title, company_id, status, changed', 'safe', 'on'=>'search'),
@@ -32,7 +36,7 @@ class SearchServer extends CServer {
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('changed',$this->changed,true);
 
-        return new CActiveDataProvider($this, array(
+        return new CActiveDataProvider('Server', array(
             'criteria'=>$criteria,
             'pagination'=>array('pageSize'=>40)
         ));

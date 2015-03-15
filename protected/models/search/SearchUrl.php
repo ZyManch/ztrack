@@ -17,6 +17,10 @@
     */
 class SearchUrl extends CUrl {
 
+    public function __construct($scenario = 'search') {
+        parent::__construct($scenario);
+    }
+
     public function rules()	{
         return array(
             array('id, protocol, domain, url, status, changed', 'safe', 'on'=>'search'),
@@ -34,7 +38,7 @@ class SearchUrl extends CUrl {
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('changed',$this->changed,true);
 
-        return new CActiveDataProvider($this, array(
+        return new CActiveDataProvider('Url', array(
             'criteria'=>$criteria,
             'pagination'=>array('pageSize'=>40)
         ));

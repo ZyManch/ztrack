@@ -21,6 +21,10 @@
     */
 class SearchSystemModule extends CSystemModule {
 
+    public function __construct($scenario = 'search') {
+        parent::__construct($scenario);
+    }
+
     public function rules()	{
         return array(
             array('id, name, title, description, type, installation, position, status, changed', 'safe', 'on'=>'search'),
@@ -41,7 +45,7 @@ class SearchSystemModule extends CSystemModule {
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('changed',$this->changed,true);
 
-        return new CActiveDataProvider($this, array(
+        return new CActiveDataProvider('SystemModule', array(
             'criteria'=>$criteria,
             'pagination'=>array('pageSize'=>40)
         ));

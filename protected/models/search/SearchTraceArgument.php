@@ -17,6 +17,10 @@
     */
 class SearchTraceArgument extends CTraceArgument {
 
+    public function __construct($scenario = 'search') {
+        parent::__construct($scenario);
+    }
+
     public function rules()	{
         return array(
             array('id, trace_id, name, position, value, status, changed', 'safe', 'on'=>'search'),
@@ -35,7 +39,7 @@ class SearchTraceArgument extends CTraceArgument {
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('changed',$this->changed,true);
 
-        return new CActiveDataProvider($this, array(
+        return new CActiveDataProvider('TraceArgument', array(
             'criteria'=>$criteria,
             'pagination'=>array('pageSize'=>40)
         ));

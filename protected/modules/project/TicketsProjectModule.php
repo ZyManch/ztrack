@@ -49,18 +49,20 @@ class TicketsProjectModule extends AbstractProjectModule {
         if ($widget->haveItems()) {
             return $widget;
         }
-        $widget = new ProjectTicketsWidgetModule();
-        $widget->configure($projectId);
+        $widget = new TicketsWidgetModule();
+        $page = new SearchPage();
+        $page->project_id = Yii::app()->request->getParam('id');
+        $widget->configure($page);
         return $widget;
     }
 
 
     protected function _getMyTicketsWidget() {
-        $widget = new UserTicketsWidgetModule();
-        $widget->configure(
-            Yii::app()->user->id,
-            Yii::app()->request->getParam('id')
-        );
+        $page = new SearchPage();
+        $page->project_id = Yii::app()->request->getParam('id');
+        $page->assign_user_id = Yii::app()->user->id;
+        $widget = new TicketsWidgetModule();
+        $widget->configure($page);
         return $widget;
     }
 

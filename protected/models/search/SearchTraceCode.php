@@ -16,6 +16,10 @@
     */
 class SearchTraceCode extends CTraceCode {
 
+    public function __construct($scenario = 'search') {
+        parent::__construct($scenario);
+    }
+
     public function rules()	{
         return array(
             array('id, trace_id, line, code, status, changed', 'safe', 'on'=>'search'),
@@ -33,7 +37,7 @@ class SearchTraceCode extends CTraceCode {
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('changed',$this->changed,true);
 
-        return new CActiveDataProvider($this, array(
+        return new CActiveDataProvider('TraceCode', array(
             'criteria'=>$criteria,
             'pagination'=>array('pageSize'=>40)
         ));

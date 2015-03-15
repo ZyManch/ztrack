@@ -16,6 +16,10 @@
     */
 class SearchEditor extends CEditor {
 
+    public function __construct($scenario = 'search') {
+        parent::__construct($scenario);
+    }
+
     public function rules()	{
         return array(
             array('id, name, title, description, status, changed', 'safe', 'on'=>'search'),
@@ -33,7 +37,7 @@ class SearchEditor extends CEditor {
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('changed',$this->changed,true);
 
-        return new CActiveDataProvider($this, array(
+        return new CActiveDataProvider('Editor', array(
             'criteria'=>$criteria,
             'pagination'=>array('pageSize'=>40)
         ));

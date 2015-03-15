@@ -15,6 +15,10 @@
     */
 class SearchPageType extends CPageType {
 
+    public function __construct($scenario = 'search') {
+        parent::__construct($scenario);
+    }
+
     public function rules()	{
         return array(
             array('id, constant, title, status, changed', 'safe', 'on'=>'search'),
@@ -31,7 +35,7 @@ class SearchPageType extends CPageType {
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('changed',$this->changed,true);
 
-        return new CActiveDataProvider($this, array(
+        return new CActiveDataProvider('PageType', array(
             'criteria'=>$criteria,
             'pagination'=>array('pageSize'=>40)
         ));

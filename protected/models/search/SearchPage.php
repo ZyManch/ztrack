@@ -30,6 +30,10 @@
     */
 class SearchPage extends CPage {
 
+    public function __construct($scenario = 'search') {
+        parent::__construct($scenario);
+    }
+
     public function rules()	{
         return array(
             array('id, parent_page_id, author_user_id, assign_user_id, page_type_id, project_id, url, title, body, progress, level_id, status, changed', 'safe', 'on'=>'search'),
@@ -54,7 +58,7 @@ class SearchPage extends CPage {
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('changed',$this->changed,true);
 
-        return new CActiveDataProvider($this, array(
+        return new CActiveDataProvider('Page', array(
             'criteria'=>$criteria,
             'pagination'=>array('pageSize'=>40)
         ));

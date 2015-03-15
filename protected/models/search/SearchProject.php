@@ -20,6 +20,10 @@
     */
 class SearchProject extends CProject {
 
+    public function __construct($scenario = 'search') {
+        parent::__construct($scenario);
+    }
+
     public function rules()	{
         return array(
             array('id, title, parent_id, status, changed', 'safe', 'on'=>'search'),
@@ -36,7 +40,7 @@ class SearchProject extends CProject {
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('changed',$this->changed,true);
 
-        return new CActiveDataProvider($this, array(
+        return new CActiveDataProvider('Project', array(
             'criteria'=>$criteria,
             'pagination'=>array('pageSize'=>40)
         ));

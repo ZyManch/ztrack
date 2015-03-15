@@ -23,6 +23,10 @@
     */
 class SearchTrace extends CTrace {
 
+    public function __construct($scenario = 'search') {
+        parent::__construct($scenario);
+    }
+
     public function rules()	{
         return array(
             array('id, request_id, parent_id, filename, line, method, position, status, changed', 'safe', 'on'=>'search'),
@@ -43,7 +47,7 @@ class SearchTrace extends CTrace {
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('changed',$this->changed,true);
 
-        return new CActiveDataProvider($this, array(
+        return new CActiveDataProvider('Trace', array(
             'criteria'=>$criteria,
             'pagination'=>array('pageSize'=>40)
         ));

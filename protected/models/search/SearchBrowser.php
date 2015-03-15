@@ -16,6 +16,10 @@
     */
 class SearchBrowser extends CBrowser {
 
+    public function __construct($scenario = 'search') {
+        parent::__construct($scenario);
+    }
+
     public function rules()	{
         return array(
             array('id, browser, name, version, status, changed', 'safe', 'on'=>'search'),
@@ -33,7 +37,7 @@ class SearchBrowser extends CBrowser {
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('changed',$this->changed,true);
 
-        return new CActiveDataProvider($this, array(
+        return new CActiveDataProvider('Browser', array(
             'criteria'=>$criteria,
             'pagination'=>array('pageSize'=>40)
         ));

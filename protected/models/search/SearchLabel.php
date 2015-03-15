@@ -17,6 +17,10 @@
     */
 class SearchLabel extends CLabel {
 
+    public function __construct($scenario = 'search') {
+        parent::__construct($scenario);
+    }
+
     public function rules()	{
         return array(
             array('id, company_id, title, color, status, changed', 'safe', 'on'=>'search'),
@@ -34,7 +38,7 @@ class SearchLabel extends CLabel {
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('changed',$this->changed,true);
 
-        return new CActiveDataProvider($this, array(
+        return new CActiveDataProvider('Label', array(
             'criteria'=>$criteria,
             'pagination'=>array('pageSize'=>40)
         ));

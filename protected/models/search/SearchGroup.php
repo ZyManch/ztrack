@@ -17,6 +17,10 @@
     */
 class SearchGroup extends CGroup {
 
+    public function __construct($scenario = 'search') {
+        parent::__construct($scenario);
+    }
+
     public function rules()	{
         return array(
             array('id, company_id, title, status, changed', 'safe', 'on'=>'search'),
@@ -33,7 +37,7 @@ class SearchGroup extends CGroup {
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('changed',$this->changed,true);
 
-        return new CActiveDataProvider($this, array(
+        return new CActiveDataProvider('Group', array(
             'criteria'=>$criteria,
             'pagination'=>array('pageSize'=>40)
         ));

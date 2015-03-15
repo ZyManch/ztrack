@@ -22,6 +22,10 @@
     */
 class SearchCompany extends CCompany {
 
+    public function __construct($scenario = 'search') {
+        parent::__construct($scenario);
+    }
+
     public function rules()	{
         return array(
             array('id, title, editor_id, status, changed', 'safe', 'on'=>'search'),
@@ -38,7 +42,7 @@ class SearchCompany extends CCompany {
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('changed',$this->changed,true);
 
-        return new CActiveDataProvider($this, array(
+        return new CActiveDataProvider('Company', array(
             'criteria'=>$criteria,
             'pagination'=>array('pageSize'=>40)
         ));

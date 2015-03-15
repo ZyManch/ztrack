@@ -6,7 +6,7 @@
  * Time: 13:26
  * @var $this Controller
  * @var $second_widget AbstractWidgetModule
- * @var $my_tickets_widget UserTicketsWidgetModule
+ * @var $my_tickets_widget TicketsWidgetModule
  */
 ?>
 <div class="row">

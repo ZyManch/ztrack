@@ -14,6 +14,7 @@ return array(
     'import'=>array(
         'application.models.original.*',
         'application.models.page.*',
+        'application.models.search.*',
         'application.models.*',
         'application.forms.*',
         'application.components.*',

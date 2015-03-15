@@ -30,6 +30,10 @@
     */
 class SearchRequest extends CRequest {
 
+    public function __construct($scenario = 'search') {
+        parent::__construct($scenario);
+    }
+
     public function rules()	{
         return array(
             array('id, browser_id, os_id, user_ip, code, method_id, url_id, referer_url_id, server_id, branch_id, status, changed', 'safe', 'on'=>'search'),
@@ -53,7 +57,7 @@ class SearchRequest extends CRequest {
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('changed',$this->changed,true);
 
-        return new CActiveDataProvider($this, array(
+        return new CActiveDataProvider('Request', array(
             'criteria'=>$criteria,
             'pagination'=>array('pageSize'=>40)
         ));

@@ -22,6 +22,10 @@
     */
 class SearchUser extends CUser {
 
+    public function __construct($scenario = 'search') {
+        parent::__construct($scenario);
+    }
+
     public function rules()	{
         return array(
             array('id, company_id, login, email, password, status, changed', 'safe', 'on'=>'search'),
@@ -40,7 +44,7 @@ class SearchUser extends CUser {
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('changed',$this->changed,true);
 
-        return new CActiveDataProvider($this, array(
+        return new CActiveDataProvider('User', array(
             'criteria'=>$criteria,
             'pagination'=>array('pageSize'=>40)
         ));

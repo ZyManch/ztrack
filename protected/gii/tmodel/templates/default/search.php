@@ -52,6 +52,10 @@
 */
 class Search<?php echo $modelClass; ?> extends C<?php echo $modelClass; ?> {
 
+    public function __construct($scenario = 'search') {
+        parent::__construct($scenario);
+    }
+
     public function rules()	{
         return array(
             array('<?php echo implode(', ', array_keys($columns)); ?>', 'safe', 'on'=>'search'),
@@ -76,7 +80,7 @@ class Search<?php echo $modelClass; ?> extends C<?php echo $modelClass; ?> {
         }
         ?>
 
-        return new CActiveDataProvider($this, array(
+        return new CActiveDataProvider('<?php echo $modelClass; ?>', array(
             'criteria'=>$criteria,
             'pagination'=>array('pageSize'=>40)
         ));
