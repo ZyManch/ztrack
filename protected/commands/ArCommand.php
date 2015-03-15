@@ -15,10 +15,10 @@ class ArCommand extends CConsoleCommand {
         Yii::import('system.gii.*',true);
         Yii::import('system.gii.controllers.*',true);
         Yii::import('system.gii.generators.model.*',true);
-        Yii::import('application.gii.trackmodel.*',true);
+        Yii::import('application.gii.tmodel.*',true);
         $tables = $this->_getTables();
-        $model = new TrackmodelCode();
-        $templatePath = Yii::getPathOfAlias('application.gii.trackmodel.templates.default');
+        $model = new TmodelCode();
+        $templatePath = Yii::getPathOfAlias('application.gii.tmodel.templates.default');
         $controller = Yii::createComponent(array(
             'class'=>'CodeGenerator',
             'templates'=>array('default' => $templatePath),
