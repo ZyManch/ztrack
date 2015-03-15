@@ -12,46 +12,40 @@
     * @property string $changed
     *
     * The followings are the available model relations:
-            * @property Company[] $companies
-    */
+        * @property Company[] $companies
+*/
 class CEditor extends ActiveRecord {
 
-public function tableName()	{
-return 'editor';
-}
+    public function tableName()	{
+        return 'editor';
+    }
 
-public function rules()	{
-return array(
-    array('name, title, description, changed', 'required'),
-    array('name, title', 'length', 'max'=>32),
-    array('status', 'length', 'max'=>7),
-// The following rule is used by search().
-// @todo Please remove those attributes that should not be searched.
-array('id, name, title, description, status, changed', 'safe', 'on'=>'search'),
-);
-}
+    public function rules()	{
+        return array(
+            array('name, title, description, changed', 'required'),
+			array('name, title', 'length', 'max'=>32),
+			array('status', 'length', 'max'=>7)        );
+    }
 
-/**
-* @return array relational rules.
-*/
-protected function _baseRelations()	{
-// NOTE: you may need to adjust the relation name and the related
-// class name for the relations automatically generated below.
-return array(
-    'companies' => array(self::HAS_MANY, 'Company', 'editor_id'),
-);
-}
+    /**
+    * @return array relational rules.
+    */
+    protected function _baseRelations()	{
+        return array(
+            'companies' => array(self::HAS_MANY, 'Company', 'editor_id'),
+        );
+    }
 
-public function attributeLabels() {
-return array(
-    'id' => 'ID',
-    'name' => 'Name',
-    'title' => 'Title',
-    'description' => 'Description',
-    'status' => 'Status',
-    'changed' => 'Changed',
-);
-}
+    public function attributeLabels() {
+        return array(
+            'id' => 'ID',
+            'name' => 'Name',
+            'title' => 'Title',
+            'description' => 'Description',
+            'status' => 'Status',
+            'changed' => 'Changed',
+        );
+    }
 
 
 }

@@ -16,9 +16,15 @@
     */
 class SearchEditor extends CEditor {
 
-public function search() {
+    public function rules()	{
+        return array(
+            array('id, name, title, description, status, changed', 'safe', 'on'=>'search'),
+        );
+    }
 
-$criteria=new CDbCriteria;
+    public function search() {
+
+        $criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id,true);
 		$criteria->compare('name',$this->name,true);
@@ -27,10 +33,14 @@ $criteria=new CDbCriteria;
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('changed',$this->changed,true);
 
-return new CActiveDataProvider($this, array(
-'criteria'=>$criteria,
-'pagination'=>array('pageSize'=>40)
-));
-}
+        return new CActiveDataProvider($this, array(
+            'criteria'=>$criteria,
+            'pagination'=>array('pageSize'=>40)
+        ));
+    }
+
+    public function save() {
+        throw new Exception('Its search only model');
+    }
 
 }

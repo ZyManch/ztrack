@@ -52,28 +52,38 @@
 */
 class Search<?php echo $modelClass; ?> extends C<?php echo $modelClass; ?> {
 
-public function search() {
+    public function rules()	{
+        return array(
+            array('<?php echo implode(', ', array_keys($columns)); ?>', 'safe', 'on'=>'search'),
+        );
+    }
 
-$criteria=new CDbCriteria;
+    public function search() {
+
+        $criteria=new CDbCriteria;
 
 <?php
-foreach($columns as $name=>$column)
-{
-    if($column->type==='string')
-    {
-        echo "\t\t\$criteria->compare('$name',\$this->$name,true);\n";
-    }
-    else
-    {
-        echo "\t\t\$criteria->compare('$name',\$this->$name);\n";
-    }
-}
-?>
+        foreach($columns as $name=>$column)
+        {
+            if($column->type==='string')
+            {
+                echo "\t\t\$criteria->compare('$name',\$this->$name,true);\n";
+            }
+            else
+            {
+                echo "\t\t\$criteria->compare('$name',\$this->$name);\n";
+            }
+        }
+        ?>
 
-return new CActiveDataProvider($this, array(
-'criteria'=>$criteria,
-'pagination'=>array('pageSize'=>40)
-));
-}
+        return new CActiveDataProvider($this, array(
+            'criteria'=>$criteria,
+            'pagination'=>array('pageSize'=>40)
+        ));
+    }
+
+    public function save() {
+        throw new Exception('Its search only model');
+    }
 
 }

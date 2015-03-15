@@ -30,9 +30,15 @@
     */
 class SearchRequest extends CRequest {
 
-public function search() {
+    public function rules()	{
+        return array(
+            array('id, browser_id, os_id, user_ip, code, method_id, url_id, referer_url_id, server_id, branch_id, status, changed', 'safe', 'on'=>'search'),
+        );
+    }
 
-$criteria=new CDbCriteria;
+    public function search() {
+
+        $criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id,true);
 		$criteria->compare('browser_id',$this->browser_id,true);
@@ -47,10 +53,14 @@ $criteria=new CDbCriteria;
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('changed',$this->changed,true);
 
-return new CActiveDataProvider($this, array(
-'criteria'=>$criteria,
-'pagination'=>array('pageSize'=>40)
-));
-}
+        return new CActiveDataProvider($this, array(
+            'criteria'=>$criteria,
+            'pagination'=>array('pageSize'=>40)
+        ));
+    }
+
+    public function save() {
+        throw new Exception('Its search only model');
+    }
 
 }

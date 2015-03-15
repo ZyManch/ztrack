@@ -11,60 +11,54 @@
     * @property string $changed
     *
     * The followings are the available model relations:
-            * @property Access[] $accesses
-            * @property Branch[] $branches
-            * @property Editor $editor
-            * @property Group[] $groups
-            * @property Label[] $labels
-            * @property Level[] $levels
-            * @property Server[] $servers
-            * @property User[] $users
-    */
+        * @property Access[] $accesses
+        * @property Branch[] $branches
+        * @property Editor $editor
+        * @property Group[] $groups
+        * @property Label[] $labels
+        * @property Level[] $levels
+        * @property Server[] $servers
+        * @property User[] $users
+*/
 class CCompany extends ActiveRecord {
 
-public function tableName()	{
-return 'company';
-}
+    public function tableName()	{
+        return 'company';
+    }
 
-public function rules()	{
-return array(
-    array('title, editor_id, changed', 'required'),
-    array('title', 'length', 'max'=>64),
-    array('editor_id', 'length', 'max'=>10),
-    array('status', 'length', 'max'=>7),
-// The following rule is used by search().
-// @todo Please remove those attributes that should not be searched.
-array('id, title, editor_id, status, changed', 'safe', 'on'=>'search'),
-);
-}
+    public function rules()	{
+        return array(
+            array('title, editor_id, changed', 'required'),
+			array('title', 'length', 'max'=>64),
+			array('editor_id', 'length', 'max'=>10),
+			array('status', 'length', 'max'=>7)        );
+    }
 
-/**
-* @return array relational rules.
-*/
-protected function _baseRelations()	{
-// NOTE: you may need to adjust the relation name and the related
-// class name for the relations automatically generated below.
-return array(
-    'accesses' => array(self::HAS_MANY, 'Access', 'company_id'),
-    'branches' => array(self::HAS_MANY, 'Branch', 'company_id'),
-    'editor' => array(self::BELONGS_TO, 'Editor', 'editor_id'),
-    'groups' => array(self::HAS_MANY, 'Group', 'company_id'),
-    'labels' => array(self::HAS_MANY, 'Label', 'company_id'),
-    'levels' => array(self::HAS_MANY, 'Level', 'company_id'),
-    'servers' => array(self::HAS_MANY, 'Server', 'company_id'),
-    'users' => array(self::HAS_MANY, 'User', 'company_id'),
-);
-}
+    /**
+    * @return array relational rules.
+    */
+    protected function _baseRelations()	{
+        return array(
+            'accesses' => array(self::HAS_MANY, 'Access', 'company_id'),
+            'branches' => array(self::HAS_MANY, 'Branch', 'company_id'),
+            'editor' => array(self::BELONGS_TO, 'Editor', 'editor_id'),
+            'groups' => array(self::HAS_MANY, 'Group', 'company_id'),
+            'labels' => array(self::HAS_MANY, 'Label', 'company_id'),
+            'levels' => array(self::HAS_MANY, 'Level', 'company_id'),
+            'servers' => array(self::HAS_MANY, 'Server', 'company_id'),
+            'users' => array(self::HAS_MANY, 'User', 'company_id'),
+        );
+    }
 
-public function attributeLabels() {
-return array(
-    'id' => 'ID',
-    'title' => 'Title',
-    'editor_id' => 'Editor',
-    'status' => 'Status',
-    'changed' => 'Changed',
-);
-}
+    public function attributeLabels() {
+        return array(
+            'id' => 'ID',
+            'title' => 'Title',
+            'editor_id' => 'Editor',
+            'status' => 'Status',
+            'changed' => 'Changed',
+        );
+    }
 
 
 }

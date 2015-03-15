@@ -11,56 +11,50 @@
     * @property string $changed
     *
     * The followings are the available model relations:
-            * @property GroupAccess[] $groupAccesses
-            * @property Page[] $pages
-            * @property Project $parent
-            * @property Project[] $projects
-            * @property ProjectSystemModule[] $projectSystemModules
-            * @property UserAccess[] $userAccesses
-    */
+        * @property GroupAccess[] $groupAccesses
+        * @property Page[] $pages
+        * @property Project $parent
+        * @property Project[] $projects
+        * @property ProjectSystemModule[] $projectSystemModules
+        * @property UserAccess[] $userAccesses
+*/
 class CProject extends ActiveRecord {
 
-public function tableName()	{
-return 'project';
-}
+    public function tableName()	{
+        return 'project';
+    }
 
-public function rules()	{
-return array(
-    array('title, changed', 'required'),
-    array('title', 'length', 'max'=>64),
-    array('parent_id', 'length', 'max'=>10),
-    array('status', 'length', 'max'=>7),
-// The following rule is used by search().
-// @todo Please remove those attributes that should not be searched.
-array('id, title, parent_id, status, changed', 'safe', 'on'=>'search'),
-);
-}
+    public function rules()	{
+        return array(
+            array('title, changed', 'required'),
+			array('title', 'length', 'max'=>64),
+			array('parent_id', 'length', 'max'=>10),
+			array('status', 'length', 'max'=>7)        );
+    }
 
-/**
-* @return array relational rules.
-*/
-protected function _baseRelations()	{
-// NOTE: you may need to adjust the relation name and the related
-// class name for the relations automatically generated below.
-return array(
-    'groupAccesses' => array(self::HAS_MANY, 'GroupAccess', 'project_id'),
-    'pages' => array(self::HAS_MANY, 'Page', 'project_id'),
-    'parent' => array(self::BELONGS_TO, 'Project', 'parent_id'),
-    'projects' => array(self::HAS_MANY, 'Project', 'parent_id'),
-    'projectSystemModules' => array(self::HAS_MANY, 'ProjectSystemModule', 'project_id'),
-    'userAccesses' => array(self::HAS_MANY, 'UserAccess', 'project_id'),
-);
-}
+    /**
+    * @return array relational rules.
+    */
+    protected function _baseRelations()	{
+        return array(
+            'groupAccesses' => array(self::HAS_MANY, 'GroupAccess', 'project_id'),
+            'pages' => array(self::HAS_MANY, 'Page', 'project_id'),
+            'parent' => array(self::BELONGS_TO, 'Project', 'parent_id'),
+            'projects' => array(self::HAS_MANY, 'Project', 'parent_id'),
+            'projectSystemModules' => array(self::HAS_MANY, 'ProjectSystemModule', 'project_id'),
+            'userAccesses' => array(self::HAS_MANY, 'UserAccess', 'project_id'),
+        );
+    }
 
-public function attributeLabels() {
-return array(
-    'id' => 'ID',
-    'title' => 'Title',
-    'parent_id' => 'Parent',
-    'status' => 'Status',
-    'changed' => 'Changed',
-);
-}
+    public function attributeLabels() {
+        return array(
+            'id' => 'ID',
+            'title' => 'Title',
+            'parent_id' => 'Parent',
+            'status' => 'Status',
+            'changed' => 'Changed',
+        );
+    }
 
 
 }

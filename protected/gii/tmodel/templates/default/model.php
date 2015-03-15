@@ -22,7 +22,7 @@
 <?php if(!empty($relations)): ?>
     *
     * The followings are the available model relations:
-    <?php foreach($relations as $name=>$relation): ?>
+<?php foreach($relations as $name=>$relation): ?>
         * @property <?php
         if (preg_match("~^array\(self::([^,]+), '([^']+)', '([^']+)'\)$~", $relation, $matches))
         {
@@ -47,52 +47,45 @@
             }
         }
         ?>
-    <?php endforeach; ?>
+<?php endforeach; ?>
 <?php endif; ?>
 */
 class C<?php echo $modelClass; ?> extends <?php echo $this->baseClass; ?> {
 
-public function tableName()	{
-return '<?php echo $tableName; ?>';
-}
+    public function tableName()	{
+        return '<?php echo $tableName; ?>';
+    }
 
-public function rules()	{
-return array(
-<?php foreach($rules as $rule): ?>
-    <?php echo $rule.",\n"; ?>
-<?php endforeach; ?>
-// The following rule is used by search().
-// @todo Please remove those attributes that should not be searched.
-array('<?php echo implode(', ', array_keys($columns)); ?>', 'safe', 'on'=>'search'),
-);
-}
+    public function rules()	{
+        return array(
+            <?php echo implode(",\n\t\t\t",$rules);?>
+        );
+    }
 
-/**
-* @return array relational rules.
-*/
-protected function _baseRelations()	{
-// NOTE: you may need to adjust the relation name and the related
-// class name for the relations automatically generated below.
-return array(
+    /**
+    * @return array relational rules.
+    */
+    protected function _baseRelations()	{
+        return array(
 <?php foreach($relations as $name=>$relation): ?>
-    <?php echo "'$name' => $relation,\n"; ?>
+            <?php echo "'$name' => $relation,\n"; ?>
 <?php endforeach; ?>
-);
-}
+        );
+    }
 
-public function attributeLabels() {
-return array(
+    public function attributeLabels() {
+        return array(
 <?php foreach($labels as $name=>$label): ?>
-    <?php echo "'$name' => '$label',\n"; ?>
+            <?php echo "'$name' => '$label',\n"; ?>
 <?php endforeach; ?>
-);
-}
+        );
+    }
 
 <?php if($connectionId!='db'):?>
 
-    public function getDbConnection() {
-    return Yii::app()-><?php echo $connectionId ?>;
-    }
+        public function getDbConnection() {
+            return Yii::app()-><?php echo $connectionId ?>;
+        }
 
 <?php endif?>
 

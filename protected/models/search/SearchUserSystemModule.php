@@ -7,6 +7,7 @@
     * @property string $id
     * @property string $user_id
     * @property string $system_module_id
+    * @property string $params
     * @property string $changed
     *
     * The followings are the available model relations:
@@ -15,19 +16,30 @@
     */
 class SearchUserSystemModule extends CUserSystemModule {
 
-public function search() {
+    public function rules()	{
+        return array(
+            array('id, user_id, system_module_id, params, changed', 'safe', 'on'=>'search'),
+        );
+    }
 
-$criteria=new CDbCriteria;
+    public function search() {
+
+        $criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id,true);
 		$criteria->compare('user_id',$this->user_id,true);
 		$criteria->compare('system_module_id',$this->system_module_id,true);
+		$criteria->compare('params',$this->params,true);
 		$criteria->compare('changed',$this->changed,true);
 
-return new CActiveDataProvider($this, array(
-'criteria'=>$criteria,
-'pagination'=>array('pageSize'=>40)
-));
-}
+        return new CActiveDataProvider($this, array(
+            'criteria'=>$criteria,
+            'pagination'=>array('pageSize'=>40)
+        ));
+    }
+
+    public function save() {
+        throw new Exception('Its search only model');
+    }
 
 }
