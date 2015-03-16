@@ -43,7 +43,7 @@ return array(
             'routes'=> array(
                 array(
                     'class'  => 'ext.yiidebugtb.XWebDebugRouter',
-                    'config' => 'alignRight, opaque, runInDebug, fixedPos, yamlStyle',
+                    'config' => 'alignRight, opaque, runInDebug, fixedPos, yamlStyle, collapsed',
                     'levels' => 'error, warning, trace, profile, info',
                     'allowedIPs' => array('127.0.0.1', $_SERVER['REMOTE_ADDR']),
                 ),

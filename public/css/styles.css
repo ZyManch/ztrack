@@ -7,19 +7,22 @@
 .todo-list li.level > ul{
     margin: 0;
 }
-tr.low td {
+tr.low td, .label.label-low {
     background-color: #b6c7ef;
 }
-tr.normal td {
+tr.normal td,.label.label-normal {
 
 }
-tr.high td {
+tr.high td ,.label.label-high{
     background-color: #efcd90;
 }
-tr.urgent td {
+tr.urgent td, .label.label-urgent {
     background-color: #ef9179;
 }
-tr.immediately td {
+tr.immediately td, .label.label-immediately {
     background-color: #ef492a;
     color: #ffffff;
+}
+.project-title small a {
+    font-size: 85%;
 }

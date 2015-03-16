@@ -12,9 +12,9 @@
     * @property string $changed
     *
     * The followings are the available model relations:
+        * @property Group $group
         * @property Access $access
         * @property Project $project
-        * @property Group $group
 */
 class CGroupAccess extends ActiveRecord {
 
@@ -34,9 +34,9 @@ class CGroupAccess extends ActiveRecord {
     */
     protected function _baseRelations()	{
         return array(
+            'group' => array(self::BELONGS_TO, 'Group', 'group_id'),
             'access' => array(self::BELONGS_TO, 'Access', 'access_id'),
             'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
-            'group' => array(self::BELONGS_TO, 'Group', 'group_id'),
         );
     }
 

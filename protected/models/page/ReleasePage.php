@@ -11,4 +11,16 @@ class ReleasePage extends Page {
         return 'Релиз '.$this->title;
     }
 
+    public function __toString() {
+        return CHtml::link(
+            CHtml::encode($this->getTitle()),
+            array(
+                'project/view',
+                'id'=>$this->project_id,
+                'module'=>'tickets',
+                'action'=>'view',
+                'ticket_id'=>$this->id
+            )
+        );
+    }
 }

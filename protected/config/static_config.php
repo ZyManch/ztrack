@@ -11,6 +11,7 @@ return array(
     'preload'=>array('loader'),
     'sourceLanguage' => 'en',
     'language' => 'ru',
+    'localeClass' => 'Locale',
     'import'=>array(
         'application.models.original.*',
         'application.models.page.*',
@@ -23,6 +24,7 @@ return array(
         'application.modules.project.*',
         'application.modules.widget.*',
         'application.models.editor.*',
+        'application.behaviors.*',
     ),
 
     // application components

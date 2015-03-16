@@ -5,6 +5,18 @@
  */
 class Page extends CPage {
 
+
+    public function behaviors() {
+        return array_merge(
+            parent::behaviors(),
+            array(
+                'fillCreateColumn' => array(
+                    'class' => 'FillCreateColumnBehavior'
+                )
+            )
+        );
+    }
+
     public function _extendedRelations() {
         return array(
             'labels' => array(self::MANY_MANY, 'Label', 'page_label(page_id,label_id)'),
@@ -51,6 +63,19 @@ class Page extends CPage {
             $parent = $parent->parentPage;
         }
         return $parent;
+    }
+
+    public function getParentsList($invert = true) {
+        $parent = $this->parentPage;
+        $result = array();
+        while ($parent) {
+            $result[] = $parent;
+            $parent = $parent->parentPage;
+        }
+        if ($invert) {
+            return array_reverse($result);
+        }
+        return $result;
     }
 
     public function getBodyAsHtml() {

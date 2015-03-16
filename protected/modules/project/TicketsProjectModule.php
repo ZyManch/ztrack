@@ -23,7 +23,7 @@ class TicketsProjectModule extends AbstractProjectModule {
         return  array_merge(
             array(
                 array('allow',
-                    'actions' => array('index'),
+                    'actions' => array('index','view'),
                     'users'=>array('*'),
                 )
             ),
@@ -33,10 +33,20 @@ class TicketsProjectModule extends AbstractProjectModule {
 
     public function actionIndex() {
         $this->renderPartial(
-            '//modules/project/_tickets',
+            '//modules/project/tickets/_index',
             array(
                 'my_tickets_widget' => $this->_getMyTicketsWidget(),
                 'second_widget' => $this->_getSecondWidget()
+            )
+        );
+    }
+
+    public function actionView() {
+        $model = $this->_getCurrentTicket();
+        $this->renderPartial(
+            '//modules/project/tickets/_view',
+            array(
+                'model' => $model,
             )
         );
     }
@@ -46,7 +56,7 @@ class TicketsProjectModule extends AbstractProjectModule {
         $projectId = Yii::app()->request->getParam('id');
         $widget = new LastReleaseWidgetModule();
         $widget->configure($projectId);
-        if ($widget->haveItems()) {
+        if ($widget->getLastRelease()) {
             return $widget;
         }
         $widget = new TicketsWidgetModule();
@@ -66,4 +76,18 @@ class TicketsProjectModule extends AbstractProjectModule {
         return $widget;
     }
 
+    protected function _getCurrentTicket() {
+        $ticketId = Yii::app()->request->getParam('ticket_id');
+        if (!$ticketId) {
+            throw new Exception('Missed ticket id');
+        }
+        $ticket = TicketPage::model()->findByAttributes(array(
+            'id'=>$ticketId,
+            'project_id'=>Yii::app()->request->getParam('id')
+        ));
+        if (!$ticket) {
+            throw new Exception('Ticket not found');
+        }
+        return $ticket;
+    }
 }

@@ -13,14 +13,14 @@
     <div class="col-md-12">
         <div class="ibox float-e-margins">
             <div class="ibox-content">
-                asd
+
             </div>
         </div>
     </div>
 </div>
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-lg-6">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <h5>Мои тикеты</h5>
@@ -31,7 +31,7 @@
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-lg-6">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <?php if ($second_widget instanceof LastReleaseWidgetModule):?>

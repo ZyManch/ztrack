@@ -19,12 +19,12 @@ class TicketsWidgetModule extends AbstractWidgetModule {
         Yii::app()->controller->renderPartial(
             '//modules/widget/_tickets',
             array(
-                'provider' => $this->_getTicketsProvider()
+                'search_model' => $this->_getTicketsSearchModel()
             )
         );
     }
 
-    protected function _getTicketsProvider() {
-        return $this->_page->search();
+    protected function _getTicketsSearchModel() {
+        return $this->_page;
     }
 }

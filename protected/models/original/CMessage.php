@@ -1,29 +1,30 @@
 <?php
 
 /**
-* This is the model class for table "user_group".
+* This is the model class for table "message".
 *
-* The followings are the available columns in table 'user_group':
+* The followings are the available columns in table 'message':
     * @property string $id
     * @property string $user_id
-    * @property string $group_id
+    * @property string $body
     * @property string $status
     * @property string $changed
     *
     * The followings are the available model relations:
-        * @property Group $group
         * @property User $user
+        * @property PageMessage[] $pageMessages
+        * @property UserMessage[] $userMessages
 */
-class CUserGroup extends ActiveRecord {
+class CMessage extends ActiveRecord {
 
     public function tableName()	{
-        return 'user_group';
+        return 'message';
     }
 
     public function rules()	{
         return array(
-            array('user_id, group_id, changed', 'required'),
-			array('user_id, group_id', 'length', 'max'=>10),
+            array('user_id, body, changed', 'required'),
+			array('user_id', 'length', 'max'=>10),
 			array('status', 'length', 'max'=>7)        );
     }
 
@@ -32,8 +33,9 @@ class CUserGroup extends ActiveRecord {
     */
     protected function _baseRelations()	{
         return array(
-            'group' => array(self::BELONGS_TO, 'Group', 'group_id'),
             'user' => array(self::BELONGS_TO, 'User', 'user_id'),
+            'pageMessages' => array(self::HAS_MANY, 'PageMessage', 'message_id'),
+            'userMessages' => array(self::HAS_MANY, 'UserMessage', 'message_id'),
         );
     }
 
@@ -41,7 +43,7 @@ class CUserGroup extends ActiveRecord {
         return array(
             'id' => 'ID',
             'user_id' => 'User',
-            'group_id' => 'Group',
+            'body' => 'Body',
             'status' => 'Status',
             'changed' => 'Changed',
         );

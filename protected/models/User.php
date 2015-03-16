@@ -63,4 +63,30 @@ class User extends CUser {
         }
     }
 
+    public function getGravatarUrl($size) {
+        return 'http://www.gravatar.com/avatar/'.
+        md5(strtolower( trim( $this->email ) ) ).
+        '?s='.$size.'&d=identicon&r=g';
+    }
+
+    public function getGravatarLink($size, $options = array()) {
+        return CHtml::link(
+            $this->getGravatarImage($size),
+            array('user/view','id'=>$this->id),
+            $options
+        );
+    }
+
+    public function getGravatarImage($size) {
+        return CHtml::image($this->getGravatarUrl($size),CHtml::encode($this->username));
+    }
+
+    public function __toString() {
+        return CHtml::link(
+            CHtml::encode($this->username),
+            array('user/view','id'=>$this->id)
+        );
+    }
+
+
 }

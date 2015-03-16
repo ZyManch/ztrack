@@ -1,6 +1,6 @@
 <?php
 
-class TrackcrudCode extends CCodeModel
+class TcrudCode extends CCodeModel
 {
 	public $model;
 	public $controller;

@@ -2,7 +2,7 @@
 
 class TmodelGenerator extends CCodeGenerator
 {
-    public $codeModel='application.gii.trackmodel.TmodelCode';
+    public $codeModel='application.gii.tmodel.TmodelCode';
 
     /**
      * Provides autocomplete table names

@@ -18,13 +18,13 @@
     * @property string $changed
     *
     * The followings are the available model relations:
+        * @property Os $os
         * @property Branch $branch
         * @property Url $url
         * @property Method $method
         * @property Server $server
         * @property Url $refererUrl
         * @property Browser $browser
-        * @property Os $os
         * @property RequestData[] $requestDatas
         * @property Trace[] $traces
 */
@@ -48,13 +48,13 @@ class CRequest extends ActiveRecord {
     */
     protected function _baseRelations()	{
         return array(
+            'os' => array(self::BELONGS_TO, 'Os', 'os_id'),
             'branch' => array(self::BELONGS_TO, 'Branch', 'branch_id'),
             'url' => array(self::BELONGS_TO, 'Url', 'url_id'),
             'method' => array(self::BELONGS_TO, 'Method', 'method_id'),
             'server' => array(self::BELONGS_TO, 'Server', 'server_id'),
             'refererUrl' => array(self::BELONGS_TO, 'Url', 'referer_url_id'),
             'browser' => array(self::BELONGS_TO, 'Browser', 'browser_id'),
-            'os' => array(self::BELONGS_TO, 'Os', 'os_id'),
             'requestDatas' => array(self::HAS_MANY, 'RequestData', 'request_id'),
             'traces' => array(self::HAS_MANY, 'Trace', 'request_id'),
         );

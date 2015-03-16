@@ -7,8 +7,8 @@
  */
 class LastReleaseWidgetModule extends AbstractWidgetModule {
 
-    /** @var  CActiveDataProvider */
-    protected $_provider;
+    /** @var  SearchPage */
+    protected $_searchModel;
 
     /** @var  Page */
     protected $_lastRelease;
@@ -16,15 +16,11 @@ class LastReleaseWidgetModule extends AbstractWidgetModule {
 
     public function configure($projectId) {
         $this->_lastRelease = $this->_getLastRelease($projectId);
-        $this->_provider = $this->_getTicketsProvider($projectId);
+        $this->_searchModel = $this->_getSearchModel($projectId);
     }
 
     public function getLastRelease() {
         return $this->_lastRelease;
-    }
-
-    public function haveItems() {
-        return $this->_provider->itemCount > 0;
     }
 
     protected function _getLastRelease($projectId) {
@@ -41,22 +37,21 @@ class LastReleaseWidgetModule extends AbstractWidgetModule {
         Yii::app()->controller->renderPartial(
             '//modules/widget/_lastRelease',
             array(
-                'provider' => $this->_provider
+                'search_model' => $this->_searchModel,
+                'last_release' => $this->_lastRelease
             )
         );
     }
 
 
-    protected function  _getTicketsProvider($projectId) {
+    protected function  _getSearchModel($projectId) {
         if (!$this->_lastRelease) {
-            return new CArrayDataProvider(array());
+            return null;
         }
-        $criteria = new CDbCriteria();
-        $criteria->compare('parent_page_id',$this->_lastRelease->id);
-        $criteria->compare('project_id',$projectId);
-        return new CActiveDataProvider('Page',array(
-            'criteria'=>$criteria
-        ));
+        $search = new SearchPage();
+        $search->project_id = $projectId;
+        $search->parent_page_id = $this->_lastRelease->id;
+        return $search;
     }
 
 }

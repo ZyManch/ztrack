@@ -8,11 +8,7 @@
 ?>
 <li class="nav-header">
     <div class="dropdown profile-element"> <span>
-        <?php echo CHtml::image(
-            'http://www.gravatar.com/avatar/'.
-            md5(strtolower( trim( Yii::app()->user->getUser()->email ) ) ).
-            '?s=48&d=mm&r=g'
-        );?>
+        <?php echo Yii::app()->user->getUser()->getGravatarImage(48);?>
 
         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
             <span class="clear">
