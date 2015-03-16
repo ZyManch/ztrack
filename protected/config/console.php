@@ -3,6 +3,7 @@
 // This is the configuration for yiic console application.
 // Any writable CConsoleApplication properties can be configured here.
 return array(
+    'language' => 'en',
     'components'=>array(
         'constants' => array(
             'enabled'=>false,
@@ -10,12 +11,10 @@ return array(
     ),
     'commandMap' => array(
         'migrate' => array(
-            'modulePaths' => array(
-                'class' => 'application.vendor.yiiext.migrate-commands.EMigrateCommand',
-                'migrationTable' => 'migration',
-                'applicationModuleName' => 'core',
-                'migrationPath' => 'application.migrations',
-            ),
+            'class' => 'application.vendor.yiiext.migrate-command.EMigrateCommand',
+            'migrationTable' => 'migration',
+            'applicationModuleName' => 'core',
+            'migrationPath' => 'application.migrations',
         )
     ),
     'params' => array(
