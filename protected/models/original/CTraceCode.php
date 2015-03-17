@@ -22,11 +22,10 @@ class CTraceCode extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('trace_id, line, code, changed', 'required'),
+            array('trace_id, line, code', 'required'),
 			array('line', 'numerical', 'integerOnly'=>true),
 			array('trace_id', 'length', 'max'=>10),
-			array('code', 'length', 'max'=>255),
-			array('status', 'length', 'max'=>7)        );
+			array('code', 'length', 'max'=>255)        );
     }
 
     /**

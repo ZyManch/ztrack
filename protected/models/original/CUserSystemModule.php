@@ -11,8 +11,8 @@
     * @property string $changed
     *
     * The followings are the available model relations:
-        * @property SystemModule $systemModule
         * @property User $user
+        * @property SystemModule $systemModule
 */
 class CUserSystemModule extends ActiveRecord {
 
@@ -22,7 +22,7 @@ class CUserSystemModule extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('user_id, system_module_id, changed', 'required'),
+            array('user_id, system_module_id', 'required'),
 			array('user_id, system_module_id', 'length', 'max'=>10),
 			array('params', 'safe')        );
     }
@@ -32,8 +32,8 @@ class CUserSystemModule extends ActiveRecord {
     */
     protected function _baseRelations()	{
         return array(
-            'systemModule' => array(self::BELONGS_TO, 'SystemModule', 'system_module_id'),
             'user' => array(self::BELONGS_TO, 'User', 'user_id'),
+            'systemModule' => array(self::BELONGS_TO, 'SystemModule', 'system_module_id'),
         );
     }
 

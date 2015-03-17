@@ -25,6 +25,7 @@ return array(
         'application.modules.widget.*',
         'application.models.editor.*',
         'application.behaviors.*',
+        'application.widgets.*',
     ),
 
     // application components

@@ -28,10 +28,9 @@ class CCompany extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('title, editor_id, changed', 'required'),
+            array('title, editor_id', 'required'),
 			array('title', 'length', 'max'=>64),
-			array('editor_id', 'length', 'max'=>10),
-			array('status', 'length', 'max'=>7)        );
+			array('editor_id', 'length', 'max'=>10)        );
     }
 
     /**

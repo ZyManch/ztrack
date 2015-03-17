@@ -12,9 +12,9 @@
     * @property string $changed
     *
     * The followings are the available model relations:
-        * @property Project $project
         * @property User $user
         * @property Access $access
+        * @property Project $project
 */
 class CUserAccess extends ActiveRecord {
 
@@ -24,9 +24,8 @@ class CUserAccess extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('user_id, access_id, project_id, changed', 'required'),
-			array('user_id, access_id, project_id', 'length', 'max'=>10),
-			array('status', 'length', 'max'=>7)        );
+            array('user_id, access_id, project_id', 'required'),
+			array('user_id, access_id, project_id', 'length', 'max'=>10)        );
     }
 
     /**
@@ -34,9 +33,9 @@ class CUserAccess extends ActiveRecord {
     */
     protected function _baseRelations()	{
         return array(
-            'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
             'user' => array(self::BELONGS_TO, 'User', 'user_id'),
             'access' => array(self::BELONGS_TO, 'Access', 'access_id'),
+            'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
         );
     }
 

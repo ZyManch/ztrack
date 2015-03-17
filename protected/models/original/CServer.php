@@ -22,10 +22,9 @@ class CServer extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('title, company_id, changed', 'required'),
+            array('title, company_id', 'required'),
 			array('title', 'length', 'max'=>64),
-			array('company_id', 'length', 'max'=>10),
-			array('status', 'length', 'max'=>7)        );
+			array('company_id', 'length', 'max'=>10)        );
     }
 
     /**

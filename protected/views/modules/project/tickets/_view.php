@@ -104,20 +104,7 @@ $parent = $model->parentPage;
                                     <div class="panel-body">
                                         <div class="tab-content">
                                             <div class="tab-pane active" id="messages">
-                                                <div class="feed-activity-list">
-                                                    <?php foreach ($model->pageMessages as $pageMessage):?>
-                                                    <div class="feed-element">
-                                                        <?php echo $pageMessage->message->user->getGravatarLink('38',array('class'=>'pull-left'));?>
-                                                        <div class="media-body ">
-                                                            <small class="pull-right"><?php echo Yii::app()->dateFormatter->diff(strtotime($pageMessage->message->changed));?></small>
-                                                            <small class="text-muted"><?php echo Yii::app()->dateFormatter->formatDateTime(strtotime($pageMessage->message->changed));?></small>
-                                                            <div class="well">
-                                                                <?php echo $pageMessage->message->getBodyAsHtml();?>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <?php endforeach;?>
-                                                </div>
+                                                <?php echo $this->renderPartial('//comments/_list',array('dataProvider'=>$model->getCommentsProvider()));?>
                                             </div>
                                         </div>
                                     </div>

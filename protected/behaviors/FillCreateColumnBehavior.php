@@ -7,10 +7,19 @@
  */
 class FillCreateColumnBehavior extends CActiveRecordBehavior  {
 
+    public function beforeValidate($event) {
+        $model = $event->sender;
+        if (!$model->created) {
+            $model->created = time();
+        }
+        return true;
+    }
 
     public function beforeSave($event) {
         $model = $event->sender;
-        $model->created = time();
+        if (!$model->created) {
+            $model->created = time();
+        }
         return true;
     }
 }

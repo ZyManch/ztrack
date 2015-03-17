@@ -26,12 +26,11 @@ class CLevel extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('title, weight, changed', 'required'),
+            array('title, weight', 'required'),
 			array('weight', 'numerical', 'integerOnly'=>true),
 			array('type', 'length', 'max'=>9),
 			array('title, css_class', 'length', 'max'=>32),
-			array('company_id', 'length', 'max'=>10),
-			array('status', 'length', 'max'=>7)        );
+			array('company_id', 'length', 'max'=>10)        );
     }
 
     /**

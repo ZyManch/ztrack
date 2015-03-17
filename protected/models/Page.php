@@ -20,6 +20,7 @@ class Page extends CPage {
     public function _extendedRelations() {
         return array(
             'labels' => array(self::MANY_MANY, 'Label', 'page_label(page_id,label_id)'),
+            'messages' => array(self::MANY_MANY, 'Message', 'page_message(page_id,message_id)'),
         );
     }
 
@@ -80,5 +81,18 @@ class Page extends CPage {
 
     public function getBodyAsHtml() {
         return Yii::app()->user->getEditor()->parse($this->body);
+    }
+
+    public function getCommentsProvider() {
+        $criteria = new CDbCriteria();
+        $criteria->with = array(
+            'pageMessage'=>array('select' => false)
+        );
+        $criteria->compare('pageMessage.page_id',$this->id);
+        $criteria->order = 't.created DESC';
+        return new CActiveDataProvider('Message',array(
+            'criteria' => $criteria,
+            'pagination' => array('pageSize'=>40)
+        ));
     }
 }

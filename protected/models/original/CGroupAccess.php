@@ -12,9 +12,9 @@
     * @property string $changed
     *
     * The followings are the available model relations:
-        * @property Group $group
         * @property Access $access
         * @property Project $project
+        * @property Group $group
 */
 class CGroupAccess extends ActiveRecord {
 
@@ -24,9 +24,8 @@ class CGroupAccess extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('group_id, access_id, project_id, changed', 'required'),
-			array('group_id, access_id, project_id', 'length', 'max'=>10),
-			array('status', 'length', 'max'=>7)        );
+            array('group_id, access_id, project_id', 'required'),
+			array('group_id, access_id, project_id', 'length', 'max'=>10)        );
     }
 
     /**
@@ -34,9 +33,9 @@ class CGroupAccess extends ActiveRecord {
     */
     protected function _baseRelations()	{
         return array(
-            'group' => array(self::BELONGS_TO, 'Group', 'group_id'),
             'access' => array(self::BELONGS_TO, 'Access', 'access_id'),
             'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
+            'group' => array(self::BELONGS_TO, 'Group', 'group_id'),
         );
     }
 

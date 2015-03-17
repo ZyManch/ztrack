@@ -8,6 +8,7 @@
     * @property string $user_id
     * @property string $body
     * @property string $status
+    * @property string $created
     * @property string $changed
     *
     * The followings are the available model relations:
@@ -23,9 +24,9 @@ class CMessage extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('user_id, body, changed', 'required'),
+            array('user_id, body', 'required'),
 			array('user_id', 'length', 'max'=>10),
-			array('status', 'length', 'max'=>7)        );
+			array('created', 'safe')        );
     }
 
     /**
@@ -45,6 +46,7 @@ class CMessage extends ActiveRecord {
             'user_id' => 'User',
             'body' => 'Body',
             'status' => 'Status',
+            'created' => 'Created',
             'changed' => 'Changed',
         );
     }

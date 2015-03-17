@@ -20,9 +20,8 @@ class CGuestSystemModule extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('system_module_id, changed', 'required'),
-			array('system_module_id', 'length', 'max'=>10),
-			array('status', 'length', 'max'=>7)        );
+            array('system_module_id', 'required'),
+			array('system_module_id', 'length', 'max'=>10)        );
     }
 
     /**

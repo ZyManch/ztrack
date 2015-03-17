@@ -31,11 +31,10 @@ class CUser extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('company_id, login, username, email, password, changed', 'required'),
+            array('company_id, login, username, email, password', 'required'),
 			array('company_id', 'length', 'max'=>10),
 			array('login, password', 'length', 'max'=>32),
-			array('username, email', 'length', 'max'=>128),
-			array('status', 'length', 'max'=>7)        );
+			array('username, email', 'length', 'max'=>128)        );
     }
 
     /**
