@@ -7,6 +7,8 @@
  */
 class DateFormatter extends CDateFormatter {
 
+    static $currentTimestamp;
+
     public function __construct() {
         parent::__construct(Yii::app()->locale);
     }
@@ -28,5 +30,18 @@ class DateFormatter extends CDateFormatter {
             return round($betweenDays).' дней';
         }
         return round($betweenDays,1).' лет';
+    }
+
+    public static function getCurrentTimestamp()
+    {
+        if (!self::$currentTimestamp) {
+            $time = Yii::app()->db->createCommand('SELECT NOW()')->queryScalar();
+            $timestamp = strtotime($time);
+            if ($timestamp < strtotime('-1 day')) {
+                $timestamp = time();
+            }
+            self::$currentTimestamp = $timestamp;
+        }
+        return self::$currentTimestamp;
     }
 }

@@ -21,25 +21,7 @@ $parent = $model->parentPage;
                 <div class="row">
                     <div class="col-sm-4 col-lg-2 text-center">
                         <div class="list-group">
-                            <?php if ($model->assignUser):?>
-                                <a class="list-group-item active" href="#">
-                                    <h4 class="list-group-item-heading">
-                                        Назначено
-                                        <?php echo $model->assignUser->username;?>
-                                    </h4>
-                                    <p class="list-group-item-text">
-                                        <?php echo $model->assignUser->getGravatarImage(64);?>
-                                    </p>
-                                </a>
-                            <?php endif;?>
-                            <a class="list-group-item<?php if (!$model->assignUser):?> active<?php endif;?>" href="#">
-                                <h4 class="list-group-item-heading">
-                                    Назначить
-                                </h4>
-                                <p class="list-group-item-text">
-                                    -
-                                </p>
-                            </a>
+                            <?php echo $this->renderPartial('//modules/project/tickets/_ticketUsers',array('model'=>$model));?>
                         </div>
                     </div>
                     <div class="col-sm-8 col-lg-10">

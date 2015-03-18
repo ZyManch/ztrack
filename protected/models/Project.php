@@ -53,4 +53,29 @@ class Project extends CProject {
             'systemModules' => array(self::MANY_MANY, 'SystemModule', 'project_system_module(project_id,system_module_id)', 'order' => 'systemModules.position ASC','index'=>'id'),
         );
     }
+
+    public function getUsersThatHaveProject() {
+        return User::model()->findAll(array(
+            'order' => 't.username ASC',
+            'params' => array(
+                ':PROJECT_ID' => $this->id
+            ),
+            'with' => array(
+                'userGroups' => array(
+                    'select' => false,
+                ),
+                'userGroups.group' => array(
+                    'select' => false,
+                ),
+                'userGroups.group.groupAccesses' => array(
+                    'select' => false,
+                    'on' => 'groupAccesses.project_id = :PROJECT_ID'
+                ),
+                'userAccesses' => array(
+                    'select' => false,
+                    'on' => 'userAccesses.project_id = :PROJECT_ID'
+                )
+            )
+        ));
+    }
 }

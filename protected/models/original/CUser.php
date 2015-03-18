@@ -16,11 +16,11 @@
     * The followings are the available model relations:
         * @property Message[] $messages
         * @property Page[] $pages
-        * @property Page[] $pages1
         * @property Company $company
         * @property UserAccess[] $userAccesses
         * @property UserGroup[] $userGroups
         * @property UserMessage[] $userMessages
+        * @property UserPage[] $userPages
         * @property UserSystemModule[] $userSystemModules
 */
 class CUser extends ActiveRecord {
@@ -44,11 +44,11 @@ class CUser extends ActiveRecord {
         return array(
             'messages' => array(self::HAS_MANY, 'Message', 'user_id'),
             'pages' => array(self::HAS_MANY, 'Page', 'author_user_id'),
-            'pages1' => array(self::HAS_MANY, 'Page', 'assign_user_id'),
             'company' => array(self::BELONGS_TO, 'Company', 'company_id'),
             'userAccesses' => array(self::HAS_MANY, 'UserAccess', 'user_id'),
             'userGroups' => array(self::HAS_MANY, 'UserGroup', 'user_id'),
             'userMessages' => array(self::HAS_MANY, 'UserMessage', 'user_id'),
+            'userPages' => array(self::HAS_MANY, 'UserPage', 'user_id'),
             'userSystemModules' => array(self::HAS_MANY, 'UserSystemModule', 'user_id'),
         );
     }

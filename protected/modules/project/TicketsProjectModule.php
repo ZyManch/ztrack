@@ -23,7 +23,7 @@ class TicketsProjectModule extends AbstractProjectModule {
         return  array_merge(
             array(
                 array('allow',
-                    'actions' => array('index','view'),
+                    'actions' => array('index','view','assign'),
                     'users'=>array('*'),
                 )
             ),
@@ -49,6 +49,39 @@ class TicketsProjectModule extends AbstractProjectModule {
                 'model' => $model,
             )
         );
+    }
+
+    public function actionAssign() {
+        $model = $this->_getCurrentTicket();
+        try {
+            $userId = Yii::app()->request->getParam('user_id');
+            if (!$userId) {
+                throw new Exception('User not found');
+            }
+            $user = User::model()->findByAttributes(array(
+                'id' => $userId,
+                'company_id' => Yii::app()->user->getUser()->company_id
+            ));
+            if (!$user) {
+                throw new Exception('User not found');
+            }
+            $link = $model->getOrCreateUserPage($user->id);
+            if ($model->assignedUserPage) {
+                $model->assignedUserPage->is_assigned = UserPage::IS_NOT_ASSIGNED;
+                $model->assignedUserPage->save(false);
+            }
+            $link->is_assigned = UserPage::IS_ASSIGNED;
+            $link->save(false);
+        } catch (Exception $e) {
+            Yii::app()->user->setFlash('error',$e->getMessage());
+        }
+        Yii::app()->request->redirect(CHtml::normalizeUrl(array(
+            'project/view',
+            'id' => $model->project_id,
+            'module'=>'tickets',
+            'action'=>'view',
+            'ticket_id'=>$model->id
+        )));
     }
 
 

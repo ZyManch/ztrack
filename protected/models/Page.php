@@ -2,6 +2,8 @@
 /**
  * Class Page
  * @property Label[] $labels
+ * @property UserPage[] $userPages
+ * @property UserPage $assignedUserPage
  */
 class Page extends CPage {
 
@@ -21,6 +23,8 @@ class Page extends CPage {
         return array(
             'labels' => array(self::MANY_MANY, 'Label', 'page_label(page_id,label_id)'),
             'messages' => array(self::MANY_MANY, 'Message', 'page_message(page_id,message_id)'),
+            'userPages' => array(self::HAS_MANY, 'UserPage', 'page_id','order'=>'userPages.position ASC'),
+            'assignedUserPage' => array(self::HAS_ONE, 'UserPage', 'page_id','on'=>'assignedUserPage.is_assigned="'.UserPage::IS_ASSIGNED.'"'),
         );
     }
 
@@ -94,5 +98,38 @@ class Page extends CPage {
             'criteria' => $criteria,
             'pagination' => array('pageSize'=>40)
         ));
+    }
+
+    /**
+     * @param $userId
+     * @return UserPage
+     */
+    public function getOrCreateUserPage($userId) {
+        $attributes = array(
+            'page_id' => $this->id,
+            'user_id' => $userId
+        );
+        $link = UserPage::model()->findByAttributes($attributes);
+        if ($link) {
+            return $link;
+        }
+        $link = new UserPage();
+        $link->attributes = $attributes;
+        $link->position = 0;
+        $isAlreadyAssigned = false;
+        $assignedPosition = 0;
+        foreach ($this->userPages as $userPage) {
+            if ($isAlreadyAssigned) {
+                $link->position = round(($userPage->position + $assignedPosition)/2);
+                break;
+            }
+            if ($userPage->is_assigned == UserPage::IS_ASSIGNED) {
+                $isAlreadyAssigned = true;
+                $assignedPosition = $userPage->position;
+            }
+            $link->position = $userPage->position + 1000;
+        }
+        $link->save(false);
+        return $link;
     }
 }

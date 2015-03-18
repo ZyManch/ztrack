@@ -10,7 +10,7 @@ class FillCreateColumnBehavior extends CActiveRecordBehavior  {
     public function beforeValidate($event) {
         $model = $event->sender;
         if (!$model->created) {
-            $model->created = time();
+            $model->created = date('Y-m-d H:i:s',DateFormatter::getCurrentTimestamp());
         }
         return true;
     }
@@ -18,7 +18,7 @@ class FillCreateColumnBehavior extends CActiveRecordBehavior  {
     public function beforeSave($event) {
         $model = $event->sender;
         if (!$model->created) {
-            $model->created = time();
+            $model->created = date('Y-m-d H:i:s',DateFormatter::getCurrentTimestamp());
         }
         return true;
     }
