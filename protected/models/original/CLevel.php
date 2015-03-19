@@ -17,6 +17,7 @@
         * @property Exception[] $exceptions
         * @property Company $company
         * @property Page[] $pages
+        * @property PageHistory[] $pageHistories
 */
 class CLevel extends ActiveRecord {
 
@@ -41,6 +42,7 @@ class CLevel extends ActiveRecord {
             'exceptions' => array(self::HAS_MANY, 'Exception', 'level_id'),
             'company' => array(self::BELONGS_TO, 'Company', 'company_id'),
             'pages' => array(self::HAS_MANY, 'Page', 'level_id'),
+            'pageHistories' => array(self::HAS_MANY, 'PageHistory', 'level_id'),
         );
     }
 

@@ -16,6 +16,7 @@
     * The followings are the available model relations:
         * @property Message[] $messages
         * @property Page[] $pages
+        * @property PageHistory[] $pageHistories
         * @property Company $company
         * @property UserAccess[] $userAccesses
         * @property UserGroup[] $userGroups
@@ -44,6 +45,7 @@ class CUser extends ActiveRecord {
         return array(
             'messages' => array(self::HAS_MANY, 'Message', 'user_id'),
             'pages' => array(self::HAS_MANY, 'Page', 'author_user_id'),
+            'pageHistories' => array(self::HAS_MANY, 'PageHistory', 'assign_user_id'),
             'company' => array(self::BELONGS_TO, 'Company', 'company_id'),
             'userAccesses' => array(self::HAS_MANY, 'UserAccess', 'user_id'),
             'userGroups' => array(self::HAS_MANY, 'UserGroup', 'user_id'),

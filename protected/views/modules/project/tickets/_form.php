@@ -2,6 +2,18 @@
 /* @var $this TicketController */
 /* @var $model TicketPage */
 /* @var $form CActiveForm */
+Yii::app()->clientScript->registerScriptFile('/js/jquery.nouislider.all.min.js');
+Yii::app()->clientScript->registerCssFile('/css/jquery.nouislider.css');
+Yii::app()->clientScript->registerScript('progress','
+            var a = $("#progress-bar").noUiSlider({
+                    start:  '.$model->progress.',
+                    behaviour: "tap",
+                    connect: "lower",
+                    step: 5,
+                    range: {min:  0,max:  100}
+            });
+            $("#progress-bar").Link("lower").to($("#progress-input"),null, wNumb({decimals: 0}));
+');
 ?>
 
 <div class="form">
@@ -13,59 +25,28 @@
 	// There is a call to performAjaxValidation() commented in generated controller code.
 	// See class documentation of CActiveForm for details on this.
 	'enableAjaxValidation'=>false,
+    'htmlOptions' => array('class'=>'form-horizontal')
 )); ?>
-
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="form-group">
 		<?php echo $form->labelEx($model,'parent_page_id',array('class'=>'col-sm-2 control-label')); ?>
-        <div class="col-sm-10">
+        <div class="col-sm-4">
 		    <?php echo $form->textField($model,'parent_page_id',array('size'=>10,'maxlength'=>10,'class'=>'form-control')); ?>
+            <?php echo $form->error($model,'parent_page_id'); ?>
         </div>
-		<?php echo $form->error($model,'parent_page_id'); ?>
+
+
+        <?php echo $form->labelEx($model,'project_id',array('class'=>'col-sm-2 control-label')); ?>
+        <div class="col-sm-4">
+            <?php echo $form->textField($model,'project_id',array('size'=>10,'maxlength'=>10,'class'=>'form-control')); ?>
+            <?php echo $form->error($model,'project_id'); ?>
+        </div>
+
 	</div>
 
-	<div class="form-group">
-		<?php echo $form->labelEx($model,'author_user_id',array('class'=>'col-sm-2 control-label')); ?>
-        <div class="col-sm-10">
-		    <?php echo $form->textField($model,'author_user_id',array('size'=>10,'maxlength'=>10,'class'=>'form-control')); ?>
-        </div>
-		<?php echo $form->error($model,'author_user_id'); ?>
-	</div>
-
-	<div class="form-group">
-		<?php echo $form->labelEx($model,'assign_user_id',array('class'=>'col-sm-2 control-label')); ?>
-        <div class="col-sm-10">
-		    <?php echo $form->textField($model,'assign_user_id',array('size'=>10,'maxlength'=>10,'class'=>'form-control')); ?>
-        </div>
-		<?php echo $form->error($model,'assign_user_id'); ?>
-	</div>
-
-	<div class="form-group">
-		<?php echo $form->labelEx($model,'page_type_id',array('class'=>'col-sm-2 control-label')); ?>
-        <div class="col-sm-10">
-		    <?php echo $form->textField($model,'page_type_id',array('size'=>10,'maxlength'=>10,'class'=>'form-control')); ?>
-        </div>
-		<?php echo $form->error($model,'page_type_id'); ?>
-	</div>
-
-	<div class="form-group">
-		<?php echo $form->labelEx($model,'project_id',array('class'=>'col-sm-2 control-label')); ?>
-        <div class="col-sm-10">
-		    <?php echo $form->textField($model,'project_id',array('size'=>10,'maxlength'=>10,'class'=>'form-control')); ?>
-        </div>
-		<?php echo $form->error($model,'project_id'); ?>
-	</div>
-
-	<div class="form-group">
-		<?php echo $form->labelEx($model,'url',array('class'=>'col-sm-2 control-label')); ?>
-        <div class="col-sm-10">
-		    <?php echo $form->textField($model,'url',array('size'=>60,'maxlength'=>64,'class'=>'form-control')); ?>
-        </div>
-		<?php echo $form->error($model,'url'); ?>
-	</div>
+    <div class="hr-line-dashed"></div>
 
 	<div class="form-group">
 		<?php echo $form->labelEx($model,'title',array('class'=>'col-sm-2 control-label')); ?>
@@ -75,49 +56,47 @@
 		<?php echo $form->error($model,'title'); ?>
 	</div>
 
+
+    <div class="hr-line-dashed"></div>
+
 	<div class="form-group">
 		<?php echo $form->labelEx($model,'body',array('class'=>'col-sm-2 control-label')); ?>
         <div class="col-sm-10">
-		    <?php echo $form->textArea($model,'body',array('rows'=>6, 'cols'=>50,'class'=>'form-control')); ?>
+            <?php echo Yii::app()->user->getUser()->company->editor->getHtmlEditor($model,'body',array('rows'=>6, 'cols'=>50,'class'=>'form-control')); ?>
         </div>
 		<?php echo $form->error($model,'body'); ?>
 	</div>
 
+    <div class="hr-line-dashed"></div>
+
 	<div class="form-group">
 		<?php echo $form->labelEx($model,'progress',array('class'=>'col-sm-2 control-label')); ?>
         <div class="col-sm-10">
-		    <?php echo $form->textField($model,'progress',array('class'=>'form-control')); ?>
+            <div id="progress-bar" class=""></div>
+		    <?php echo $form->hiddenField($model,'progress',array('id'=>'progress-input')); ?>
         </div>
 		<?php echo $form->error($model,'progress'); ?>
 	</div>
 
+    <div class="hr-line-dashed"></div>
+
 	<div class="form-group">
 		<?php echo $form->labelEx($model,'level_id',array('class'=>'col-sm-2 control-label')); ?>
         <div class="col-sm-10">
-		    <?php echo $form->textField($model,'level_id',array('size'=>10,'maxlength'=>10,'class'=>'form-control')); ?>
+		    <?php echo $form->dropDownList($model,'level_id',Level::getVariants(),array('class'=>'form-control')); ?>
         </div>
 		<?php echo $form->error($model,'level_id'); ?>
 	</div>
 
-	<div class="form-group">
-		<?php echo $form->labelEx($model,'status',array('class'=>'col-sm-2 control-label')); ?>
-        <div class="col-sm-10">
-		    <?php echo $form->textField($model,'status',array('size'=>7,'maxlength'=>7,'class'=>'form-control')); ?>
-        </div>
-		<?php echo $form->error($model,'status'); ?>
-	</div>
 
-	<div class="form-group">
-		<?php echo $form->labelEx($model,'changed',array('class'=>'col-sm-2 control-label')); ?>
-        <div class="col-sm-10">
-		    <?php echo $form->textField($model,'changed',array('class'=>'form-control')); ?>
-        </div>
-		<?php echo $form->error($model,'changed'); ?>
-	</div>
+    <div class="hr-line-dashed"></div>
 
 	<div class="form-group">
         <div class="col-sm-4 col-sm-offset-2">
-		    <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+		    <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save',array('class'=>'btn btn-primary')); ?>
+            <?php echo CHtml::link('Cancel',array(
+
+            ),array('class'=>'btn btn-white'));?>
         </div>
 	</div>
 

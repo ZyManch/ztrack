@@ -13,6 +13,7 @@
     * The followings are the available model relations:
         * @property GroupAccess[] $groupAccesses
         * @property Page[] $pages
+        * @property PageHistory[] $pageHistories
         * @property Project $parent
         * @property Project[] $projects
         * @property ProjectSystemModule[] $projectSystemModules
@@ -38,6 +39,7 @@ class CProject extends ActiveRecord {
         return array(
             'groupAccesses' => array(self::HAS_MANY, 'GroupAccess', 'project_id'),
             'pages' => array(self::HAS_MANY, 'Page', 'project_id'),
+            'pageHistories' => array(self::HAS_MANY, 'PageHistory', 'project_id'),
             'parent' => array(self::BELONGS_TO, 'Project', 'parent_id'),
             'projects' => array(self::HAS_MANY, 'Project', 'parent_id'),
             'projectSystemModules' => array(self::HAS_MANY, 'ProjectSystemModule', 'project_id'),

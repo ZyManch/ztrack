@@ -7,6 +7,8 @@
  */
 class ActiveRecord extends CActiveRecord {
 
+    static $_variants = array();
+
     const STATUS_ACTIVE = 'Active';
     const STATUS_BLOCKED = 'Blocked';
     const STATUS_DELETED = 'Deleted';
@@ -80,5 +82,54 @@ class ActiveRecord extends CActiveRecord {
         foreach ($constants as $key => $value) {
             define($key, $value);
         }
+    }
+
+    public static function getVariants($filters = array()) {
+        $className = get_called_class();
+        $cacheKey = $className.md5(json_encode($filters));
+        if (isset(self::$_variants[$cacheKey])) {
+            return self::$_variants[$cacheKey];
+        }
+        $criteria = $className::_getVariantsCriteria($filters);
+
+        $items = $className::model()->findAll($criteria);
+        if (!$items) {
+            return array();
+        }
+        $keys = array_keys($items[0]->getAttributes());
+        $keyName = $keys[0];
+        $valName = $keys[1];
+        $result = array();
+        /** @var ActiveRecord $item */
+        foreach ($items as $item) {
+            $skip = false;
+            foreach ($filters as $name => $val) {
+                if (is_array($val)) {
+                    if (!in_array($item->$name,$val)) {
+                        $skip = true;
+                        break;
+                    }
+                } else {
+                    if ($item->$name != $val) {
+                        $skip = true;
+                        break;
+                    }
+                }
+            }
+            if (!$skip) {
+                $result[$item->$keyName] = $item->$valName;
+            }
+        }
+        return self::$_variants[$className] = $result;
+    }
+
+    protected static function _getVariantsCriteria($filters = array()) {
+        $criteria = new CDbCriteria();
+        $criteria->select = 'id, title';
+        if ($filters) {
+            $criteria->select.=','.implode(',',array_keys($filters));
+        }
+        $criteria->order = 'title';
+        return $criteria;
     }
 }

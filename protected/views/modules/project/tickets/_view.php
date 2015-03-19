@@ -10,12 +10,35 @@ $parent = $model->parentPage;
         <div class="ibox float-e-margins">
             <div class="ibox-content">
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-md-9">
                         <h1>[#<?php echo $model->id;?>] <?php echo CHtml::encode($model->getTitle());?></h1>
                         <?php if ($model->parent_page_id):?>
                             <?php echo implode(' > ', $model->getParentsList(true));?>
                         <?php endif;?>
                         <hr>
+                    </div>
+                    <div class="col-md-3 text-right">
+                        <?php echo CHtml::link('Edit',array(
+                            'project/view',
+                            'id' =>$model->project_id,
+                            'module'=>'tickets',
+                            'action'=>'update',
+                            'ticket_id'=>$model->id
+                        ),array('class'=>'btn btn-primary'));?>
+                        <?php echo CHtml::link('History',array(
+                            'project/view',
+                            'id' =>$model->project_id,
+                            'module'=>'tickets',
+                            'action'=>'history',
+                            'ticket_id'=>$model->id
+                        ),array('class'=>'btn btn-white'));?>
+                        <?php echo CHtml::link('Close',array(
+                            'project/view',
+                            'id' =>$model->project_id,
+                            'module'=>'tickets',
+                            'action'=>'close',
+                            'ticket_id'=>$model->id
+                        ),array('class'=>'btn btn-danger'));?>
                     </div>
                 </div>
                 <div class="row">

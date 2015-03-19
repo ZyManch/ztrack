@@ -23,7 +23,7 @@ class TicketsProjectModule extends AbstractProjectModule {
         return  array_merge(
             array(
                 array('allow',
-                    'actions' => array('index','view','assign'),
+                    'actions' => array('index','view','assign','update'),
                     'users'=>array('*'),
                 )
             ),
@@ -72,6 +72,9 @@ class TicketsProjectModule extends AbstractProjectModule {
             }
             $link->is_assigned = UserPage::IS_ASSIGNED;
             $link->save(false);
+            if (!$model->save()) {
+                throw new Exception($model->getErrorsAsText());
+            }
         } catch (Exception $e) {
             Yii::app()->user->setFlash('error',$e->getMessage());
         }
@@ -82,6 +85,29 @@ class TicketsProjectModule extends AbstractProjectModule {
             'action'=>'view',
             'ticket_id'=>$model->id
         )));
+    }
+
+    protected function actionUpdate() {
+        $model = $this->_getCurrentTicket();
+        $className = get_class($model);
+        if (isset($_POST[$className])) {
+            $model->attributes = $_POST[$className];
+            if ($model->save()) {
+                Yii::app()->request->redirect(CHtml::normalizeUrl(array(
+                    'project/view',
+                    'id' => $model->project_id,
+                    'module'=>'tickets',
+                    'action'=>'view',
+                    'ticket_id'=>$model->id
+                )));
+            }
+        }
+        $this->renderPartial(
+            '//modules/project/tickets/_update',
+            array(
+                'model' => $model,
+            )
+        );
     }
 
 

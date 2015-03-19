@@ -25,6 +25,7 @@
         * @property Page $parentPage
         * @property Page[] $pages
         * @property Level $level
+        * @property PageHistory[] $pageHistories
         * @property PageLabel[] $pageLabels
         * @property PageMessage[] $pageMessages
         * @property UserPage[] $userPages
@@ -56,6 +57,7 @@ class CPage extends ActiveRecord {
             'parentPage' => array(self::BELONGS_TO, 'Page', 'parent_page_id'),
             'pages' => array(self::HAS_MANY, 'Page', 'parent_page_id'),
             'level' => array(self::BELONGS_TO, 'Level', 'level_id'),
+            'pageHistories' => array(self::HAS_MANY, 'PageHistory', 'page_id'),
             'pageLabels' => array(self::HAS_MANY, 'PageLabel', 'page_id'),
             'pageMessages' => array(self::HAS_MANY, 'PageMessage', 'page_id'),
             'userPages' => array(self::HAS_MANY, 'UserPage', 'page_id'),

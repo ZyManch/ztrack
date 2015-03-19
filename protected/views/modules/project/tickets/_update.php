@@ -2,20 +2,41 @@
 /* @var $this TicketController */
 /* @var $model TicketPage */
 
-
+$parent = $model->parentPage;
 
 ?>
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="page-header">
-                <h1>Правка TicketPage <?php echo $model->id; ?></h1>
+<div class="row">
+    <div class="col-md-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-md-9">
+                        <h1>[#<?php echo $model->id;?>] <?php echo CHtml::encode($model->getTitle());?></h1>
+                    </div>
+                    <div class="col-md-3 text-right">
+                        <?php echo CHtml::link('View',array(
+                            'project/view',
+                            'id' =>$model->project_id,
+                            'module'=>'tickets',
+                            'action'=>'view',
+                            'ticket_id'=>$model->id
+                        ),array('class'=>'btn btn-primary'));?>
+                        <?php echo CHtml::link('Close',array(
+                            'project/view',
+                            'id' =>$model->project_id,
+                            'module'=>'tickets',
+                            'action'=>'close',
+                            'ticket_id'=>$model->id
+                        ),array('class'=>'btn btn-danger'));?>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <?php $this->renderPartial('//modules/project/tickets/_form', array('model'=>$model)); ?>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-
-<div class="row">
-    <div class="col-xs-12">
-
-        <?php $this->renderPartial('_form', array('model'=>$model)); ?>
     </div>
 </div>

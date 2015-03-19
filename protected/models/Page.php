@@ -4,6 +4,7 @@
  * @property Label[] $labels
  * @property UserPage[] $userPages
  * @property UserPage $assignedUserPage
+ * @property PageHistory $lastHistory
  */
 class Page extends CPage {
 
@@ -14,6 +15,9 @@ class Page extends CPage {
             array(
                 'fillCreateColumn' => array(
                     'class' => 'FillCreateColumnBehavior'
+                ),
+                'pageHistory' => array(
+                    'class' => 'PageHistoryBehavior'
                 )
             )
         );
@@ -25,6 +29,7 @@ class Page extends CPage {
             'messages' => array(self::MANY_MANY, 'Message', 'page_message(page_id,message_id)'),
             'userPages' => array(self::HAS_MANY, 'UserPage', 'page_id','order'=>'userPages.position ASC'),
             'assignedUserPage' => array(self::HAS_ONE, 'UserPage', 'page_id','on'=>'assignedUserPage.is_assigned="'.UserPage::IS_ASSIGNED.'"'),
+            'lastHistory' => array(self::HAS_ONE, 'PageHistory', 'page_id','order' => 'lastHistory.created DESC'),
         );
     }
 
