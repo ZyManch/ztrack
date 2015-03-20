@@ -22,9 +22,10 @@ class CBrowser extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('browser', 'required'),
+            array('browser, changed', 'required'),
 			array('browser', 'length', 'max'=>255),
-			array('name, version', 'length', 'max'=>32)        );
+			array('name, version', 'length', 'max'=>32),
+			array('status', 'length', 'max'=>7)        );
     }
 
     /**

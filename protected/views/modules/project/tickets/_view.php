@@ -25,20 +25,25 @@ $parent = $model->parentPage;
                             'action'=>'update',
                             'ticket_id'=>$model->id
                         ),array('class'=>'btn btn-primary'));?>
-                        <?php echo CHtml::link('History',array(
-                            'project/view',
-                            'id' =>$model->project_id,
-                            'module'=>'tickets',
-                            'action'=>'history',
-                            'ticket_id'=>$model->id
-                        ),array('class'=>'btn btn-white'));?>
-                        <?php echo CHtml::link('Close',array(
-                            'project/view',
-                            'id' =>$model->project_id,
-                            'module'=>'tickets',
-                            'action'=>'close',
-                            'ticket_id'=>$model->id
-                        ),array('class'=>'btn btn-danger'));?>
+                        <?php if ($model->status != Page::STATUS_CLOSED):?>
+                            <?php echo CHtml::link('Close',array(
+                                'project/view',
+                                'id' =>$model->project_id,
+                                'module'=>'tickets',
+                                'action'=>'changeStatus',
+                                'status' => 'Closed',
+                                'ticket_id'=>$model->id
+                            ),array('class'=>'btn btn-danger'));?>
+                        <?php else:?>
+                            <?php echo CHtml::link('Reopen',array(
+                                'project/view',
+                                'id' =>$model->project_id,
+                                'module'=>'tickets',
+                                'action'=>'changeStatus',
+                                'status' => 'Active',
+                                'ticket_id'=>$model->id
+                            ),array('class'=>'btn btn-info'));?>
+                        <?php endif;?>
                     </div>
                 </div>
                 <div class="row">
@@ -99,17 +104,23 @@ $parent = $model->parentPage;
                                 <div class="panel blank-panel">
                                     <div class="panel-heading">
                                         <div class="panel-options">
-                                            <div class="nav nav-tabs">
+                                            <ul class="nav nav-tabs">
                                                 <li class="active">
                                                     <a href="#messages" data-toggle="tab">Messages</a>
                                                 </li>
-                                            </div>
+                                                <li>
+                                                    <a href="#history" data-toggle="tab">History</a>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </div>
                                     <div class="panel-body">
                                         <div class="tab-content">
                                             <div class="tab-pane active" id="messages">
                                                 <?php echo $this->renderPartial('//comments/_list',array('dataProvider'=>$model->getCommentsProvider()));?>
+                                            </div>
+                                            <div class="tab-pane" id="history">
+                                                <?php echo $this->renderPartial('//modules/project/tickets/_historyList',array('dataProvider'=>$model->getHistoryProvider()));?>
                                             </div>
                                         </div>
                                     </div>

@@ -248,7 +248,7 @@ class TmodelCode extends CCodeModel
         {
             if($column->autoIncrement)
                 continue;
-            if (in_array($column->name,array('changed','status'))) {
+            if (in_array($column->name,array('changed'))) {
                 continue;
             }
             $r=!$column->allowNull && $column->defaultValue===null;

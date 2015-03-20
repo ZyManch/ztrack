@@ -23,7 +23,7 @@ class TicketsProjectModule extends AbstractProjectModule {
         return  array_merge(
             array(
                 array('allow',
-                    'actions' => array('index','view','assign','update'),
+                    'actions' => array('index','view','assign','update','changeStatus'),
                     'users'=>array('*'),
                 )
             ),
@@ -33,7 +33,7 @@ class TicketsProjectModule extends AbstractProjectModule {
 
     public function actionIndex() {
         $this->renderPartial(
-            '//modules/project/tickets/_index',
+            '_index',
             array(
                 'my_tickets_widget' => $this->_getMyTicketsWidget(),
                 'second_widget' => $this->_getSecondWidget()
@@ -44,7 +44,7 @@ class TicketsProjectModule extends AbstractProjectModule {
     public function actionView() {
         $model = $this->_getCurrentTicket();
         $this->renderPartial(
-            '//modules/project/tickets/_view',
+            '_view',
             array(
                 'model' => $model,
             )
@@ -78,32 +78,43 @@ class TicketsProjectModule extends AbstractProjectModule {
         } catch (Exception $e) {
             Yii::app()->user->setFlash('error',$e->getMessage());
         }
-        Yii::app()->request->redirect(CHtml::normalizeUrl(array(
-            'project/view',
-            'id' => $model->project_id,
-            'module'=>'tickets',
+        $this->redirect(array(
             'action'=>'view',
             'ticket_id'=>$model->id
-        )));
+        ));
     }
 
-    protected function actionUpdate() {
+    public function actionChangeStatus() {
+        $model = $this->_getCurrentTicket();
+        $status = Yii::app()->request->getParam('status');
+        try {
+            $model->status = $status;
+            if (!$model->save()) {
+                throw new Exception('Error save model: '.$model->getErrorsAsText());
+            }
+        } catch (Exception $e) {
+            Yii::app()->user->setFlash('error',$e->getMessage());
+        }
+        $this->redirect(array(
+            'action' => 'view',
+            'ticket_id' => $model->id
+        ));
+    }
+
+    public function actionUpdate() {
         $model = $this->_getCurrentTicket();
         $className = get_class($model);
         if (isset($_POST[$className])) {
             $model->attributes = $_POST[$className];
             if ($model->save()) {
-                Yii::app()->request->redirect(CHtml::normalizeUrl(array(
-                    'project/view',
-                    'id' => $model->project_id,
-                    'module'=>'tickets',
+                $this->redirect(array(
                     'action'=>'view',
                     'ticket_id'=>$model->id
-                )));
+                ));
             }
         }
         $this->renderPartial(
-            '//modules/project/tickets/_update',
+            '_update',
             array(
                 'model' => $model,
             )
@@ -140,7 +151,7 @@ class TicketsProjectModule extends AbstractProjectModule {
         if (!$ticketId) {
             throw new Exception('Missed ticket id');
         }
-        $ticket = TicketPage::model()->findByAttributes(array(
+        $ticket = TicketPage::model()->resetScope()->findByAttributes(array(
             'id'=>$ticketId,
             'project_id'=>Yii::app()->request->getParam('id')
         ));

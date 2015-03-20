@@ -12,6 +12,7 @@ class ActiveRecord extends CActiveRecord {
     const STATUS_ACTIVE = 'Active';
     const STATUS_BLOCKED = 'Blocked';
     const STATUS_DELETED = 'Deleted';
+    const STATUS_CLOSED = 'Closed';
 
 
     protected function _hasStatus() {

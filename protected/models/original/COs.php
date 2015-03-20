@@ -22,9 +22,10 @@ class COs extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('os', 'required'),
+            array('os, changed', 'required'),
 			array('os', 'length', 'max'=>255),
-			array('name, version', 'length', 'max'=>32)        );
+			array('name, version', 'length', 'max'=>32),
+			array('status', 'length', 'max'=>7)        );
     }
 
     /**

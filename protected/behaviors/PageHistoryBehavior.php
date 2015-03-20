@@ -19,13 +19,15 @@ class PageHistoryBehavior extends CActiveRecordBehavior  {
     public function afterSave($event) {
         /** @var Page $model */
         $model = $event->sender;
-        if (!$this->_isChanged($model)) {
+        $newAttributes = $this->_getModelAttributes($model);
+        if (!$this->_isChanged($newAttributes)) {
             return true;
         }
         $lastHistory = $model->lastHistory;
         $history = new PageHistory();
-        $history->attributes = $this->_oldAttributes;
+        $history->attributes = $newAttributes;
         $history->page_id = $model->id;
+        $history->user_id = Yii::app()->user->id;
         if ($lastHistory) {
             $history->previous_page_history_id = $lastHistory->id;
         }
@@ -45,12 +47,11 @@ class PageHistoryBehavior extends CActiveRecordBehavior  {
             $attributes[$attributeName] = $model->$attributeName;
         }
         $assignUserPage = $model->getRelated('assignedUserPage',true);
-        $attributes['assigned_user_id'] = ($assignUserPage ? $assignUserPage->user_id : null);
+        $attributes['assign_user_id'] = ($assignUserPage ? $assignUserPage->user_id : null);
         return $attributes;
     }
 
-    protected function _isChanged(Page $model) {
-        $newAttributes = $this->_getModelAttributes($model);
+    protected function _isChanged($newAttributes) {
         if ($newAttributes != $this->_oldAttributes) {
             return true;
         }

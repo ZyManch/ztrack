@@ -18,4 +18,29 @@ class PageHistory extends CPageHistory {
         );
     }
 
+    public function getChangesAttributes() {
+        $result = array();
+        if (!$this->previousPageHistory) {
+            return $result;
+        }
+        foreach (self::getAttributesThatCanChange() as $attribute) {
+            if ($this->$attribute != $this->previousPageHistory->$attribute) {
+                $result[] = $attribute;
+            }
+        }
+        return $result;
+    }
+
+    public static function getAttributesThatCanChange() {
+        return array(
+            'assign_user_id',
+            'project_id',
+            'title',
+            'body',
+            'progress',
+            'level_id',
+            'status',
+        );
+    }
+
 }

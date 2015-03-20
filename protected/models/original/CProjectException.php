@@ -24,10 +24,11 @@ class CProjectException extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('title, level_id', 'required'),
+            array('title, level_id, changed', 'required'),
 			array('title, trace_line', 'numerical', 'integerOnly'=>true),
 			array('level_id, total_count', 'length', 'max'=>10),
-			array('trace_file', 'length', 'max'=>200)        );
+			array('trace_file', 'length', 'max'=>200),
+			array('status', 'length', 'max'=>7)        );
     }
 
     /**

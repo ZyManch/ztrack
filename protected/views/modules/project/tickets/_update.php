@@ -21,13 +21,25 @@ $parent = $model->parentPage;
                             'action'=>'view',
                             'ticket_id'=>$model->id
                         ),array('class'=>'btn btn-primary'));?>
-                        <?php echo CHtml::link('Close',array(
-                            'project/view',
-                            'id' =>$model->project_id,
-                            'module'=>'tickets',
-                            'action'=>'close',
-                            'ticket_id'=>$model->id
-                        ),array('class'=>'btn btn-danger'));?>
+                        <?php if ($model->status != Page::STATUS_CLOSED):?>
+                            <?php echo CHtml::link('Close',array(
+                                'project/view',
+                                'id' =>$model->project_id,
+                                'module'=>'tickets',
+                                'action'=>'changeStatus',
+                                'status' => 'Closed',
+                                'ticket_id'=>$model->id
+                            ),array('class'=>'btn btn-danger'));?>
+                        <?php else:?>
+                            <?php echo CHtml::link('Reopen',array(
+                                'project/view',
+                                'id' =>$model->project_id,
+                                'module'=>'tickets',
+                                'action'=>'changeStatus',
+                                'status' => 'Active',
+                                'ticket_id'=>$model->id
+                            ),array('class'=>'btn btn-info'));?>
+                        <?php endif;?>
                     </div>
                 </div>
                 <hr>

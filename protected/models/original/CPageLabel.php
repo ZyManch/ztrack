@@ -22,8 +22,9 @@ class CPageLabel extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('page_id, label_id', 'required'),
-			array('page_id, label_id', 'length', 'max'=>10)        );
+            array('page_id, label_id, changed', 'required'),
+			array('page_id, label_id', 'length', 'max'=>10),
+			array('status', 'length', 'max'=>7)        );
     }
 
     /**

@@ -5,6 +5,7 @@
 *
 * The followings are the available columns in table 'page_history':
     * @property string $id
+    * @property string $user_id
     * @property string $previous_page_history_id
     * @property string $assign_user_id
     * @property string $page_id
@@ -17,12 +18,13 @@
     * @property string $created
     *
     * The followings are the available model relations:
-        * @property User $assignUser
+        * @property User $user
         * @property PageHistory $previousPageHistory
         * @property PageHistory[] $pageHistories
         * @property Page $page
         * @property Project $project
         * @property Level $level
+        * @property User $assignUser
 */
 class CPageHistory extends ActiveRecord {
 
@@ -32,10 +34,11 @@ class CPageHistory extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('body', 'required'),
+            array('user_id, body', 'required'),
 			array('progress', 'numerical', 'integerOnly'=>true),
-			array('previous_page_history_id, assign_user_id, page_id, project_id, level_id', 'length', 'max'=>10),
+			array('user_id, previous_page_history_id, assign_user_id, page_id, project_id, level_id', 'length', 'max'=>10),
 			array('title', 'length', 'max'=>128),
+			array('status', 'length', 'max'=>7),
 			array('created', 'safe')        );
     }
 
@@ -44,18 +47,20 @@ class CPageHistory extends ActiveRecord {
     */
     protected function _baseRelations()	{
         return array(
-            'assignUser' => array(self::BELONGS_TO, 'User', 'assign_user_id'),
+            'user' => array(self::BELONGS_TO, 'User', 'user_id'),
             'previousPageHistory' => array(self::BELONGS_TO, 'PageHistory', 'previous_page_history_id'),
             'pageHistories' => array(self::HAS_MANY, 'PageHistory', 'previous_page_history_id'),
             'page' => array(self::BELONGS_TO, 'Page', 'page_id'),
             'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
             'level' => array(self::BELONGS_TO, 'Level', 'level_id'),
+            'assignUser' => array(self::BELONGS_TO, 'User', 'assign_user_id'),
         );
     }
 
     public function attributeLabels() {
         return array(
             'id' => 'ID',
+            'user_id' => 'User',
             'previous_page_history_id' => 'Previous Page History',
             'assign_user_id' => 'Assign User',
             'page_id' => 'Page',

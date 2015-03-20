@@ -73,7 +73,27 @@ abstract class AbstractProjectModule extends SystemModule {
     }
 
     public function renderPartial($file,$attributes = array()) {
+        if (substr($file,0,2)!='//') {
+            $file = '//modules/project/'.$this->name.'/'.ltrim($file,'/');
+        }
         Yii::app()->controller->renderPartial($file,$attributes);
+    }
+
+    public function redirect($attributes =  array()) {
+        Yii::app()->request->redirect(
+            $this->normalizeUrl($attributes)
+        );
+    }
+
+    public function normalizeUrl($attributes) {
+        return CHtml::normalizeUrl(array_merge(
+            array(
+                'project/view',
+                'id' => Yii::app()->request->getParam('id'),
+                'module'=>$this->name,
+            ),
+            $attributes
+        ));
     }
 
 }

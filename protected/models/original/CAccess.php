@@ -24,9 +24,10 @@ class CAccess extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('title, access', 'required'),
+            array('title, access, changed', 'required'),
 			array('company_id', 'length', 'max'=>10),
-			array('title', 'length', 'max'=>32)        );
+			array('title', 'length', 'max'=>32),
+			array('status', 'length', 'max'=>7)        );
     }
 
     /**

@@ -105,6 +105,20 @@ class Page extends CPage {
         ));
     }
 
+    public function getHistoryProvider() {
+        $criteria = new CDbCriteria();
+        $criteria->with = array(
+            'previousPageHistory'
+        );
+        $criteria->addCondition('t.previous_page_history_id IS NOT NULL');
+        $criteria->compare('t.page_id',$this->id);
+        $criteria->order = 't.created DESC';
+        return new CActiveDataProvider('PageHistory',array(
+            'criteria' => $criteria,
+            'pagination' => array('pageSize'=>40)
+        ));
+    }
+
     /**
      * @param $userId
      * @return UserPage

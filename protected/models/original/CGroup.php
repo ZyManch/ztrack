@@ -23,9 +23,10 @@ class CGroup extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('company_id, title', 'required'),
+            array('company_id, title, changed', 'required'),
 			array('company_id', 'length', 'max'=>10),
-			array('title', 'length', 'max'=>32)        );
+			array('title', 'length', 'max'=>32),
+			array('status', 'length', 'max'=>7)        );
     }
 
     /**

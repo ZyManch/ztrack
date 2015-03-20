@@ -24,8 +24,9 @@ class CUserAccess extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('user_id, access_id, project_id', 'required'),
-			array('user_id, access_id, project_id', 'length', 'max'=>10)        );
+            array('user_id, access_id, project_id, changed', 'required'),
+			array('user_id, access_id, project_id', 'length', 'max'=>10),
+			array('status', 'length', 'max'=>7)        );
     }
 
     /**

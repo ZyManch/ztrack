@@ -20,8 +20,9 @@ class CMethod extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('title', 'required'),
-			array('title', 'length', 'max'=>32)        );
+            array('title, changed', 'required'),
+			array('title', 'length', 'max'=>32),
+			array('status', 'length', 'max'=>7)        );
     }
 
     /**
