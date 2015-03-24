@@ -6,7 +6,8 @@
     "require": {
         "php": ">=5.3.2",
         "yiisoft/yii": "dev-master",
-        "yiiext/migrate-command": "dev-master"
+        "yiiext/migrate-command": "dev-master",
+        "pentium10/yii-remember-filters-gridview":"dev-master"
     },
 
     "autoload": {

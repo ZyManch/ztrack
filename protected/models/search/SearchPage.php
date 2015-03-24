@@ -30,13 +30,16 @@
     */
 class SearchPage extends CPage {
 
+    public $assign_user_id;
+
     public function __construct($scenario = 'search') {
         parent::__construct($scenario);
     }
 
     public function rules()	{
         return array(
-            array('id, parent_page_id, author_user_id, assign_user_id, page_type_id, project_id, url, title, body, progress, level_id, status, changed', 'safe', 'on'=>'search'),
+            array('id, parent_page_id, author_user_id, assign_user_id, page_type_id', 'safe', 'on'=>'search'),
+            array('project_id, url, title, body, progress, level_id, status, changed', 'safe', 'on'=>'search'),
         );
     }
 
@@ -48,19 +51,23 @@ class SearchPage extends CPage {
             'level'
         );
 		$criteria->compare('t.id',$this->id,true);
-		$criteria->compare('t.parent_page_id',$this->parent_page_id,true);
-		$criteria->compare('t.author_user_id',$this->author_user_id,true);
-		$criteria->compare('t.assign_user_id',$this->assign_user_id,true);
-		$criteria->compare('t.page_type_id',$this->page_type_id,true);
-		$criteria->compare('t.project_id',$this->project_id,true);
+		$criteria->compare('t.parent_page_id',$this->parent_page_id);
+		$criteria->compare('t.author_user_id',$this->author_user_id);
+        if ($this->assign_user_id) {
+            $criteria->with['userPages']=array('on'=>'userPages.is_assigned="Yes"');
+            $criteria->compare('userPages.user_id', $this->assign_user_id);
+        }
+		$criteria->compare('t.page_type_id',$this->page_type_id);
+		$criteria->compare('t.project_id',$this->project_id);
 		$criteria->compare('t.url',$this->url,true);
 		$criteria->compare('t.title',$this->title,true);
 		$criteria->compare('t.body',$this->body,true);
 		$criteria->compare('t.progress',$this->progress);
-		$criteria->compare('t.level_id',$this->level_id,true);
+		$criteria->compare('t.level_id',$this->level_id);
 		$criteria->compare('t.status',$this->status,true);
 		$criteria->compare('t.changed',$this->changed,true);
         $criteria->order = 'level.weight DESC,t.changed DESC';
+        $criteria->together = true;
         return new CActiveDataProvider('Page', array(
             'criteria'=>$criteria,
             'pagination'=>array('pageSize'=>40)

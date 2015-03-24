@@ -100,7 +100,7 @@
             'type' => 'raw',
             'htmlOptions' => array('class'=>'project-people','style'=>'width:40px'),
             'value' => function(Page $page) {
-                return $page->assignUser->getGravatarLink(32);
+                return $page->assignedUserPage->user->getGravatarLink(32);
             }
         ),
     )

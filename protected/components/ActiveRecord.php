@@ -14,6 +14,18 @@ class ActiveRecord extends CActiveRecord {
     const STATUS_DELETED = 'Deleted';
     const STATUS_CLOSED = 'Closed';
 
+    public function behaviors() {
+        if ($this->getScenario() == 'search') {
+            return array(
+                'ERememberFiltersBehavior' => array(
+                    'class' => 'application.vendor.pentium10.yii-remember-filters-gridview.components.ERememberFiltersBehavior',
+                    // 'defaults'=>array(),           /* optional line */
+                    // 'defaultStickOnClear'=>false   /* optional line */
+                ),
+            );
+        }
+        return array();
+    }
 
     protected function _hasStatus() {
         return isset($this->tableSchema->columnNames['status']);
