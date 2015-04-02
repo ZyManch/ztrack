@@ -23,7 +23,7 @@ class CUrl extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('domain, url, changed', 'required'),
+            array('domain, url', 'required'),
 			array('protocol', 'length', 'max'=>5),
 			array('domain', 'length', 'max'=>200),
 			array('status', 'length', 'max'=>7)        );

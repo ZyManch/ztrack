@@ -36,7 +36,7 @@ class CRequest extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('browser_id, os_id, user_ip, code, method_id, url_id, branch_id, changed', 'required'),
+            array('browser_id, os_id, user_ip, code, method_id, url_id, branch_id', 'required'),
 			array('browser_id, os_id, user_ip, method_id, url_id, server_id, branch_id', 'length', 'max'=>10),
 			array('code', 'length', 'max'=>32),
 			array('referer_url_id', 'length', 'max'=>11),

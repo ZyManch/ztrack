@@ -22,7 +22,7 @@ class CRequestData extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('type, request_id, data, changed', 'required'),
+            array('type, request_id, data', 'required'),
 			array('type', 'length', 'max'=>32),
 			array('request_id', 'length', 'max'=>10),
 			array('status', 'length', 'max'=>7)        );

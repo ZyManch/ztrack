@@ -27,7 +27,7 @@ class CSystemModule extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('name, title, description, position, changed', 'required'),
+            array('name, title, description, position', 'required'),
 			array('position', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>32),
 			array('title', 'length', 'max'=>64),

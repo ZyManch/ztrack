@@ -38,7 +38,7 @@ class CPage extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('author_user_id, page_type_id, body, changed', 'required'),
+            array('author_user_id, page_type_id, body', 'required'),
 			array('progress', 'numerical', 'integerOnly'=>true),
 			array('parent_page_id, author_user_id, page_type_id, project_id, level_id', 'length', 'max'=>10),
 			array('url', 'length', 'max'=>64),

@@ -22,7 +22,7 @@ class CEditor extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('name, title, description, changed', 'required'),
+            array('name, title, description', 'required'),
 			array('name, title', 'length', 'max'=>32),
 			array('status', 'length', 'max'=>7)        );
     }

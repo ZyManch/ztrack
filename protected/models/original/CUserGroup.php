@@ -22,7 +22,7 @@ class CUserGroup extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('user_id, group_id, changed', 'required'),
+            array('user_id, group_id', 'required'),
 			array('user_id, group_id', 'length', 'max'=>10),
 			array('status', 'length', 'max'=>7)        );
     }

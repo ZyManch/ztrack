@@ -21,7 +21,7 @@ class CPageType extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('constant, title, changed', 'required'),
+            array('constant, title', 'required'),
 			array('constant, title', 'length', 'max'=>64),
 			array('status', 'length', 'max'=>7)        );
     }

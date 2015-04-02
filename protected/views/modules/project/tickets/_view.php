@@ -3,6 +3,7 @@
 /* @var $model TicketPage */
 
 $parent = $model->parentPage;
+Yii::app()->clientScript->registerCssFile('/css/custom.css');
 
 ?>
 <div class="row">
@@ -10,14 +11,21 @@ $parent = $model->parentPage;
         <div class="ibox float-e-margins">
             <div class="ibox-content">
                 <div class="row">
-                    <div class="col-md-9">
+                    <div class="col-md-8">
                         <h1>[#<?php echo $model->id;?>] <?php echo CHtml::encode($model->getTitle());?></h1>
                         <?php if ($model->parent_page_id):?>
                             <?php echo implode(' > ', $model->getParentsList(true));?>
                         <?php endif;?>
                         <hr>
                     </div>
-                    <div class="col-md-3 text-right">
+                    <div class="col-md-4 text-right">
+                        <?php echo CHtml::link('Create sub ticket',array(
+                            'project/view',
+                            'id' =>$model->project_id,
+                            'module'=>'tickets',
+                            'action'=>'create',
+                            'ticket_id'=>$model->id
+                        ),array('class'=>'btn btn-warning'));?>
                         <?php echo CHtml::link('Edit',array(
                             'project/view',
                             'id' =>$model->project_id,
@@ -86,7 +94,7 @@ $parent = $model->parentPage;
                                     <dt>Progress</dt>
                                     <dd>
                                         <div class="progress progress-striped active m-b-sm">
-                                            <div class="progress-bar" style="width: <?php echo $model->progress;?>%"></div>
+                                            <div class="progress-bar" style="width: <?php echo $model->getProgressValue();?>%"></div>
                                         </div>
                                     </dd>
                                 </dl>
@@ -99,6 +107,56 @@ $parent = $model->parentPage;
                                 <hr>
                             </div>
                         </div>
+                        <?php if ($model->getRelated('pages',true,array('resetScope'=>true))):?>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h4>Связанные задачи</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-lg-12">
+                                <table class="table table-striped">
+                                    <colgroup>
+                                        <col width="30px">
+                                        <col>
+                                        <col width="60px">
+                                        <col width="60px">
+                                    </colgroup>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Title</th>
+                                        <th>Progress</th>
+                                        <th>Assigned</th>
+                                    </tr>
+                                    <?php foreach ($model->pages as $page):?>
+                                        <tr>
+                                            <td>
+                                                <div class="icheckbox_square-green<?php if ($page->status==Page::STATUS_CLOSED):?> checked<?php endif;?>"></div>
+                                            </td>
+                                            <td>
+                                                <?php echo CHtml::link(
+                                                    CHtml::encode($page->title),
+                                                    array(
+                                                        'project/view',
+                                                        'id' => $page->project_id,
+                                                        'module'=>'tickets',
+                                                        'action'=>'view',
+                                                        'ticket_id'=>$page->id)
+                                                );?>
+                                            </td>
+                                            <td>
+                                                <?php echo $page->getProgressPie(16);?>
+                                            </td>
+                                            <td>
+                                                <?php echo $page->assignedUserPage ? $page->assignedUserPage->user->getGravatarImage(16) : '-';?>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach;?>
+                                </table>
+                            </div>
+                        </div>
+                        <?php endif;?>
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="panel blank-panel">

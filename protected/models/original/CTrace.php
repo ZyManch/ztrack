@@ -29,7 +29,7 @@ class CTrace extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('position, changed', 'required'),
+            array('position', 'required'),
 			array('line, method', 'numerical', 'integerOnly'=>true),
 			array('request_id, parent_id, position', 'length', 'max'=>10),
 			array('filename', 'length', 'max'=>255),

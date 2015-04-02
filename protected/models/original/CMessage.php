@@ -24,7 +24,7 @@ class CMessage extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('user_id, body, changed', 'required'),
+            array('user_id, body', 'required'),
 			array('user_id', 'length', 'max'=>10),
 			array('status', 'length', 'max'=>7),
 			array('created', 'safe')        );

@@ -22,7 +22,7 @@ class CUserSystemModule extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('user_id, system_module_id, changed', 'required'),
+            array('user_id, system_module_id', 'required'),
 			array('user_id, system_module_id', 'length', 'max'=>10),
 			array('params', 'safe')        );
     }

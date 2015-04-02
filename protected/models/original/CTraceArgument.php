@@ -23,7 +23,7 @@ class CTraceArgument extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('trace_id, position, value, changed', 'required'),
+            array('trace_id, position, value', 'required'),
 			array('position', 'numerical', 'integerOnly'=>true),
 			array('trace_id', 'length', 'max'=>10),
 			array('name', 'length', 'max'=>64),

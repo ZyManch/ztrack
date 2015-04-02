@@ -151,4 +151,25 @@ class Page extends CPage {
         $link->save(false);
         return $link;
     }
+
+
+    public function getProgressValue() {
+        if ($this->status == self::STATUS_CLOSED) {
+            return 100;
+        }
+        return $this->progress;
+    }
+
+    public function getProgressPie($size) {
+        $pie = new PieChart($size);
+        $pie->setValue($this->getProgressValue(),100);
+        return $pie;
+    }
+
+    public function canChangeProgress() {
+        if ($this->pages) {
+            return false;
+        }
+        return true;
+    }
 }

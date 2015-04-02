@@ -23,7 +23,7 @@ class TicketsProjectModule extends AbstractProjectModule {
         return  array_merge(
             array(
                 array('allow',
-                    'actions' => array('index','view','assign','update','changeStatus'),
+                    'actions' => array('index','view','assign','update','changeStatus','create'),
                     'users'=>array('*'),
                 )
             ),
@@ -115,6 +115,35 @@ class TicketsProjectModule extends AbstractProjectModule {
         }
         $this->renderPartial(
             '_update',
+            array(
+                'model' => $model,
+            )
+        );
+    }
+
+    public function actionCreate() {
+        $model = new TicketPage('create');
+        $projectId = Yii::app()->request->getParam('id');
+        $model->attributes = Yii::app()->request->getParam('TicketPage',array());
+        try {
+            $parent = $this->_getCurrentTicket();
+            $model->parent_page_id = $parent->id;
+            $model->level_id = $parent->level_id;
+        }catch (Exception $e) {
+            $parent = null;
+        }
+        $model->project_id = $projectId;
+        $model->author_user_id = Yii::app()->user->id;
+        $model->page_type_id = PAGE_TYPE_TICKETS;
+
+        if (Yii::app()->request->isPostRequest && $model->save()) {
+            $this->redirect(array(
+                'action'=>'view',
+                'ticket_id'=>$model->id
+            ));
+        }
+        $this->renderPartial(
+            '_create',
             array(
                 'model' => $model,
             )
