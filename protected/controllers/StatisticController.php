@@ -108,6 +108,7 @@ class StatisticController extends Controller
 	public function actionAdmin() {
 		$model=new SearchStatistic('search');
 
+        $model->id = array_keys(Yii::app()->user->getUser()->getAvailableStatistics());
 		$this->render('admin',array(
 			'model'=>$model,
 		));

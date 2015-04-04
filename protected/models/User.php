@@ -61,6 +61,21 @@ class User extends CUser {
         return $result;
     }
 
+    public function getAvailableStatistics() {
+        if (!$this->groups) {
+            return array();
+        }
+        $result = array();
+        $criteria = new CDbCriteria();
+        $criteria->addInCondition('t.group_id',array_keys($this->groups));
+        $groupStatistics = GroupStatistic::model()->
+            findAll($criteria);
+        foreach ($groupStatistics as $groupStatistic) {
+            $result[$groupStatistic->statistic_id] = array();
+        }
+        return $result;
+    }
+
     public function addUserModule(SystemModule $module) {
         if($module->type != SystemModule::TYPE_USER) {
             return false;
