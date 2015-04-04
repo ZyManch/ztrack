@@ -1,22 +1,21 @@
 <?php
 
 /**
-* This is the model class for table "access".
+* This is the model class for table "statistic".
 *
-* The followings are the available columns in table 'access':
+* The followings are the available columns in table 'statistic':
     * @property string $id
     * @property string $company_id
-    * @property string $title
-    * @property string $access
+    * @property string $name
     * @property string $status
     * @property string $changed
     *
     * The followings are the available model relations:
+            * @property GroupStatistic[] $groupStatistics
             * @property Company $company
-            * @property GroupAccess[] $groupAccesses
-            * @property UserAccess[] $userAccesses
+            * @property StatisticPoint[] $statisticPoints
     */
-class SearchAccess extends CAccess {
+class SearchStatistic extends CStatistic {
 
     public function __construct($scenario = 'search') {
         parent::__construct($scenario);
@@ -24,7 +23,7 @@ class SearchAccess extends CAccess {
 
     public function rules()	{
         return array(
-            array('id, company_id, title, access, status, changed', 'safe', 'on'=>'search'),
+            array('id, company_id, name, status, changed', 'safe', 'on'=>'search'),
         );
     }
 
@@ -34,12 +33,11 @@ class SearchAccess extends CAccess {
 
 		$criteria->compare('id',$this->id,true);
 		$criteria->compare('company_id',$this->company_id,true);
-		$criteria->compare('title',$this->title,true);
-		$criteria->compare('access',$this->access,true);
+		$criteria->compare('name',$this->name,true);
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('changed',$this->changed,true);
 
-        return new CActiveDataProvider('Access', array(
+        return new CActiveDataProvider('Statistic', array(
             'criteria'=>$criteria,
             'pagination'=>array('pageSize'=>40)
         ));

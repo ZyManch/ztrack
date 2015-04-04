@@ -1,31 +1,30 @@
 <?php
 
 /**
-* This is the model class for table "user_access".
+* This is the model class for table "group_project".
 *
-* The followings are the available columns in table 'user_access':
+* The followings are the available columns in table 'group_project':
     * @property string $id
-    * @property string $user_id
-    * @property string $access_id
+    * @property string $group_id
     * @property string $project_id
     * @property string $status
     * @property string $changed
     *
     * The followings are the available model relations:
-        * @property User $user
-        * @property Access $access
         * @property Project $project
+        * @property Group $group
+        * @property GroupProjectModule[] $groupProjectModules
 */
-class CUserAccess extends ActiveRecord {
+class CGroupProject extends ActiveRecord {
 
     public function tableName()	{
-        return 'user_access';
+        return 'group_project';
     }
 
     public function rules()	{
         return array(
-            array('user_id, access_id, project_id', 'required'),
-			array('user_id, access_id, project_id', 'length', 'max'=>10),
+            array('group_id, project_id', 'required'),
+			array('group_id, project_id', 'length', 'max'=>10),
 			array('status', 'length', 'max'=>7)        );
     }
 
@@ -34,17 +33,16 @@ class CUserAccess extends ActiveRecord {
     */
     protected function _baseRelations()	{
         return array(
-            'user' => array(self::BELONGS_TO, 'User', 'user_id'),
-            'access' => array(self::BELONGS_TO, 'Access', 'access_id'),
             'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
+            'group' => array(self::BELONGS_TO, 'Group', 'group_id'),
+            'groupProjectModules' => array(self::HAS_MANY, 'GroupProjectModule', 'group_project_id'),
         );
     }
 
     public function attributeLabels() {
         return array(
             'id' => 'ID',
-            'user_id' => 'User',
-            'access_id' => 'Access',
+            'group_id' => 'Group',
             'project_id' => 'Project',
             'status' => 'Status',
             'changed' => 'Changed',

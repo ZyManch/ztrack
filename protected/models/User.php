@@ -2,8 +2,6 @@
 
 /**
  * @property Group[] $groups
- * @property Access[] $accesses
- * @property Project[] $projects
  * @property AbstractUserModule[] $systemModules
  * @property Page[] $mainNotes
  */
@@ -26,9 +24,7 @@ class User extends CUser {
 
     protected function _extendedRelations() {
         return array(
-            'accesses' => array(self::MANY_MANY,'Access','user_access(user_id,access_id)'),
-            'groups' => array(self::MANY_MANY,'Group','user_group(user_id,group_id)'),
-            'projects' => array(self::MANY_MANY,'Project','user_access(user_id,project_id)'),
+            'groups' => array(self::MANY_MANY,'Group','user_group(user_id,group_id)','index'=>'id'),
             'systemModules' => array(self::MANY_MANY, 'SystemModule','user_system_module(user_id,system_module_id)', 'order' => 'systemModules.position ASC','index'=>'id'),
             'mainNotes' => array(self::HAS_MANY, 'Page','author_user_id', 'on' => 'mainNotes.page_type_id='.PAGE_TYPE_NOTES.' AND mainNotes.parent_page_id IS  null'),
         );
@@ -40,6 +36,29 @@ class User extends CUser {
             $result[$module->id] = $module;
         }
         return SystemModule::sort($result);
+    }
+
+    public function getAvailableProjects() {
+        if (!$this->groups) {
+            return array();
+        }
+        $result = array();
+        $criteria = new CDbCriteria();
+        $criteria->addInCondition('t.group_id',array_keys($this->groups));
+        $criteria->with = array(
+            'groupProjectModules' => array()
+        );
+        $groupProjects = GroupProject::model()->
+            findAll($criteria);
+        foreach ($groupProjects as $groupProject) {
+            $result[$groupProject->project_id] = array();
+            foreach ($groupProject->groupProjectModules as $groupProjectModule) {
+                $result[$groupProject->project_id][$groupProjectModule->system_module_id] = array(
+                    //empty config
+                );
+            }
+        }
+        return $result;
     }
 
     public function addUserModule(SystemModule $module) {

@@ -38,12 +38,22 @@ class Project extends CProject {
         }
     }
 
-    public function getEnabledProjectModules() {
-        $result = $this->systemModules;
+    public function getEnabledProjectModules(User $user = null) {
+        $modules = $this->systemModules;
         foreach (SystemModule::getForceInstalledSystemModules(SystemModule::TYPE_PROJECT) as $module) {
-            $result[$module->id] = $module;
+            $modules[$module->id] = $module;
         }
-        return SystemModule::sort($result);
+        if (!is_null($user)) {
+            $result = array();
+            $projects = $user->getAvailableProjects();
+            foreach ($projects[$this->id] as $systemModuleId => $config) {
+                if (isset($modules[$systemModuleId])) {
+                    $result[$systemModuleId] = $modules[$systemModuleId];
+                }
+            }
+            $modules = $result;
+        }
+        return SystemModule::sort($modules);
     }
 
     protected function _extendedRelations()	{
@@ -62,18 +72,17 @@ class Project extends CProject {
             ),
             'with' => array(
                 'userGroups' => array(
+                    'joinType' => 'inner join',
                     'select' => false,
                 ),
                 'userGroups.group' => array(
+                    'joinType' => 'inner join',
                     'select' => false,
                 ),
-                'userGroups.group.groupAccesses' => array(
+                'userGroups.group.groupProjects' => array(
+                    'joinType' => 'inner join',
                     'select' => false,
-                    'on' => 'groupAccesses.project_id = :PROJECT_ID'
-                ),
-                'userAccesses' => array(
-                    'select' => false,
-                    'on' => 'userAccesses.project_id = :PROJECT_ID'
+                    'on' => 'groupProjects.project_id = :PROJECT_ID'
                 )
             )
         ));

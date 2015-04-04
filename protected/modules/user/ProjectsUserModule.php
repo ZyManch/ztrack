@@ -13,11 +13,8 @@ class ProjectsUserModule extends AbstractUserModule {
         }
         $user = Yii::app()->user->getUser();
         $projectIds = array();
-        foreach ($user->userAccesses as $access) {
-            $projectIds[] = $access->project_id;
-        }
         foreach ($user->groups as $group) {
-            foreach ($group->groupAccesses as $access) {
+            foreach ($group->groupProjects as $access) {
                 $projectIds[] = $access->project_id;
             }
         }
@@ -25,7 +22,9 @@ class ProjectsUserModule extends AbstractUserModule {
         $projects = Project::model()->findAllByPk($projectIds);
         $list = array();
         $tree = array();
-        while (sizeof($projects) > 0) {
+        $previousSize = 0 ;
+        while (sizeof($projects) > 0 && $previousSize !=sizeof($projects)) {
+            $previousSize = sizeof($projects);
             foreach ($projects as $key => $project) {
                 $item = array(
                     'label' => $project->title,

@@ -18,7 +18,7 @@ $activeSystemModule = null;
 <div class="wrapper wrapper-content  animated fadeInRight">
     <div class="col-xs-12">
         <ul class="nav nav-tabs">
-            <?php foreach ($model->getEnabledProjectModules() as $systemModule):?>
+            <?php foreach ($model->getEnabledProjectModules(Yii::app()->user->getUser()) as $systemModule):?>
                 <?php foreach ($systemModule->getTabs() as $tab):?>
                     <?php
                     if (!$currentModule) {

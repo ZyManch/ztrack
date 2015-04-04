@@ -19,7 +19,6 @@
         * @property PageHistory[] $pageHistories
         * @property PageHistory[] $pageHistories1
         * @property Company $company
-        * @property UserAccess[] $userAccesses
         * @property UserGroup[] $userGroups
         * @property UserMessage[] $userMessages
         * @property UserPage[] $userPages
@@ -50,7 +49,6 @@ class CUser extends ActiveRecord {
             'pageHistories' => array(self::HAS_MANY, 'PageHistory', 'assign_user_id'),
             'pageHistories1' => array(self::HAS_MANY, 'PageHistory', 'user_id'),
             'company' => array(self::BELONGS_TO, 'Company', 'company_id'),
-            'userAccesses' => array(self::HAS_MANY, 'UserAccess', 'user_id'),
             'userGroups' => array(self::HAS_MANY, 'UserGroup', 'user_id'),
             'userMessages' => array(self::HAS_MANY, 'UserMessage', 'user_id'),
             'userPages' => array(self::HAS_MANY, 'UserPage', 'user_id'),

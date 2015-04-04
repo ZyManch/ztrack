@@ -12,7 +12,8 @@
     *
     * The followings are the available model relations:
         * @property Company $company
-        * @property GroupAccess[] $groupAccesses
+        * @property GroupProject[] $groupProjects
+        * @property GroupStatistic[] $groupStatistics
         * @property UserGroup[] $userGroups
 */
 class CGroup extends ActiveRecord {
@@ -35,7 +36,8 @@ class CGroup extends ActiveRecord {
     protected function _baseRelations()	{
         return array(
             'company' => array(self::BELONGS_TO, 'Company', 'company_id'),
-            'groupAccesses' => array(self::HAS_MANY, 'GroupAccess', 'group_id'),
+            'groupProjects' => array(self::HAS_MANY, 'GroupProject', 'group_id'),
+            'groupStatistics' => array(self::HAS_MANY, 'GroupStatistic', 'group_id'),
             'userGroups' => array(self::HAS_MANY, 'UserGroup', 'group_id'),
         );
     }

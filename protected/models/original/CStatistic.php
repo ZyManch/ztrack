@@ -1,32 +1,33 @@
 <?php
 
 /**
-* This is the model class for table "access".
+* This is the model class for table "statistic".
 *
-* The followings are the available columns in table 'access':
+* The followings are the available columns in table 'statistic':
     * @property string $id
     * @property string $company_id
-    * @property string $title
-    * @property string $access
+    * @property string $name
+    * @property string $interval
     * @property string $status
     * @property string $changed
     *
     * The followings are the available model relations:
+        * @property GroupStatistic[] $groupStatistics
         * @property Company $company
-        * @property GroupAccess[] $groupAccesses
-        * @property UserAccess[] $userAccesses
+        * @property StatisticPoint[] $statisticPoints
 */
-class CAccess extends ActiveRecord {
+class CStatistic extends ActiveRecord {
 
     public function tableName()	{
-        return 'access';
+        return 'statistic';
     }
 
     public function rules()	{
         return array(
-            array('title, access', 'required'),
+            array('company_id, name', 'required'),
 			array('company_id', 'length', 'max'=>10),
-			array('title', 'length', 'max'=>32),
+			array('name', 'length', 'max'=>64),
+			array('interval', 'length', 'max'=>6),
 			array('status', 'length', 'max'=>7)        );
     }
 
@@ -35,9 +36,9 @@ class CAccess extends ActiveRecord {
     */
     protected function _baseRelations()	{
         return array(
+            'groupStatistics' => array(self::HAS_MANY, 'GroupStatistic', 'statistic_id'),
             'company' => array(self::BELONGS_TO, 'Company', 'company_id'),
-            'groupAccesses' => array(self::HAS_MANY, 'GroupAccess', 'access_id'),
-            'userAccesses' => array(self::HAS_MANY, 'UserAccess', 'access_id'),
+            'statisticPoints' => array(self::HAS_MANY, 'StatisticPoint', 'statistic_id'),
         );
     }
 
@@ -45,8 +46,8 @@ class CAccess extends ActiveRecord {
         return array(
             'id' => 'ID',
             'company_id' => 'Company',
-            'title' => 'Title',
-            'access' => 'Access',
+            'name' => 'Name',
+            'interval' => 'Interval',
             'status' => 'Status',
             'changed' => 'Changed',
         );

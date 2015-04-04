@@ -11,13 +11,13 @@
     * @property string $changed
     *
     * The followings are the available model relations:
-        * @property Access[] $accesses
         * @property Branch[] $branches
         * @property Editor $editor
         * @property Group[] $groups
         * @property Label[] $labels
         * @property Level[] $levels
         * @property Server[] $servers
+        * @property Statistic[] $statistics
         * @property User[] $users
 */
 class CCompany extends ActiveRecord {
@@ -39,13 +39,13 @@ class CCompany extends ActiveRecord {
     */
     protected function _baseRelations()	{
         return array(
-            'accesses' => array(self::HAS_MANY, 'Access', 'company_id'),
             'branches' => array(self::HAS_MANY, 'Branch', 'company_id'),
             'editor' => array(self::BELONGS_TO, 'Editor', 'editor_id'),
             'groups' => array(self::HAS_MANY, 'Group', 'company_id'),
             'labels' => array(self::HAS_MANY, 'Label', 'company_id'),
             'levels' => array(self::HAS_MANY, 'Level', 'company_id'),
             'servers' => array(self::HAS_MANY, 'Server', 'company_id'),
+            'statistics' => array(self::HAS_MANY, 'Statistic', 'company_id'),
             'users' => array(self::HAS_MANY, 'User', 'company_id'),
         );
     }
