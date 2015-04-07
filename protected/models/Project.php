@@ -5,6 +5,7 @@
  *
  * The followings are the available columns in table 'branch':
  * @property AbstractProjectModule[] $systemModules
+ * @property int $pagesCount
  */
 class Project extends CProject {
 
@@ -61,6 +62,7 @@ class Project extends CProject {
         // class name for the relations automatically generated below.
         return array(
             'systemModules' => array(self::MANY_MANY, 'SystemModule', 'project_system_module(project_id,system_module_id)', 'order' => 'systemModules.position ASC','index'=>'id'),
+            'pagesCount' => array(self::STAT, 'Page', 'project_id'),
         );
     }
 

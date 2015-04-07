@@ -146,7 +146,7 @@ Yii::app()->clientScript->registerCssFile('/css/custom.css');
                                                 );?>
                                             </td>
                                             <td>
-                                                <?php echo $page->getProgressPie(16);?>
+                                                <?php echo $page->getProgressPie(16)->render(array('width'=>16,'height'=>16));?>
                                             </td>
                                             <td>
                                                 <?php echo $page->assignedUserPage ? $page->assignedUserPage->user->getGravatarImage(16) : '-';?>

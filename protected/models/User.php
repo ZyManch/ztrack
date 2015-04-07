@@ -98,9 +98,12 @@ class User extends CUser {
     }
 
     public function getGravatarUrl($size) {
+        if (!Yii::app()->params['gravatar']) {
+            return '/images/avatar.jpg';
+        }
         return 'http://www.gravatar.com/avatar/'.
-        md5(strtolower( trim( $this->email ) ) ).
-        '?s='.$size.'&d=identicon&r=g';
+            md5(strtolower( trim( $this->email ) ) ).
+            '?s='.$size.'&d=identicon&r=g';
     }
 
     public function getGravatarLink($size, $options = array()) {
@@ -112,7 +115,11 @@ class User extends CUser {
     }
 
     public function getGravatarImage($size) {
-        return CHtml::image($this->getGravatarUrl($size),CHtml::encode($this->username));
+        return CHtml::image(
+            $this->getGravatarUrl($size),
+            CHtml::encode($this->username),
+            array('width'=>$size.'px','height'=>$size.'px')
+        );
     }
 
     public function __toString() {

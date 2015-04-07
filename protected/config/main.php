@@ -56,6 +56,6 @@ return array(
 		),
 	),
 	'params'=>array(
-
+        'gravatar' => false
 	),
 );

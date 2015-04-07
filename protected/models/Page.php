@@ -18,6 +18,9 @@ class Page extends CPage {
                 ),
                 'pageHistory' => array(
                     'class' => 'PageHistoryBehavior'
+                ),
+                'progress' => array(
+                    'class'=>'ProgressBehavior'
                 )
             )
         );
@@ -161,8 +164,8 @@ class Page extends CPage {
     }
 
     public function getProgressPie($size) {
-        $pie = new PieChart($size);
-        $pie->setValue($this->getProgressValue(),100);
+        $pie = new NativePieGraph($size);
+        $pie->addData('Progress',array($this->getProgressValue()));
         return $pie;
     }
 

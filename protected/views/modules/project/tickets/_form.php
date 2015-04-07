@@ -94,9 +94,21 @@ Yii::app()->clientScript->registerScript('progress','
 	<div class="form-group">
         <div class="col-sm-4 col-sm-offset-2">
 		    <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save',array('class'=>'btn btn-primary')); ?>
-            <?php echo CHtml::link('Cancel',array(
-
-            ),array('class'=>'btn btn-white'));?>
+            <?php if ($model->parent_page_id):?>
+                <?php echo CHtml::link('Cancel',array(
+                    'project/view',
+                    'id' => 2,
+                    'module'=>'tickets',
+                    'action'=>'view',
+                    'ticket_id' => $model->parent_page_id
+                ),array('class'=>'btn btn-white'));?>
+            <?php else:?>
+                <?php echo CHtml::link('Cancel',array(
+                    'project/view',
+                    'id' => 2,
+                    'module'=>'tickets',
+                ),array('class'=>'btn btn-white'));?>
+            <?php endif;?>
         </div>
 	</div>
 

@@ -21,6 +21,7 @@ class Loader extends CComponent {
             return false;
         }
         PageType::loadConstants();
+        Graph::loadConstants();
         return true;
     }
 

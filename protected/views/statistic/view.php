@@ -1,29 +1,25 @@
 <?php
 /* @var $this StatisticController */
 /* @var $model Statistic */
-
-
+$graphData = new GraphData($model->name,$model->getLastPoints(10));
+$graph = new ChartLineGraph();
+$graph->addData($graphData);
 
 ?>
 <div class="row">
     <div class="col-xs-12">
-        <div class="page-header">
-            <h1>View Statistic #<?php echo $model->id; ?></h1>
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <h1><?php echo CHtml::encode($model->name); ?></h1>
         </div>
     </div>
 </div>
 
-<div class="row">
-    <div class="col-xs-12">
-        <?php $this->widget('zii.widgets.CDetailView', array(
-            'data'=>$model,
-            'attributes'=>array(
-        		'id',
-		'company_id',
-		'name',
-		'status',
-		'changed',
-            ),
-        )); ?>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="ibox float-e-margins col-xs-12">
+        <div class="ibox-content">
+            <div>
+                <?php echo $graph->render(array('height'=>100));?>
+            </div>
+        </div>
     </div>
 </div>
