@@ -7,5 +7,16 @@
  */
 abstract class AbstractWidgetModule extends SystemModule {
 
-    abstract function draw();
+    abstract public function getTitle();
+
+    abstract public function renderWidget();
+
+    abstract public function configure($config);
+
+    public function renderConfigure($config) {
+        Yii::app()->controller->renderPartial('//modules/widget/'.$this->name.'/_settings',array(
+            'system_module'=>$this,
+            'config' => $config
+        ));
+    }
 }

@@ -13,8 +13,16 @@ class LastReleaseWidgetModule extends AbstractWidgetModule {
     /** @var  Page */
     protected $_lastRelease;
 
+    public function getLabel() {
+        return 'Текущий '.$this->getLastRelease()->getTitle();
+    }
 
-    public function configure($projectId) {
+
+    public function configure($config) {
+        if (!isset($config['project_id']) || !$config['project_id']) {
+            throw new Exception('project id is missed in widget');
+        }
+        $projectId = $config['project_id'];
         $this->_lastRelease = $this->_getLastRelease($projectId);
         $this->_searchModel = $this->_getSearchModel($projectId);
     }
@@ -33,9 +41,9 @@ class LastReleaseWidgetModule extends AbstractWidgetModule {
 
 
 
-    public function draw() {
+    public function renderWidget() {
         Yii::app()->controller->renderPartial(
-            '//modules/widget/_lastRelease',
+            '//modules/widget/lastRelease/_view',
             array(
                 'search_model' => $this->_searchModel,
                 'last_release' => $this->_lastRelease

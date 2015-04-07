@@ -10,14 +10,21 @@ class TicketsWidgetModule extends AbstractWidgetModule {
     /** @var  SearchPage */
     protected $_page;
 
-    public function configure(SearchPage $page) {
+    public function getTitle() {
+        return 'Текущий список задач';
+    }
+
+    public function configure($config) {
+        $page = new SearchPage();
+        $page->page_type_id = PAGE_TYPE_TICKETS;
+        $page->attributes = $config;
         $this->_page = $page;
     }
 
 
-    public function draw() {
+    public function renderWidget() {
         Yii::app()->controller->renderPartial(
-            '//modules/widget/_tickets',
+            '//modules/widget/tickets/_view',
             array(
                 'search_model' => $this->_getTicketsSearchModel()
             )

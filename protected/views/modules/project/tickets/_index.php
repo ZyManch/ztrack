@@ -34,11 +34,7 @@
     <div class="col-lg-6">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <?php if ($second_widget instanceof LastReleaseWidgetModule):?>
-                    <h5>Текущий <?php echo $second_widget->getLastRelease()->getTitle();?></h5>
-                <?php else:?>
-                    <h5>Текущий список задач</h5>
-                <?php endif;?>
+                <h5><?php echo $second_widget->getTitle();?></h5>
             </div>
             <div class="ibox-content">
                 <?php $second_widget->draw();?>

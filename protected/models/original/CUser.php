@@ -14,6 +14,7 @@
     * @property string $changed
     *
     * The followings are the available model relations:
+        * @property Dashboard[] $dashboards
         * @property Message[] $messages
         * @property Page[] $pages
         * @property PageHistory[] $pageHistories
@@ -44,6 +45,7 @@ class CUser extends ActiveRecord {
     */
     protected function _baseRelations()	{
         return array(
+            'dashboards' => array(self::HAS_MANY, 'Dashboard', 'user_id'),
             'messages' => array(self::HAS_MANY, 'Message', 'user_id'),
             'pages' => array(self::HAS_MANY, 'Page', 'author_user_id'),
             'pageHistories' => array(self::HAS_MANY, 'PageHistory', 'assign_user_id'),

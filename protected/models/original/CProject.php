@@ -11,7 +11,8 @@
     * @property string $changed
     *
     * The followings are the available model relations:
-        * @property GroupProject[] $groupProjects
+        * @property Dashboard[] $dashboards
+        * @property GroupAccess[] $groupAccesses
         * @property Page[] $pages
         * @property PageHistory[] $pageHistories
         * @property Project $parent
@@ -37,6 +38,7 @@ class CProject extends ActiveRecord {
     */
     protected function _baseRelations()	{
         return array(
+            'dashboards' => array(self::HAS_MANY, 'Dashboard', 'project_id'),
             'groupProjects' => array(self::HAS_MANY, 'GroupProject', 'project_id'),
             'pages' => array(self::HAS_MANY, 'Page', 'project_id'),
             'pageHistories' => array(self::HAS_MANY, 'PageHistory', 'project_id'),
