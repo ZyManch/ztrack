@@ -26,7 +26,7 @@
                 <h5>Мои тикеты</h5>
             </div>
             <div class="ibox-content">
-                <?php $my_tickets_widget->draw();?>
+                <?php $my_tickets_widget->renderWidget();?>
             </div>
         </div>
     </div>
@@ -37,7 +37,7 @@
                 <h5><?php echo $second_widget->getTitle();?></h5>
             </div>
             <div class="ibox-content">
-                <?php $second_widget->draw();?>
+                <?php $second_widget->renderWidget();?>
             </div>
         </div>
     </div>

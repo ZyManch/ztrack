@@ -8,13 +8,11 @@
  */
 $systemModule = $dashboard_system_module->getSystemModule();
 ?>
-<div class="stat-panel col-md-6">
-    <div class="panel panel-warning">
-        <div class="panel-heading">
-            <h5><?php echo $systemModule->getTitle();?></h5>
-        </div>
+<div class="stat-panel col-md-<?php echo $dashboard_system_module->rows;?>">
+    <div class="widget yellow-bg p-lg text-center">
+        <h5><?php echo $systemModule->getTitle();?></h5>
         <div class="panel-body">
-            <?php echo $systemModule->draw();?>
+            <?php echo $systemModule->renderWidget();?>
 
         </div>
     </div>

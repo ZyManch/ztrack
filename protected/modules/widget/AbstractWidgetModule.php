@@ -13,10 +13,13 @@ abstract class AbstractWidgetModule extends SystemModule {
 
     abstract public function configure($config);
 
-    public function renderConfigure($config) {
+    abstract public function convertPostToConfigure($postData);
+
+    public function renderConfigure(CActiveForm $form, $config = null) {
         Yii::app()->controller->renderPartial('//modules/widget/'.$this->name.'/_settings',array(
             'system_module'=>$this,
-            'config' => $config
+            'config' => $config,
+            'form' => $form
         ));
     }
 }

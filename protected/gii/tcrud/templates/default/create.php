@@ -11,16 +11,16 @@
 
 ?>
 
-<div class="row">
+<div class="wrapper wrapper-content">
     <div class="col-xs-12">
-        <div class="page-header">
-            <h1>Создание <?php echo $this->modelClass; ?></h1>
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Создание <?php echo $this->modelClass; ?></h5>
+            </div>
+            <div class="ibox-content">
+                <?php echo "<?php \$this->renderPartial('_form', array('model'=>\$model)); ?>"; ?>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="row">
-    <div class="col-xs-12">
-        <?php echo "<?php \$this->renderPartial('_form', array('model'=>\$model)); ?>"; ?>
-    </div>
-</div>

@@ -15,24 +15,24 @@ $label=$this->pluralize($this->class2name($this->modelClass));
 
 
 ?>
-<div class="row">
+<div class="wrapper wrapper-content">
     <div class="col-xs-12">
-        <div class="page-header">
-            <h1>View <?php echo $this->modelClass." #<?php echo \$model->{$this->tableSchema->primaryKey}; ?>"; ?></h1>
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>View <?php echo $this->modelClass." #<?php echo \$model->{$this->tableSchema->primaryKey}; ?>"; ?></h5>
+            </div>
+            <div class="ibox-content">
+                <?php echo "<?php"; ?> $this->widget('zii.widgets.CDetailView', array(
+                'data'=>$model,
+                'attributes'=>array(
+                <?php
+                foreach($this->tableSchema->columns as $column)
+                    echo "\t\t'".$column->name."',\n";
+                ?>
+                ),
+                )); ?>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="row">
-    <div class="col-xs-12">
-        <?php echo "<?php"; ?> $this->widget('zii.widgets.CDetailView', array(
-            'data'=>$model,
-            'attributes'=>array(
-        <?php
-        foreach($this->tableSchema->columns as $column)
-            echo "\t\t'".$column->name."',\n";
-        ?>
-            ),
-        )); ?>
-    </div>
-</div>

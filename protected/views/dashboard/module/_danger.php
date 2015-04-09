@@ -8,13 +8,38 @@
  */
 $systemModule = $dashboard_system_module->getSystemModule();
 ?>
-<div class="stat-panel col-md-6">
-    <div class="panel panel-danger">
-        <div class="panel-heading">
-            <h5><?php echo $systemModule->getTitle();?></h5>
-        </div>
-        <div class="panel-body">
-            <?php echo $systemModule->draw();?>
+<div class="col-md-<?php echo $dashboard_system_module->rows;?>">
+    <div class="widget red-bg p-lg text-center">
+        <h3>
+            <?php echo $systemModule->getTitle();?>
+                <?php echo CHtml::link(
+                    '<i class="fa fa-pencil"></i>',
+                    array(
+                        'dashboard/configure',
+                        'id'=>$dashboard_system_module->dashboard_id,
+                        'dashboard_system_module_id' => $dashboard_system_module->id,
+                    ),
+                    array(
+                        'class'=>'btn btn-xs',
+                        'title'=>'Редактировать виджет'
+                    )
+                );?>
+                <?php echo CHtml::link(
+                    '<i class="fa fa-trash"></i>',
+                    array(
+                        'dashboard/deleteWidget',
+                        'id'=>$dashboard_system_module->dashboard_id,
+                        'dashboard_system_module_id' => $dashboard_system_module->id,
+                    ),
+                    array(
+                        'class'=>'btn btn-xs',
+                        'title'=>'Удалить виджет'
+                    )
+                );?>
+        </h3>
+
+        <div>
+            <?php echo $systemModule->renderWidget();?>
 
         </div>
     </div>

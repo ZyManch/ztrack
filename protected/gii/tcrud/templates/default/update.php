@@ -16,18 +16,15 @@ $label=$this->pluralize($this->class2name($this->modelClass));
 
 
 ?>
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="page-header">
-                <h1>Правка <?php echo $this->modelClass." <?php echo \$model->{$this->tableSchema->primaryKey}; ?>"; ?></h1>
+<div class="wrapper wrapper-content">
+    <div class="col-xs-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Правка <?php echo $this->modelClass." <?php echo \$model->{$this->tableSchema->primaryKey}; ?>"; ?></h5>
+            </div>
+            <div class="ibox-content">
+                <?php echo "<?php \$this->renderPartial('_form', array('model'=>\$model)); ?>"; ?>
             </div>
         </div>
-    </div>
-
-<div class="row">
-    <div class="col-xs-12">
-
-        <?php echo "<?php \$this->renderPartial('_form', array('model'=>\$model)); ?>"; ?>
-
     </div>
 </div>

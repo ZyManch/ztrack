@@ -32,9 +32,19 @@ class DashboardSystemModule extends CDashboardSystemModule {
      * @return AbstractWidgetModule
      */
     public function getSystemModule() {
+        /** @var AbstractWidgetModule $module */
         $module = $this->systemModule;
-        $module->configure($this->params ? json_encode($this->params) : null);
+        $module->configure($this->params ? json_decode($this->params, 1) : array());
         return $module;
+    }
+
+    public static function getTypeVariants() {
+        return array(
+            'Default' => 'Стандарт',
+            'Warning' => 'Оповещение',
+            'Info' => 'Информация',
+            'Danger' => 'Важно'
+        );
     }
 
 }

@@ -7,6 +7,8 @@
  */
 class User extends CUser {
 
+    const AVATAR_COUNT = 9;
+
     public function checkPassword($password) {
         return $this->password == $this->_encrypt($password);
     }
@@ -67,11 +69,15 @@ class User extends CUser {
         }
         $result = array();
         $criteria = new CDbCriteria();
+        $criteria->with = array('statistic');
         $criteria->addInCondition('t.group_id',array_keys($this->groups));
         $groupStatistics = GroupStatistic::model()->
             findAll($criteria);
         foreach ($groupStatistics as $groupStatistic) {
-            $result[$groupStatistic->statistic_id] = array();
+            $result[$groupStatistic->statistic_id] = array(
+                'id' => $groupStatistic->statistic_id,
+                'title' => $groupStatistic->statistic->name
+            );
         }
         return $result;
     }
@@ -99,7 +105,7 @@ class User extends CUser {
 
     public function getGravatarUrl($size) {
         if (!Yii::app()->params['gravatar']) {
-            return '/images/avatar.jpg';
+            return '/images/avatars/'.($this->id%self::AVATAR_COUNT).'.png';
         }
         return 'http://www.gravatar.com/avatar/'.
             md5(strtolower( trim( $this->email ) ) ).

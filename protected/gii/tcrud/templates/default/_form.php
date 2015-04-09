@@ -19,11 +19,12 @@
 	// There is a call to performAjaxValidation() commented in generated controller code.
 	// See class documentation of CActiveForm for details on this.
 	'enableAjaxValidation'=>false,
+	'htmlOptions' => array('class'=>'form-horizontal')
 )); ?>\n"; ?>
 
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
-	<?php echo "<?php echo \$form->errorSummary(\$model); ?>\n"; ?>
+	<?php echo "<?php echo \$form->errorSummary(\$model,null,null,array('class'=>'alert alert-danger')); ?>\n"; ?>
 
 <?php
 foreach($this->tableSchema->columns as $column)
@@ -36,15 +37,16 @@ foreach($this->tableSchema->columns as $column)
         <div class="col-sm-10">
 		    <?php echo "<?php echo ".$this->generateActiveField($this->modelClass,$column)."; ?>\n"; ?>
         </div>
-		<?php echo "<?php echo \$form->error(\$model,'{$column->name}'); ?>\n"; ?>
+		<?php echo "<?php echo \$form->error(\$model,'{$column->name}',array('class'=>'label label-danger')); ?>\n"; ?>
 	</div>
-
+    <div class="hr-line-dashed"></div>
 <?php
 }
 ?>
 	<div class="form-group">
         <div class="col-sm-4 col-sm-offset-2">
-		    <?php echo "<?php echo CHtml::submitButton(\$model->isNewRecord ? 'Create' : 'Save'); ?>\n"; ?>
+		    <?php echo "<?php echo CHtml::link('Cancel',array('$this->modelClass/index'),array('class'=>'btn btn-white')); ?>\n"; ?>
+		    <?php echo "<?php echo CHtml::submitButton(\$model->isNewRecord ? 'Create' : 'Save',array('class'=>'btn btn-primary')); ?>\n"; ?>
         </div>
 	</div>
 

@@ -2,19 +2,19 @@
 /**
  * Created by PhpStorm.
  * User: ZyManch
- * Date: 07.04.2015
- * Time: 8:22
+ * Date: 08.04.2015
+ * Time: 11:18
  */
-class ProjectTicketsWidgetModule extends AbstractWidgetModule {
+class StatisticWidgetModule  extends AbstractWidgetModule {
 
     protected $_config = array(
-        'graph_id' => GRAPH_CHART_BAR,
-        'projects' => null
+        'graph_id' => GRAPH_CHART_LINE,
     );
 
     public function getTitle() {
-        return 'Статистика проектов';
+        return 'Статистика';
     }
+
 
     public function configure($config) {
         $this->_config = array_merge(
@@ -31,7 +31,7 @@ class ProjectTicketsWidgetModule extends AbstractWidgetModule {
             $graph->addData($row);
         }
         Yii::app()->controller->renderPartial(
-            '//modules/widget/projectTickets/_view',
+            '//modules/widget/statistic/_view',
             array(
                 'graph' => $graph,
             )
@@ -43,17 +43,12 @@ class ProjectTicketsWidgetModule extends AbstractWidgetModule {
     }
 
     protected function _getData() {
-        $criteria = new CDbCriteria();
-        $criteria->with = array(
-            'pagesCount' => array('on' => 'pagesCount.page_type_id in :page_types')
-        );
-        $criteria->compare('t.id',$this->_config['projects']);
-        $projects = Project::model()->findAll($criteria);
+        $stats = Statistic::model()->findAllByPk($this->_config['statistics']);
         $result = array();
-        foreach ($projects as $project) {
+        foreach ($stats as $stat) {
             $result[] = new GraphData(
-                $project->title,
-                array('tickets' => (int)$project->pagesCount)
+                $stat->name,
+                $stat->getLastPoints($this->_config['count'])
             );
         }
         return $result;

@@ -26,3 +26,16 @@ tr.immediately td, .label.label-immediately {
 .project-title small a {
     font-size: 85%;
 }
+.widget {
+    margin-top: 10px !important;
+}
+.widget .ibox-title:first-child {
+    border-radius: 5px 5px 0px 0px;
+}
+.widget .ibox-content:last-child {
+    border-radius: 0px 0px 5px 5px ;
+}
+
+.widget .ibox-content {
+    overflow-x: auto;
+}

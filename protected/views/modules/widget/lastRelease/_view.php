@@ -9,7 +9,7 @@
  * @var $this Controller
  */
 if ($last_release):?>
-    <?php $this->renderPartial('//modules/widget/_tickets', array('search_model' => $search_model));;?>
+    <?php $this->renderPartial('//modules/widget/tickets/_view', array('search_model' => $search_model));;?>
 <?php else:?>
 
 <?php endif;?>

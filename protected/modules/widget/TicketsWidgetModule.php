@@ -21,6 +21,9 @@ class TicketsWidgetModule extends AbstractWidgetModule {
         $this->_page = $page;
     }
 
+    public function convertPostToConfigure($postData) {
+        return $postData;
+    }
 
     public function renderWidget() {
         Yii::app()->controller->renderPartial(

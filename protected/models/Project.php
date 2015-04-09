@@ -89,4 +89,53 @@ class Project extends CProject {
             )
         ));
     }
+
+
+    public static function getProjectsAsTree($projectIds) {
+        $projects = Project::model()->findAllByPk($projectIds);
+        $list = array();
+        $tree = array();
+        $previousSize = 0 ;
+        while (sizeof($projects) > 0 && $previousSize !=sizeof($projects)) {
+            $previousSize = sizeof($projects);
+            foreach ($projects as $key => $project) {
+                $item = array(
+                    'label' => $project->title,
+                    'id' => $project->id,
+                    'items' => array()
+                );
+                $list[$project->id] = &$item;
+                if (!$project->parent_id) {
+                    $tree[] = &$item;
+                    unset($projects[$key]);
+                } else if (isset($list[$project->parent_id])) {
+                    $list[$project->parent_id]['items'][] = &$item;
+                    unset($projects[$key]);
+                }
+                unset($item);
+            }
+        }
+        return $tree;
+    }
+
+    public static function getProjectsAsList($projectIds) {
+        $tree = self::getProjectsAsTree($projectIds);
+        $result = self::_getProjectsFromTreeAsList($tree);
+        return $result;
+
+    }
+
+    protected static function _getProjectsFromTreeAsList($projects,$level = 0) {
+        $result = array();
+        foreach ($projects as $project) {
+            $result[$project['id']] = str_repeat('-',$level).' '.$project['label'];
+            if ($project['items']) {
+                $result = array_merge(
+                    $result,
+                    self::_getProjectsFromTreeAsList($project['items'],$level+1)
+                );
+            }
+        }
+        return $result;
+    }
 }

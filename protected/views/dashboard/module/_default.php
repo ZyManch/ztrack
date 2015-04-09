@@ -8,20 +8,33 @@
  */
 $systemModule = $dashboard_system_module->getSystemModule();
 ?>
-<div class="stat-panel col-md-6">
-    <div class="ibox float-e-margins">
+<div class="col-md-<?php echo $dashboard_system_module->rows;?>">
+    <div class="ibox widget float-e-margins">
         <div class="ibox-title">
             <h5><?php echo $systemModule->getTitle();?></h5>
             <div class="ibox-tools">
                 <?php echo CHtml::link(
-                    'Edit',
+                    '<i class="fa fa-pencil"></i>',
                     array(
                         'dashboard/configure',
                         'id'=>$dashboard_system_module->dashboard_id,
                         'dashboard_system_module_id' => $dashboard_system_module->id,
                     ),
                     array(
-                        'class'=>'btn btn-xs'
+                        'class'=>'btn btn-xs',
+                        'title'=>'Редактировать виджет'
+                    )
+                );?>
+                <?php echo CHtml::link(
+                    '<i class="fa fa-trash"></i>',
+                    array(
+                        'dashboard/deleteWidget',
+                        'id'=>$dashboard_system_module->dashboard_id,
+                        'dashboard_system_module_id' => $dashboard_system_module->id,
+                    ),
+                    array(
+                        'class'=>'btn btn-xs',
+                        'title'=>'Удалить виджет'
                     )
                 );?>
             </div>

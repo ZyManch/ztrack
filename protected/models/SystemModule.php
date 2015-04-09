@@ -4,6 +4,8 @@ class SystemModule extends CSystemModule {
 
     const TYPE_USER = 'user';
     const TYPE_PROJECT = 'project';
+    const TYPE_WIDGET = 'widget';
+
     const INSTALLATION_FORCE = 'force';
     const INSTALLATION_INSTALL = 'install';
     const INSTALLATION_NOT_INSTALL = 'not_install';

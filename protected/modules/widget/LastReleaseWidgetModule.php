@@ -13,7 +13,7 @@ class LastReleaseWidgetModule extends AbstractWidgetModule {
     /** @var  Page */
     protected $_lastRelease;
 
-    public function getLabel() {
+    public function getTitle() {
         return 'Текущий '.$this->getLastRelease()->getTitle();
     }
 
@@ -39,7 +39,9 @@ class LastReleaseWidgetModule extends AbstractWidgetModule {
         return ReleasePage::model()->find($criteria);
     }
 
-
+    public function convertPostToConfigure($postData) {
+        return $postData;
+    }
 
     public function renderWidget() {
         Yii::app()->controller->renderPartial(
