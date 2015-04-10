@@ -7,6 +7,13 @@
 */
 class Dashboard extends CDashboard {
 
+
+    public function _extendedRelations() {
+        return array(
+            'dashboardSystemModules' => array(self::HAS_MANY, 'DashboardSystemModule', 'dashboard_id','order'=>'dashboardSystemModules.position ASC','index'=>'id')
+        );
+    }
+
     public function getForUser($userId, $projectId = null) {
         $criteria = new CDbCriteria();
         $criteria->addCondition('(t.user_id IS NULL OR t.user_id=:user)');

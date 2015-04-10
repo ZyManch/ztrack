@@ -15,6 +15,7 @@
     * @property string $changed
     *
     * The followings are the available model relations:
+        * @property DashboardSystemModule[] $dashboardSystemModules
         * @property GroupProjectModule[] $groupProjectModules
         * @property GuestSystemModule[] $guestSystemModules
         * @property ProjectSystemModule[] $projectSystemModules
@@ -41,6 +42,7 @@ class CSystemModule extends ActiveRecord {
     */
     protected function _baseRelations()	{
         return array(
+            'dashboardSystemModules' => array(self::HAS_MANY, 'DashboardSystemModule', 'system_module_id'),
             'groupProjectModules' => array(self::HAS_MANY, 'GroupProjectModule', 'system_module_id'),
             'guestSystemModules' => array(self::HAS_MANY, 'GuestSystemModule', 'system_module_id'),
             'projectSystemModules' => array(self::HAS_MANY, 'ProjectSystemModule', 'system_module_id'),

@@ -7,14 +7,28 @@
  * @var Dashboard[] $dashboards
  * @var int $id
  */
-Yii::app()->clientScript->registerScript(
-    'WinMove',
-    'var panels = WinMove(function(event, ui) {
-        alert(panels.sortable("serialize",{"attribute":"data-panel"}));
-    });
-    '
-);
 $selectedDashboard = ($id && isset($dashboards[$id]) ? $dashboards[$id] : null );
+if ($selectedDashboard) {
+    Yii::app()->clientScript->registerScript(
+        'WinMove',
+        sprintf(
+            '$.swappable({
+                container: ".swappable-container",
+                element: ".swappable-panel",
+                handle: ".ibox-title",
+                attribute: "data-panel",
+                update: function(fromId,toId) {
+                    $.ajax({
+                        "type": "POST",
+                        "url": "%s",
+                        "data": {"from":fromId,"to":toId}
+                    });
+                }
+            });',
+            CHtml::normalizeUrl(array('dashboard/swap','id'=>$id))
+        )
+    );
+}
 ?>
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-xs-12">
@@ -57,7 +71,7 @@ $selectedDashboard = ($id && isset($dashboards[$id]) ? $dashboards[$id] : null )
                     <div class="row">
                     <?php $row = 0;?>
                 <?php endif;?>
-                <div class="col-md-<?php echo $dashboardSystemModule->rows;?> panel-dragtable">
+                <div class="col-md-<?php echo $dashboardSystemModule->rows;?> swappable-container">
                     <?php echo $dashboardSystemModule;?>
                 </div>
                 <?php $row +=$dashboardSystemModule->rows ;?>

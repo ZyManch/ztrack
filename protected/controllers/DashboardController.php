@@ -200,6 +200,25 @@ class DashboardController extends Controller {
         }
     }
 
+    public function actionSwap($id) {
+        $model = self::loadModel($id);
+        $fromId = Yii::app()->request->getParam('from');
+        $toId = Yii::app()->request->getParam('to');
+        $modules = $model->dashboardSystemModules;
+        if (!isset($modules[$fromId])) {
+            throw new Exception('Widget not found:'.$fromId);
+        }
+        if (!isset($modules[$toId])) {
+            throw new Exception('Widget not found:'.$fromId);
+        }
+
+        $oldPosition = $modules[$fromId]->position;
+        $modules[$fromId]->position = $modules[$toId]->position;
+        $modules[$toId]->position = $oldPosition;
+        $modules[$fromId]->save();
+        $modules[$toId]->save();
+
+    }
     /**
      * @param $id
      * @return Dashboard

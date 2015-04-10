@@ -12,7 +12,7 @@
     *
     * The followings are the available model relations:
         * @property Dashboard[] $dashboards
-        * @property GroupAccess[] $groupAccesses
+        * @property GroupProject[] $groupProjects
         * @property Page[] $pages
         * @property PageHistory[] $pageHistories
         * @property Project $parent

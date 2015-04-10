@@ -8,7 +8,7 @@
  */
 $systemModule = $dashboard_system_module->getSystemModule();
 ?>
-<div class="ibox widget float-e-margins"  data-panel="widget_<?php echo $dashboard_system_module->id;?>">
+<div class="ibox widget float-e-margins swappable-panel"  data-panel="<?php echo $dashboard_system_module->id;?>">
     <div class="ibox-title">
         <h5><?php echo $systemModule->getTitle();?></h5>
         <div class="ibox-tools">

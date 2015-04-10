@@ -29,6 +29,7 @@ if ($miniNavbar) {
     $clientScript->registerScriptFile('/js/jquery.nestable.js');
     $clientScript->registerScriptFile('/js/jquery.cookie.js');
     $clientScript->registerScriptFile('/js/jquery-ui.min.js');
+    $clientScript->registerScriptFile('/js/jquery.ui.swappable.js');
     $clientScript->registerScriptFile('/js/inspinia.js');
     $clientScript->registerScriptFile('/js/pace.min.js');
     ?>

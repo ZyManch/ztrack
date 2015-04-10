@@ -19,10 +19,15 @@ class ArCommand extends CConsoleCommand {
         $tables = $this->_getTables();
         $model = new TmodelCode();
         $templatePath = Yii::getPathOfAlias('application.gii.tmodel.templates.default');
+        /** @var CodeGenerator $controller */
+        $module = new stdClass();
+        $module->newDirMode = 0777;
+        $module->newFileMode = 0777;
         $controller = Yii::createComponent(array(
             'class'=>'CodeGenerator',
             'templates'=>array('default' => $templatePath),
-        ),'gii');
+        ),'gii',$module);
+
         Yii::app()->setComponent('controller',$controller);
         foreach ($tables as $table) {
             $className = $this->_underscoreToCamelCase($table);
@@ -39,7 +44,6 @@ class ArCommand extends CConsoleCommand {
             }
             $model->save();
         }
-
     }
 
 

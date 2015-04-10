@@ -11,6 +11,7 @@ class TmodelCode extends CCodeModel
     public $buildRelations=true;
     public $commentsAsLabels=false;
 
+
     /**
      * @var array list of candidate relation code. The array are indexed by AR class names and relation names.
      * Each element represents the code of the one relation in one AR class.

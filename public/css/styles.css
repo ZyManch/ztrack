@@ -36,6 +36,18 @@ tr.immediately td, .label.label-immediately {
     border-radius: 0px 0px 5px 5px ;
 }
 
+.swappable-container {
+    min-height: 150px;
+}
 .widget .ibox-content {
     overflow-x: auto;
+}
+.from-dragged {
+    background-color: #f0f0f0;
+    border: 1px dashed gray;
+}
+.being-dragged {
+    opacity: 0.5;
+    position: relative;
+    z-index: 1000;
 }

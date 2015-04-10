@@ -39,10 +39,10 @@ $(document).ready(function () {
         var $body = $('body');
         if ($body.hasClass('mini-navbar')) {
             $("body").removeClass("mini-navbar");
-            $.removeCookie('mini-menu');
+            $.removeCookie('mini-menu',{path: '/'});
         } else {
             $("body").addClass("mini-navbar");
-            $.cookie('mini-menu',1, { expires: 93 });
+            $.cookie('mini-menu',1, { expires: 93, path: '/' });
         }
         SmoothlyMenu();
         return false;

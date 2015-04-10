@@ -8,7 +8,7 @@
  */
 $systemModule = $dashboard_system_module->getSystemModule();
 ?>
-<div class="widget yellow-bg p-lg text-center"  data-panel="widget_<?php echo $dashboard_system_module->id;?>">
+<div class="widget yellow-bg p-lg text-center  swappable-panel"  data-panel="<?php echo $dashboard_system_module->id;?>">
     <h5><?php echo $systemModule->getTitle();?></h5>
     <div class="panel-body">
         <?php echo $systemModule->renderWidget();?>

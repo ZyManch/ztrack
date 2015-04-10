@@ -11,6 +11,7 @@
     * @property string $title
     * @property integer $rows
     * @property string $params
+    * @property string $position
     * @property string $status
     * @property string $changed
     *
@@ -26,9 +27,9 @@ class CDashboardSystemModule extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('dashboard_id, system_module_id, title', 'required'),
+            array('dashboard_id, system_module_id, title, position', 'required'),
 			array('rows', 'numerical', 'integerOnly'=>true),
-			array('dashboard_id, system_module_id', 'length', 'max'=>10),
+			array('dashboard_id, system_module_id, position', 'length', 'max'=>10),
 			array('type, status', 'length', 'max'=>7),
 			array('title', 'length', 'max'=>64),
 			array('params', 'safe')        );
@@ -53,6 +54,7 @@ class CDashboardSystemModule extends ActiveRecord {
             'title' => 'Title',
             'rows' => 'Rows',
             'params' => 'Params',
+            'position' => 'Position',
             'status' => 'Status',
             'changed' => 'Changed',
         );

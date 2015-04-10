@@ -9,7 +9,7 @@
 $systemModule = $dashboard_system_module->getSystemModule();
 ?>
 
-<div class="widget red-bg p-lg text-center"  data-panel="widget_<?php echo $dashboard_system_module->id;?>">
+<div class="widget red-bg p-lg text-center  swappable-panel"  data-panel="<?php echo $dashboard_system_module->id;?>">
     <h3>
         <?php echo $systemModule->getTitle();?>
             <?php echo CHtml::link(
