@@ -7,4 +7,4 @@
  * @var GraphAbstract $graph
  *
  */
-echo $graph->render(array('height'=>'100'));
+echo $graph->render(array('height'=>'300px','style'=>'height:300px'));

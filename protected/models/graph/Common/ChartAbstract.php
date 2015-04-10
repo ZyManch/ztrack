@@ -12,4 +12,8 @@ abstract class ChartAbstract extends GraphAbstract {
         $clientScript->registerScriptFile('/js/Chart.min.js');
     }
 
+    public function render($htmlOptions = array()) {
+        $htmlOptions['height'] = 100;
+        return parent::render($htmlOptions);
+    }
 }

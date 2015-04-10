@@ -18,7 +18,7 @@ $graph->addData($graphData);
     <div class="ibox float-e-margins col-xs-12">
         <div class="ibox-content">
             <div>
-                <?php echo $graph->render(array('height'=>100));?>
+                <?php echo $graph->render(array('height'=>100,'style'=>'height:100px'));?>
             </div>
         </div>
     </div>

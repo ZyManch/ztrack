@@ -36,15 +36,23 @@ $(document).ready(function () {
 
     // minimalize menu
     $('.navbar-minimalize').click(function () {
-        $("body").toggleClass("mini-navbar");
+        var $body = $('body');
+        if ($body.hasClass('mini-navbar')) {
+            $("body").removeClass("mini-navbar");
+            $.removeCookie('mini-menu');
+        } else {
+            $("body").addClass("mini-navbar");
+            $.cookie('mini-menu',1, { expires: 93 });
+        }
         SmoothlyMenu();
-    })
+        return false;
+    });
 
     // tooltips
     $('.tooltip-demo').tooltip({
         selector: "[data-toggle=tooltip]",
         container: "body"
-    })
+    });
 
     // Move modal to body
     // Fix Bootstrap backdrop issu with animation.css
@@ -127,19 +135,21 @@ function SmoothlyMenu() {
 }
 
 // Dragable panels
-function WinMove() {
-    var element = "[class*=col]";
+function WinMove(updateFunction) {
+    var element = ".panel-dragtable";
     var handle = ".ibox-title";
-    var connect = "[class*=col]";
-    $(element).sortable(
+    var connect = ".panel-dragtable";
+    return $(element).sortable(
         {
             handle: handle,
             connectWith: connect,
             tolerance: 'pointer',
             forcePlaceholderSize: true,
             opacity: 0.8,
+            update: updateFunction
         })
         .disableSelection();
+
 };
 
 

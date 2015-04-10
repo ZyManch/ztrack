@@ -27,6 +27,11 @@ class GraphData  {
         return array_values($this->_data);
     }
 
+    public function getLastValue() {
+        $values = $this->getValues();
+        return array_pop($values);
+    }
+
     public function getData() {
         return $this->_data;
     }

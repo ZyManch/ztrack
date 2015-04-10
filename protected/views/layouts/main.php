@@ -1,4 +1,12 @@
-<?php /* @var $this Controller */ ?>
+<?php
+/**
+ * @var $this Controller
+ */
+$miniNavbar =  (isset($_COOKIE['mini-menu']) && $_COOKIE['mini-menu']);
+if ($miniNavbar) {
+    Yii::app()->clientScript->registerScript('mini-menu','SmoothlyMenu()');
+}
+?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru" class="gt-ie8 gt-ie9 not-ie">
 <head>
@@ -19,6 +27,8 @@
     $clientScript->registerScriptFile('/js/jquery.metisMenu.js');
     $clientScript->registerScriptFile('/js/jquery.slimscroll.min.js');
     $clientScript->registerScriptFile('/js/jquery.nestable.js');
+    $clientScript->registerScriptFile('/js/jquery.cookie.js');
+    $clientScript->registerScriptFile('/js/jquery-ui.min.js');
     $clientScript->registerScriptFile('/js/inspinia.js');
     $clientScript->registerScriptFile('/js/pace.min.js');
     ?>
@@ -29,7 +39,7 @@
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 
-<body class="skin-3">
+<body class="skin-3<?php if($miniNavbar):?> mini-navbar<?php endif;?>">
     <div id="wrapper">
 
         <?php if (!Yii::app()->user->isGuest):?>

@@ -14,6 +14,7 @@ Yii::app()->clientScript->registerScript('progress','
             });
             $("#progress-bar").Link("lower").to($("#progress-input"),null, wNumb({decimals: 0}));
 ');
+$projectIds = array_keys(Yii::app()->user->getUser()->getAvailableProjects());
 ?>
 
 <div class="form">
@@ -40,7 +41,7 @@ Yii::app()->clientScript->registerScript('progress','
 
         <?php echo $form->labelEx($model,'project_id',array('class'=>'col-sm-2 control-label')); ?>
         <div class="col-sm-4">
-            <?php echo $form->textField($model,'project_id',array('size'=>10,'maxlength'=>10,'class'=>'form-control')); ?>
+            <?php echo $form->dropDownList($model,'project_id',Project::getProjectsAsList($projectIds),array('class'=>'form-control')); ?>
             <?php echo $form->error($model,'project_id'); ?>
         </div>
 

@@ -22,6 +22,10 @@ class ActiveRecord extends CActiveRecord {
                     // 'defaults'=>array(),           /* optional line */
                     // 'defaultStickOnClear'=>false   /* optional line */
                 ),
+                /*
+                'EAdvancedArBehavior' => array(
+                    'class' => 'EAdvancedArBehavior',
+                ),*/
             );
         }
         return array();

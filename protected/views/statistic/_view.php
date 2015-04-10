@@ -19,7 +19,7 @@ $graph->addData($graphData);
     </div>
     <div class="ibox-content">
         <div>
-            <?php echo $graph->render(array('height'=>100));?>
+            <?php echo $graph->render(array('height'=>100,'style'=>'height:100px'));?>
         </div>
     </div>
 </div>

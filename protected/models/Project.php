@@ -130,10 +130,10 @@ class Project extends CProject {
         foreach ($projects as $project) {
             $result[$project['id']] = str_repeat('-',$level).' '.$project['label'];
             if ($project['items']) {
-                $result = array_merge(
-                    $result,
-                    self::_getProjectsFromTreeAsList($project['items'],$level+1)
-                );
+                $items = self::_getProjectsFromTreeAsList($project['items'],$level+1);
+                foreach ($items as $key => $item) {
+                    $result[$key] = $item;
+                }
             }
         }
         return $result;

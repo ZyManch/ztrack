@@ -12,8 +12,19 @@
 <div class="row">
     <div class="col-md-12">
         <div class="ibox float-e-margins">
-            <div class="ibox-content">
-
+            <div class="ibox-content text-right">
+                <?php echo CHtml::link(
+                    'Create ticket',
+                    array(
+                        'project/view',
+                        'id' => Yii::app()->request->getParam('id'),
+                        'module'=>'tickets',
+                        'action'=>'create'
+                    ),
+                    array(
+                        'class'=>'btn btn-primary'
+                    )
+                );?>
             </div>
         </div>
     </div>

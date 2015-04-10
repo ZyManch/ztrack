@@ -8,12 +8,10 @@
  */
 $systemModule = $dashboard_system_module->getSystemModule();
 ?>
-<div class="stat-panel col-md-<?php echo $dashboard_system_module->rows;?>">
-    <div class="widget lazur-bg p-xl">
-        <h5><?php echo $systemModule->getTitle();?></h5>
-        <div class="panel-body">
-            <?php echo $systemModule->renderWidget();?>
+<div class="widget lazur-bg p-xl"  data-panel="widget_<?php echo $dashboard_system_module->id;?>">
+    <h5><?php echo $systemModule->getTitle();?></h5>
+    <div class="panel-body">
+        <?php echo $systemModule->renderWidget();?>
 
-        </div>
     </div>
 </div>

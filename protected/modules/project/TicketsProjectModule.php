@@ -106,6 +106,9 @@ class TicketsProjectModule extends AbstractProjectModule {
         $className = get_class($model);
         if (isset($_POST[$className])) {
             $model->attributes = $_POST[$className];
+            if (!$model->parent_page_id) {
+                $model->parent_page_id = null;
+            }
             if ($model->save()) {
                 $this->redirect(array(
                     'action'=>'view',
@@ -131,6 +134,9 @@ class TicketsProjectModule extends AbstractProjectModule {
             $model->level_id = $parent->level_id;
         }catch (Exception $e) {
             $parent = null;
+        }
+        if (!$model->parent_page_id) {
+            $model->parent_page_id = null;
         }
         $model->project_id = $projectId;
         $model->author_user_id = Yii::app()->user->id;

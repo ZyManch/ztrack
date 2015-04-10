@@ -13,7 +13,7 @@
         <ul class="nav" id="side-menu">
             <?php foreach (Yii::app()->user->getSystemModules() as $systemModule):?>
                 <?php foreach ($systemModule->getMainMenuItems() as $menu):?>
-                    <?php $this->renderPartial('//layouts/_mainMenuItem',array('menu'=>$menu));?>
+                    <?php $this->renderPartial('//layouts/_mainMenuItem',array('menu'=>$menu,'isTopMenu'=>true));?>
                 <?php endforeach;?>
             <?php endforeach;?>
         </ul>
