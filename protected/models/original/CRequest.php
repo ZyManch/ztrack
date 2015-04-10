@@ -5,6 +5,7 @@
 *
 * The followings are the available columns in table 'request':
     * @property string $id
+    * @property string $error_id
     * @property string $browser_id
     * @property string $os_id
     * @property string $user_ip
@@ -18,6 +19,7 @@
     * @property string $changed
     *
     * The followings are the available model relations:
+        * @property Error $error
         * @property Branch $branch
         * @property Url $url
         * @property Method $method
@@ -36,8 +38,8 @@ class CRequest extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('browser_id, os_id, user_ip, code, method_id, url_id, branch_id', 'required'),
-			array('browser_id, os_id, user_ip, method_id, url_id, server_id, branch_id', 'length', 'max'=>10),
+            array('error_id, browser_id, os_id, user_ip, code, method_id, url_id, branch_id', 'required'),
+			array('error_id, browser_id, os_id, user_ip, method_id, url_id, server_id, branch_id', 'length', 'max'=>10),
 			array('code', 'length', 'max'=>32),
 			array('referer_url_id', 'length', 'max'=>11),
 			array('status', 'length', 'max'=>7)        );
@@ -48,6 +50,7 @@ class CRequest extends ActiveRecord {
     */
     protected function _baseRelations()	{
         return array(
+            'error' => array(self::BELONGS_TO, 'Error', 'error_id'),
             'branch' => array(self::BELONGS_TO, 'Branch', 'branch_id'),
             'url' => array(self::BELONGS_TO, 'Url', 'url_id'),
             'method' => array(self::BELONGS_TO, 'Method', 'method_id'),
@@ -63,6 +66,7 @@ class CRequest extends ActiveRecord {
     public function attributeLabels() {
         return array(
             'id' => 'ID',
+            'error_id' => 'Error',
             'browser_id' => 'Browser',
             'os_id' => 'Os',
             'user_ip' => 'User Ip',

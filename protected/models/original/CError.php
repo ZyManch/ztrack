@@ -1,9 +1,9 @@
 <?php
 
 /**
-* This is the model class for table "exception".
+* This is the model class for table "error".
 *
-* The followings are the available columns in table 'exception':
+* The followings are the available columns in table 'error':
     * @property string $id
     * @property integer $title
     * @property string $level_id
@@ -15,11 +15,12 @@
     *
     * The followings are the available model relations:
         * @property Level $level
+        * @property Request[] $requests
 */
-class CProjectException extends ActiveRecord {
+class CError extends ActiveRecord {
 
     public function tableName()	{
-        return 'exception';
+        return 'error';
     }
 
     public function rules()	{
@@ -37,6 +38,7 @@ class CProjectException extends ActiveRecord {
     protected function _baseRelations()	{
         return array(
             'level' => array(self::BELONGS_TO, 'Level', 'level_id'),
+            'requests' => array(self::HAS_MANY, 'Request', 'error_id'),
         );
     }
 

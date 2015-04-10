@@ -14,7 +14,7 @@
     * @property string $changed
     *
     * The followings are the available model relations:
-        * @property Exception[] $exceptions
+        * @property Error[] $errors
         * @property Company $company
         * @property Page[] $pages
         * @property PageHistory[] $pageHistories
@@ -40,7 +40,7 @@ class CLevel extends ActiveRecord {
     */
     protected function _baseRelations()	{
         return array(
-            'exceptions' => array(self::HAS_MANY, 'Exception', 'level_id'),
+            'errors' => array(self::HAS_MANY, 'Error', 'level_id'),
             'company' => array(self::BELONGS_TO, 'Company', 'company_id'),
             'pages' => array(self::HAS_MANY, 'Page', 'level_id'),
             'pageHistories' => array(self::HAS_MANY, 'PageHistory', 'level_id'),
