@@ -8,7 +8,8 @@
         "yiisoft/yii": "dev-master",
         "yiiext/migrate-command": "dev-master",
         "pentium10/yii-remember-filters-gridview":"dev-master",
-        "sebastian/diff": "dev-master"
+        "sebastian/diff": "dev-master",
+        "piwik/device-detector": "dev-master"
     },
 
     "autoload": {

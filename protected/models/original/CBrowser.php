@@ -6,7 +6,6 @@
 * The followings are the available columns in table 'browser':
     * @property string $id
     * @property string $browser
-    * @property string $name
     * @property string $version
     * @property string $status
     * @property string $changed
@@ -24,7 +23,7 @@ class CBrowser extends ActiveRecord {
         return array(
             array('browser', 'required'),
 			array('browser', 'length', 'max'=>255),
-			array('name, version', 'length', 'max'=>32),
+			array('version', 'length', 'max'=>32),
 			array('status', 'length', 'max'=>7)        );
     }
 
@@ -41,7 +40,6 @@ class CBrowser extends ActiveRecord {
         return array(
             'id' => 'ID',
             'browser' => 'Browser',
-            'name' => 'Name',
             'version' => 'Version',
             'status' => 'Status',
             'changed' => 'Changed',

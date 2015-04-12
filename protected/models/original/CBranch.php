@@ -12,7 +12,7 @@
     *
     * The followings are the available model relations:
         * @property Company $company
-        * @property Request[] $requests
+        * @property Error[] $errors
 */
 class CBranch extends ActiveRecord {
 
@@ -34,7 +34,7 @@ class CBranch extends ActiveRecord {
     protected function _baseRelations()	{
         return array(
             'company' => array(self::BELONGS_TO, 'Company', 'company_id'),
-            'requests' => array(self::HAS_MANY, 'Request', 'branch_id'),
+            'errors' => array(self::HAS_MANY, 'Error', 'branch_id'),
         );
     }
 

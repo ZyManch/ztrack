@@ -266,7 +266,7 @@ class ErrorCommand extends CConsoleCommand {
 
                         // Optional: browser
                         // The user agent string
-                        "browser"               => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3)",
+                        "browser"               => "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.154 Safari/537.36 OPR/20.0.1387.82",
 
                         // Optional: code_version
                         // String describing the running code version in javascript

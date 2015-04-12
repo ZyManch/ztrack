@@ -5,7 +5,7 @@
 *
 * The followings are the available columns in table 'error':
     * @property string $id
-    * @property integer $title
+    * @property string $title
     * @property string $hash
     * @property string $level_id
     * @property string $project_id
@@ -17,9 +17,9 @@
     * @property string $changed
     *
     * The followings are the available model relations:
-        * @property Branch $branch
         * @property Level $level
         * @property Project $project
+        * @property Branch $branch
         * @property Request[] $requests
 */
 class CError extends ActiveRecord {
@@ -31,7 +31,8 @@ class CError extends ActiveRecord {
     public function rules()	{
         return array(
             array('title, hash, level_id, branch_id', 'required'),
-			array('title, trace_line', 'numerical', 'integerOnly'=>true),
+			array('trace_line', 'numerical', 'integerOnly'=>true),
+			array('title', 'length', 'max'=>128),
 			array('hash', 'length', 'max'=>32),
 			array('level_id, project_id, branch_id, total_count', 'length', 'max'=>10),
 			array('trace_file', 'length', 'max'=>200),
@@ -43,9 +44,9 @@ class CError extends ActiveRecord {
     */
     protected function _baseRelations()	{
         return array(
-            'branch' => array(self::BELONGS_TO, 'Branch', 'branch_id'),
             'level' => array(self::BELONGS_TO, 'Level', 'level_id'),
             'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
+            'branch' => array(self::BELONGS_TO, 'Branch', 'branch_id'),
             'requests' => array(self::HAS_MANY, 'Request', 'error_id'),
         );
     }

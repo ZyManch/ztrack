@@ -6,7 +6,7 @@
 * The followings are the available columns in table 'os':
     * @property string $id
     * @property string $os
-    * @property string $name
+    * @property string $is_device
     * @property string $version
     * @property string $status
     * @property string $changed
@@ -24,7 +24,8 @@ class COs extends ActiveRecord {
         return array(
             array('os', 'required'),
 			array('os', 'length', 'max'=>255),
-			array('name, version', 'length', 'max'=>32),
+			array('is_device', 'length', 'max'=>3),
+			array('version', 'length', 'max'=>32),
 			array('status', 'length', 'max'=>7)        );
     }
 
@@ -41,7 +42,7 @@ class COs extends ActiveRecord {
         return array(
             'id' => 'ID',
             'os' => 'Os',
-            'name' => 'Name',
+            'is_device' => 'Is Device',
             'version' => 'Version',
             'status' => 'Status',
             'changed' => 'Changed',

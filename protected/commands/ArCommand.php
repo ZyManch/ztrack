@@ -50,6 +50,7 @@ class ArCommand extends CConsoleCommand {
             }
             $model->save();
         }
+        exec('git add models');
         print "Done\n";
     }
 
