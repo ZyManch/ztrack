@@ -21,6 +21,7 @@ return array(
         'application.models.*',
         'application.forms.*',
         'application.components.*',
+        'application.components.ErrorSaver.*',
         'application.controllers.*',
         'application.modules.user.*',
         'application.modules.project.*',

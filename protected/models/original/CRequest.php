@@ -14,19 +14,17 @@
     * @property string $url_id
     * @property string $referer_url_id
     * @property string $server_id
-    * @property string $branch_id
     * @property string $status
     * @property string $changed
     *
     * The followings are the available model relations:
-        * @property Error $error
-        * @property Branch $branch
         * @property Url $url
         * @property Method $method
         * @property Server $server
         * @property Url $refererUrl
         * @property Browser $browser
         * @property Os $os
+        * @property Error $error
         * @property RequestData[] $requestDatas
         * @property Trace[] $traces
 */
@@ -38,8 +36,8 @@ class CRequest extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('error_id, browser_id, os_id, user_ip, code, method_id, url_id, branch_id', 'required'),
-			array('error_id, browser_id, os_id, user_ip, method_id, url_id, server_id, branch_id', 'length', 'max'=>10),
+            array('error_id, browser_id, os_id, user_ip, code, method_id, url_id', 'required'),
+			array('error_id, browser_id, os_id, user_ip, method_id, url_id, server_id', 'length', 'max'=>10),
 			array('code', 'length', 'max'=>32),
 			array('referer_url_id', 'length', 'max'=>11),
 			array('status', 'length', 'max'=>7)        );
@@ -50,14 +48,13 @@ class CRequest extends ActiveRecord {
     */
     protected function _baseRelations()	{
         return array(
-            'error' => array(self::BELONGS_TO, 'Error', 'error_id'),
-            'branch' => array(self::BELONGS_TO, 'Branch', 'branch_id'),
             'url' => array(self::BELONGS_TO, 'Url', 'url_id'),
             'method' => array(self::BELONGS_TO, 'Method', 'method_id'),
             'server' => array(self::BELONGS_TO, 'Server', 'server_id'),
             'refererUrl' => array(self::BELONGS_TO, 'Url', 'referer_url_id'),
             'browser' => array(self::BELONGS_TO, 'Browser', 'browser_id'),
             'os' => array(self::BELONGS_TO, 'Os', 'os_id'),
+            'error' => array(self::BELONGS_TO, 'Error', 'error_id'),
             'requestDatas' => array(self::HAS_MANY, 'RequestData', 'request_id'),
             'traces' => array(self::HAS_MANY, 'Trace', 'request_id'),
         );
@@ -75,7 +72,6 @@ class CRequest extends ActiveRecord {
             'url_id' => 'Url',
             'referer_url_id' => 'Referer Url',
             'server_id' => 'Server',
-            'branch_id' => 'Branch',
             'status' => 'Status',
             'changed' => 'Changed',
         );

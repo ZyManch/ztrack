@@ -12,6 +12,7 @@ class ArCommand extends CConsoleCommand {
     );
 
     public function run($args) {
+        print "Init AR builder...\n";
         Yii::import('system.gii.*',true);
         Yii::import('system.gii.controllers.*',true);
         Yii::import('system.gii.generators.model.*',true);
@@ -29,6 +30,11 @@ class ArCommand extends CConsoleCommand {
         ),'gii',$module);
 
         Yii::app()->setComponent('controller',$controller);
+        print "Deleting old files...\n";
+        $originalPath = Yii::getPathOfAlias('application.models.original');
+        array_map('unlink', glob($originalPath."/*.php"));
+        rmdir($originalPath);
+        print "Generating new models...\n";
         foreach ($tables as $table) {
             $className = $this->_underscoreToCamelCase($table);
             if (isset($this->aliases[$className])) {
@@ -44,6 +50,7 @@ class ArCommand extends CConsoleCommand {
             }
             $model->save();
         }
+        print "Done\n";
     }
 
 

@@ -6,7 +6,10 @@
 * The followings are the available columns in table 'error':
     * @property string $id
     * @property integer $title
+    * @property string $hash
     * @property string $level_id
+    * @property string $project_id
+    * @property string $branch_id
     * @property string $total_count
     * @property string $trace_file
     * @property integer $trace_line
@@ -14,7 +17,9 @@
     * @property string $changed
     *
     * The followings are the available model relations:
+        * @property Branch $branch
         * @property Level $level
+        * @property Project $project
         * @property Request[] $requests
 */
 class CError extends ActiveRecord {
@@ -25,9 +30,10 @@ class CError extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('title, level_id', 'required'),
+            array('title, hash, level_id, branch_id', 'required'),
 			array('title, trace_line', 'numerical', 'integerOnly'=>true),
-			array('level_id, total_count', 'length', 'max'=>10),
+			array('hash', 'length', 'max'=>32),
+			array('level_id, project_id, branch_id, total_count', 'length', 'max'=>10),
 			array('trace_file', 'length', 'max'=>200),
 			array('status', 'length', 'max'=>7)        );
     }
@@ -37,7 +43,9 @@ class CError extends ActiveRecord {
     */
     protected function _baseRelations()	{
         return array(
+            'branch' => array(self::BELONGS_TO, 'Branch', 'branch_id'),
             'level' => array(self::BELONGS_TO, 'Level', 'level_id'),
+            'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
             'requests' => array(self::HAS_MANY, 'Request', 'error_id'),
         );
     }
@@ -46,7 +54,10 @@ class CError extends ActiveRecord {
         return array(
             'id' => 'ID',
             'title' => 'Title',
+            'hash' => 'Hash',
             'level_id' => 'Level',
+            'project_id' => 'Project',
+            'branch_id' => 'Branch',
             'total_count' => 'Total Count',
             'trace_file' => 'Trace File',
             'trace_line' => 'Trace Line',

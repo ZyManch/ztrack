@@ -16,6 +16,7 @@
         * @property Group[] $groups
         * @property Label[] $labels
         * @property Level[] $levels
+        * @property Project[] $projects
         * @property Server[] $servers
         * @property Statistic[] $statistics
         * @property User[] $users
@@ -44,6 +45,7 @@ class CCompany extends ActiveRecord {
             'groups' => array(self::HAS_MANY, 'Group', 'company_id'),
             'labels' => array(self::HAS_MANY, 'Label', 'company_id'),
             'levels' => array(self::HAS_MANY, 'Level', 'company_id'),
+            'projects' => array(self::HAS_MANY, 'Project', 'company_id'),
             'servers' => array(self::HAS_MANY, 'Server', 'company_id'),
             'statistics' => array(self::HAS_MANY, 'Statistic', 'company_id'),
             'users' => array(self::HAS_MANY, 'User', 'company_id'),

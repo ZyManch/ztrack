@@ -26,7 +26,7 @@ class ErrorCommand extends CConsoleCommand {
                 // production environment.
                 // You don't need to configure anything in the Rollbar UI for new environment names;
                 // we'll detect them automatically.
-                "environment"  => "production",
+                "environment"  => "master",
 
                 // Required: body
                 // The main data being sent. It can either be a message, an exception, or a crash report.
@@ -118,13 +118,6 @@ class ErrorCommand extends CConsoleCommand {
 
                     ),
 
-                    // Option 2: "trace_chain"
-                    // Used for exceptions with inner exceptions or causes
-                    "trace_chain"  => array(
-                        // Each element in the list should be a "trace" object, as shown above
-                        // Must contain at least one element.
-                    ),
-
                     // Option 3: "message"
                     // Only one of "trace", "trace_chain", "message", or "crash_report" should be present.
                     // Presence of a "message" key means that this payload is a log message.
@@ -162,17 +155,6 @@ class ErrorCommand extends CConsoleCommand {
                 // When this occurred, as a unix timestamp.
                 "timestamp"    => 1369188822,
 
-                // Optional: code_version
-                // A string, up to 40 characters, describing the version of the application code
-                // Rollbar understands these formats:
-                // - semantic version (i.e. "2.1.12")
-                // - integer (i.e. "45")
-                // - git SHA (i.e. "3da541559918a808c2402bba5012f6c60b27661c")
-                // If you have multiple code versions that are relevant, those can be sent inside "client" and "server"
-                // (see those sections below)
-                // For most cases, just send it here.
-                "code_version" => "3da541559918a808c2402bba5012f6c60b27661c",
-
                 // Optional: platform
                 // The platform on which this occurred. Meaningful platform names:
                 // "browser", "android", "ios", "flash", "client", "heroku", "google-app-engine"
@@ -182,10 +164,6 @@ class ErrorCommand extends CConsoleCommand {
                 // Optional: language
                 // The name of the language your code is written in.
                 "language"     => "python",
-
-                // Optional: framework
-                // The name of the framework your code uses
-                "framework"    => "pyramid",
 
                 // Optional: context
                 // An identifier for which part of your application this event came from.
@@ -312,43 +290,16 @@ class ErrorCommand extends CConsoleCommand {
                 // Any arbitrary metadata you want to send. "custom" itself should be an object.
                 "custom"       => array(),
 
-                // Optional: fingerprint
-                // A string controlling how this occurrence should be grouped. Occurrences with the same
-                // fingerprint are grouped together. See the "Grouping" guide for more information.
-                // Should be a string up to 40 characters long; if longer than 40 characters, we'll use its SHA1 hash.
-                // If omitted, we'll determine this on the backend.
-                "fingerprint"  => "50a5ef9dbcf9d0e0af2d4e25338da0d430f20e52",
-
                 // Optional: title
                 // A string that will be used as the title of the Item occurrences will be grouped into.
                 // Max length 255 characters.
                 // If omitted, we'll determine this on the backend.
                 "title"        => "NameError when setting last project in views/project.py",
 
-                // Optional: uuid
-                // A string, up to 36 characters, that uniquely identifies this occurrence.
-                // While it can now be any latin1 string, this may change to be a 16 byte field in the future.
-                // We recommend using a UUID4 (16 random bytes).
-                // The UUID space is unique to each project, and can be used to look up an occurrence later.
-                // It is also used to detect duplicate requests. If you send the same UUID in two payloads, the second
-                // one will be discarded.
-                "uuid"         => "d4c7acef55bf4c9ea95e4fe9428a8287",
-
-                // Optional: notifier
-                // Describes the library used to send this event.
-                "notifier"     => array(
-                    // Optional: name
-                    // Name of the library
-                    "name"    => "pyrollbar",
-
-                    // Optional: version
-                    // Library version string
-                    "version" => "0.5.5"
-                )
 
             )
         );
-        $parser = new ErrorSaver();
-        $parser->parseAsRollbarAndSave(json_encode($demo));
+        $parser = new RollbarErrorSaver();
+        $parser->save(json_encode($demo));
     }
 }
