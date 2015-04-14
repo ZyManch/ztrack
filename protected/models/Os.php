@@ -7,4 +7,13 @@
  */
 class Os extends COs {
 
+    public $count;
+
+    public function rules()	{
+        return array_merge(
+            parent::rules(),
+            array('count','number')
+        );
+    }
+
 }

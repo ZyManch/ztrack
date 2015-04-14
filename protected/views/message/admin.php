@@ -44,6 +44,9 @@ $('.search-form form').submit(function(){
             'id'=>'message-grid',
             'dataProvider'=>$model->search(),
             'filter'=>$model,
+            'template'=>'{items} {summary} {pager}',
+            'itemsCssClass' => 'table table-hover',
+            'htmlOptions' => array('class'=>'project-list'),
             'columns'=>array(
         		'id',
 		'user_id',
