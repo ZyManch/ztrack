@@ -9,6 +9,7 @@
     * @property string $browser_id
     * @property string $os_id
     * @property string $user_ip
+    * @property string $country_id
     * @property string $code
     * @property string $method_id
     * @property string $url_id
@@ -18,6 +19,7 @@
     * @property string $changed
     *
     * The followings are the available model relations:
+        * @property Country $country
         * @property Url $url
         * @property Method $method
         * @property Server $server
@@ -36,8 +38,8 @@ class CRequest extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('error_id, browser_id, os_id, user_ip, code, method_id, url_id', 'required'),
-			array('error_id, browser_id, os_id, user_ip, method_id, url_id, server_id', 'length', 'max'=>10),
+            array('error_id, browser_id, os_id, user_ip, country_id, code, method_id, url_id', 'required'),
+			array('error_id, browser_id, os_id, user_ip, country_id, method_id, url_id, server_id', 'length', 'max'=>10),
 			array('code', 'length', 'max'=>32),
 			array('referer_url_id', 'length', 'max'=>11),
 			array('status', 'length', 'max'=>7)        );
@@ -48,6 +50,7 @@ class CRequest extends ActiveRecord {
     */
     protected function _baseRelations()	{
         return array(
+            'country' => array(self::BELONGS_TO, 'Country', 'country_id'),
             'url' => array(self::BELONGS_TO, 'Url', 'url_id'),
             'method' => array(self::BELONGS_TO, 'Method', 'method_id'),
             'server' => array(self::BELONGS_TO, 'Server', 'server_id'),
@@ -67,6 +70,7 @@ class CRequest extends ActiveRecord {
             'browser_id' => 'Browser',
             'os_id' => 'Os',
             'user_ip' => 'User Ip',
+            'country_id' => 'Country',
             'code' => 'Code',
             'method_id' => 'Method',
             'url_id' => 'Url',

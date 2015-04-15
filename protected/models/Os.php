@@ -12,7 +12,7 @@ class Os extends COs {
     public function rules()	{
         return array_merge(
             parent::rules(),
-            array('count','number')
+            array(array('count','numerical','integerOnly'=>true))
         );
     }
 
