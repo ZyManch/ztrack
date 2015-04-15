@@ -4,7 +4,7 @@
 
 ?>
 <div class="wrapper wrapper-content">
-    <div class="col-xs-6">
+    <div class="col-md-6">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <h5><?php echo CHtml::encode($model->title); ?></h5>
@@ -46,7 +46,7 @@
             </div>
         </div>
     </div>
-    <div class="col-xs-6">
+    <div class="col-md-6">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <h5>Система</h5>
