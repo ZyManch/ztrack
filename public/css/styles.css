@@ -87,3 +87,17 @@ tr.immediately td, .label.label-immediately {
     margin: 0;
     padding: 0;
 }
+.btn.btn-module {
+    text-align: left;
+    padding: 20px;
+}
+.separated-element {
+    float: left;
+    border: 1px dashed #cfcfcf;
+    padding: 4px 4px 4px 15px;
+    margin: 5px;
+    border-radius: 8px;
+}
+.separated-element .btn {
+    margin: 0 !important;
+}

@@ -1,4 +1,9 @@
 <?php
+
+/**
+ * Class SystemModule
+ * @property GroupProject $groupProjects
+ */
 class SystemModule extends CSystemModule {
 
 
@@ -17,6 +22,11 @@ class SystemModule extends CSystemModule {
         return $model;
     }
 
+    protected function _extendedRelations() {
+        return array(
+            'groupProjects' => array(self::MANY_MANY, 'GroupProject', 'group_project_module(system_module_id,group_project_id)','index' => 'group_id'),
+        );
+    }
 
     public static function getSystemModules($type,$installation) {
         if (!is_array($installation)) {

@@ -23,7 +23,7 @@ class SettingsProjectModule extends AbstractProjectModule {
         return  array_merge(
             array(
                 array('allow',
-                    'actions' => array('index'),
+                    'actions' => array('index','toggleGroup'),
                     'users'=>array('*'),
                 )
             ),
@@ -35,19 +35,36 @@ class SettingsProjectModule extends AbstractProjectModule {
         $project = $this->_getProject();
         if (isset($_POST['modules'])) {
             $this->_saveModules($project, $_POST['modules']);
-            Yii::app()->controller->redirect(array(
-                'project/view',
-                'id'=>$project->id,
-                'module'=>'settings'
-            ));
+            $this->redirect(array());
         }
+        $groups = $this->_getGroups($project);
         $this->renderPartial(
             '_view',
             array(
                 'project' => $project,
                 'settings' => $this->_getAllSettings(),
+                'groups' => $groups
             )
         );
+    }
+
+    public function actionToggleGroup() {
+        $project = $this->_getProject();
+        $groups = $this->_getGroups($project);
+        $groupId = Yii::app()->request->getParam('group_id');
+        if (!isset($groups[$groupId])) {
+            throw new Exception('Group not found');
+        }
+        $group = $groups[$groupId];
+        if ($group->groupProjects) {
+            $group->groupProjects[0]->delete();
+        } else {
+            $groupProject = new GroupProject();
+            $groupProject->group_id = $group->id;
+            $groupProject->project_id = $project->id;
+            $groupProject->save(false);
+        }
+        $this->redirect(array('action'=>'index'));
     }
 
     protected function _saveModules(Project $project, $modules) {
@@ -65,6 +82,22 @@ class SettingsProjectModule extends AbstractProjectModule {
                 $project->addProjectModule($systemModule);
             }
         }
+    }
+
+    /**
+     * @param Project $project
+     * @return Group[]
+     */
+    protected function _getGroups(Project $project) {
+        $criteria = new CDbCriteria();
+        $criteria->with = array(
+            'groupProjects' => array('on'=>'groupProjects.project_id=:project'),
+            'groupProjects.groupProjectModules' => array()
+        );
+        $criteria->params[':project'] = $project->id;
+        $criteria->group = 't.id';
+        $criteria->index = 'id';
+        return Group::model()->findAll($criteria);
     }
 
 

@@ -30,7 +30,7 @@ class Project extends CProject {
         return true;
     }
 
-    public function removeProjectModule(SystemModule $module) {
+    public function removeProjectModule(AbstractProjectModule $module) {
         $module->beforeRemove($this);
         $link = ProjectSystemModule::model()->findByAttributes(array(
             'project_id'=>$this->id,
