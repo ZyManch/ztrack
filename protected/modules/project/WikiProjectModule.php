@@ -35,8 +35,8 @@ class WikiProjectModule extends AbstractProjectModule {
 
     public function actionView() {
         $wiki = $this->_getCurrentWiki();
-        Yii::app()->controller->renderPartial(
-            '//modules/project/wiki/_view',
+        $this->renderPartial(
+            '_view',
             array(
                 'model' => $wiki
             )
@@ -62,17 +62,14 @@ class WikiProjectModule extends AbstractProjectModule {
             if (!$wiki->save()) {
                 Yii::app()->user->setFlash('error',$wiki->getErrorsAsText());
             } else {
-                Yii::app()->controller->redirect(array(
-                    'project/view',
-                    'id' => $projectId,
-                    'module'=>'wiki',
+                $this->redirect(array(
                     'action'=>'view',
                     'wiki' => $request->getParam('wiki','')
                 ));
             }
         }
-        Yii::app()->controller->renderPartial(
-            '//modules/project/wiki/_update',
+        $this->renderPartial(
+            '_update',
             array(
                 'model' => $wiki
             )

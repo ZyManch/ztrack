@@ -11,6 +11,14 @@ abstract class AbstractProjectModule extends SystemModule {
 
     abstract function getModuleName();
 
+    public function beforeInstall(Project $project) {
+
+    }
+
+    public function beforeRemove(Project $project) {
+
+    }
+
     public function getTabs() {
         return array();
     }
@@ -94,6 +102,11 @@ abstract class AbstractProjectModule extends SystemModule {
             ),
             $attributes
         ));
+    }
+
+    protected function _getProject() {
+        $projectId = Yii::app()->request->getParam('id');
+        return Project::model()->findByPk($projectId);
     }
 
 }

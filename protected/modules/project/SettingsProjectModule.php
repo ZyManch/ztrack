@@ -41,8 +41,8 @@ class SettingsProjectModule extends AbstractProjectModule {
                 'module'=>'settings'
             ));
         }
-        Yii::app()->controller->renderPartial(
-            '//modules/project/_settings',
+        $this->renderPartial(
+            '_view',
             array(
                 'project' => $project,
                 'settings' => $this->_getAllSettings(),
@@ -67,10 +67,6 @@ class SettingsProjectModule extends AbstractProjectModule {
         }
     }
 
-    protected function _getProject() {
-        $projectId = Yii::app()->request->getParam('id');
-        return Project::model()->findByPk($projectId);
-    }
 
     protected function _getAllSettings() {
         return SystemModule::getSystemModules(

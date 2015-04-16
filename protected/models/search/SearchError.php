@@ -24,7 +24,7 @@ class SearchError extends CError {
 
     public function rules()	{
         return array(
-            array('id, title, level_id, total_count, trace_file, trace_line, status, changed', 'safe', 'on'=>'search'),
+            array('id, title, project_id,level_id, total_count, trace_file, trace_line, status, changed', 'safe', 'on'=>'search'),
         );
     }
 
@@ -34,6 +34,7 @@ class SearchError extends CError {
 
 		$criteria->compare('id',$this->id,true);
 		$criteria->compare('title',$this->title);
+		$criteria->compare('project_id',$this->project_id);
 		$criteria->compare('level_id',$this->level_id,true);
 		$criteria->compare('total_count',$this->total_count,true);
 		$criteria->compare('trace_file',$this->trace_file,true);

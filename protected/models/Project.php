@@ -18,10 +18,11 @@ class Project extends CProject {
         return false;
     }
 
-    public function addProjectModule(SystemModule $module) {
+    public function addProjectModule(AbstractProjectModule $module) {
         if($module->type != SystemModule::TYPE_PROJECT) {
             return false;
         }
+        $module->beforeInstall($this);
         $link = new ProjectSystemModule();
         $link->project_id = $this->id;
         $link->system_module_id = $module->id;
@@ -30,6 +31,7 @@ class Project extends CProject {
     }
 
     public function removeProjectModule(SystemModule $module) {
+        $module->beforeRemove($this);
         $link = ProjectSystemModule::model()->findByAttributes(array(
             'project_id'=>$this->id,
             'system_module_id' => $module->id
