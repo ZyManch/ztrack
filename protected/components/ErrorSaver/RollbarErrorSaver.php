@@ -9,7 +9,7 @@ class RollbarErrorSaver extends AbstractErrorSaver {
 
 
     public function save($error) {
-        $content = json_decode($error, 1);
+        $content = CJSON::decode($error);
         $token = $this->_getToken($content['access_token']);
         $companyId = $token->project->company_id;
         $data = $content['data'];
@@ -32,6 +32,7 @@ class RollbarErrorSaver extends AbstractErrorSaver {
             $fileNameAndLine[1]
         );
         $request = $this->_saveRequest($error,$data);
+        $this->_saveContext($request,$data);
         $this->_saveTrace($request, $data);
     }
 
@@ -75,6 +76,32 @@ class RollbarErrorSaver extends AbstractErrorSaver {
         );
         $request->save(false);
         return $request;
+    }
+
+    protected function _saveContext(Request $request, $data) {
+        if (isset($data['person'])) {
+            foreach ($data['person'] as $key => $value) {
+                $this->_addContext($request, 'user_'.$key,$value);
+            }
+        }
+        if (isset($data['request']['params']) && $data['request']['params']) {
+            $this->_addContext($request, 'params',json_encode($data['request']['params']));
+        }
+        if (isset($data['request']['GET']) && $data['request']['GET']) {
+            $this->_addContext($request, 'GET',json_encode($data['request']['GET']));
+        }
+        if (isset($data['request']['POST']) && $data['request']['POST']) {
+            $this->_addContext($request, 'POST',json_encode($data['request']['POST']));
+        }
+        if (isset($data['request']['body']) && $data['request']['body']) {
+            $this->_addContext($request, 'BODY',json_encode($data['request']['body']));
+        }
+
+        if (isset($data['custom']) && is_array($data['custom'])) {
+            foreach ($data['custom'] as $key => $value) {
+                $this->_addContext($request, $key,$value);
+            }
+        }
     }
 
     protected function _getFileNameAndLine($data) {

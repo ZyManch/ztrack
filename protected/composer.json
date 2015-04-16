@@ -9,7 +9,8 @@
         "yiiext/migrate-command": "dev-master",
         "pentium10/yii-remember-filters-gridview":"dev-master",
         "sebastian/diff": "dev-master",
-        "piwik/device-detector": "dev-master"
+        "piwik/device-detector": "dev-master",
+        "camspiers/json-pretty": "dev-master"
     },
 
     "autoload": {

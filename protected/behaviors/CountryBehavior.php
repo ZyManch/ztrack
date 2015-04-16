@@ -20,7 +20,7 @@ class CountryBehavior extends CActiveRecordBehavior {
     public function beforeSave($event = null) {
         $model = $event->sender;
         $key = $this->ip_field_name;
-        $countryCode = tabgeo_country_v4($model->$key);
+        $countryCode = tabgeo_country_v4(long2ip($model->$key));
         $country = Country::model()->findByAttributes(array('code'=>$countryCode));
         if (!$country) {
             $country = Country::model()->findByAttributes(array('code'=>self::DEFAULT_COUNTRY_CODE));

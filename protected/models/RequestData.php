@@ -7,4 +7,19 @@
  */
 class RequestData extends CRequestData {
 
+
+    public function getHumanReadableData() {
+        $json = CJSON::decode($this->data);
+        if ($json) {
+            $jsonPretty = new Camspiers\JsonPretty\JsonPretty;
+            $json = explode("\n",$jsonPretty->prettify($json,null,'   '));
+            $highlight = new HighlightCode('json',$json);
+            return $highlight;
+        }
+
+
+        return CHtml::tag('pre',array('class'=>'non-bordered'),CHtml::encode($this->data));
+
+    }
+
 }

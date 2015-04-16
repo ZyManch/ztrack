@@ -8,89 +8,30 @@
  */
 class ErrorCommand extends CConsoleCommand {
 
-    public function actionTest() {
+    public function actionTestRollbar() {
 
         $demo = array(
-            // Required: access_token
-            // An access token with scope "post_server_item" or "post_client_item".
-            // A post_client_item token must be used if the "platform" is "browser", "android", "ios", "flash", or "client"
-            // A post_server_item token should be used for other platforms.
             "access_token" => "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-
-            // Required: data
             "data"         => array(
-
-                // Required: environment
-                // The name of the environment in which this occurrence was seen.
-                // A string up to 255 characters. For best results, use "production" or "prod" for your
-                // production environment.
-                // You don't need to configure anything in the Rollbar UI for new environment names;
-                // we'll detect them automatically.
                 "environment"  => "master",
-
-                // Required: body
-                // The main data being sent. It can either be a message, an exception, or a crash report.
                 "body"         => array(
 
-                    // Required: "trace", "trace_chain", "message", or "crash_report" (exactly one)
-                    // If this payload is a single exception, use "trace"
-                    // If a chain of exceptions (for languages that support inner exceptions), use "trace_chain"
-                    // If a message with no stack trace, use "message"
-                    // If an iOS crash report, use "crash_report"
-
-                    // Option 1: "trace"
                     "trace"        => array(
-
-                        // Required: frames
-                        // A list of stack frames, ordered such that the most recent call is last in the list.
                         "frames"    => array(
-                            // Each frame is an object.
                             array(
-                                // Required: filename
-                                // The filename including its full path.
                                 "filename" => "/Users/brian/www/mox/mox/views/project.py",
-
-                                // Optional: lineno
-                                // The line number as an integer
-                                "lineno"   => 26,
-
-                                // Optional: colno
-                                // The column number as an integer
+                                "lineno"   => rand(24,27),
                                 "colno"    => 8,
-
-                                // Optional: method
-                                // The method or function name
                                 "method"   => "index",
-
-                                // Optional: code
-                                // The line of code
                                 "code"     => "_save_last_project(request, project_id, force=True)",
-
-                                // Optional: context
-                                // Additional code before and after the "code" line
                                 "context"  => array(
-                                    // Optional: pre
-                                    // List of lines of code before the "code" line
                                     "pre"  => array(
                                         "project = request.context", "project_id = project.id"
                                     ),
-
-                                    // Optional: post
-                                    // List of lines of code after the "code" line
                                     "post" => array()
                                 ),
-
-                                // Optional: args
-                                // List of values of positional arguments to the method/function call
-                                // NOTE: as this can contain sensitive data, you may want to scrub the values
                                 "args"     => array("<Request object>", 25),
 
-                                // Optional: kwargs
-                                // Object of keyword arguments (name => value) to the method/function call
-                                // NOTE: as this can contain sensitive data, you may want to scrub the values
-                                "kwargs"   => array(
-                                    "force" => true
-                                )
                             ),
                             array(
                                 "filename" => "/Users/brian/www/mox/mox/views/project.py", "lineno" => 497,
@@ -98,208 +39,79 @@ class ErrorCommand extends CConsoleCommand {
                             )
                         ),
 
-                        // Required: exception
-                        // An object describing the exception instance.
                         "exception" => array(
-                            // Required: class
-                            // The exception class name.
                             "class"       => "NameError",
-
-                            // Optional: message
-                            // The exception message, as a string
                             "message"     => "global name 'foo' is not defined",
-
-                            // Optional: description
-                            // An alternate human-readable string describing the exception
-                            // Usually the original exception message will have been machine-generated;
-                            // you can use this to send something custom
                             "description" => "Something went wrong while trying to save the user object"
                         )
 
                     ),
-
-                    // Option 3: "message"
-                    // Only one of "trace", "trace_chain", "message", or "crash_report" should be present.
-                    // Presence of a "message" key means that this payload is a log message.
                     "message"      => array(
 
-                        // Required: body
-                        // The primary message text, as a string
                         "body"  => "Request over threshold of 10 seconds",
-
-                        // Can also contain any arbitrary keys of metadata. Their values can be any valid JSON.
-                        // For example:
-
                         "route" => "home#index", "time_elapsed" => 15.23
 
                     ),
-
-                    // Option 4: "crash_report"
-                    // Only one of "trace", "trace_chain", "message", or "crash_report" should be present.
                     "crash_report" => array(
-                        // Required: raw
-                        // The raw crash report, as a string
-                        // Rollbar expects the format generated by rollbar-ios
                         "raw" => "<crash report here>"
                     )
 
                 ),
-
-                // Optional: level
-                // The severity level. One of: "critical", "error", "warning", "info", "debug"
-                // Defaults to "error" for exceptions and "info" for messages.
-                // The level of the *first* occurrence of an item is used as the item's level.
                 "level"        => "error",
-
-                // Optional: timestamp
-                // When this occurred, as a unix timestamp.
-                "timestamp"    => 1369188822,
-
-                // Optional: platform
-                // The platform on which this occurred. Meaningful platform names:
-                // "browser", "android", "ios", "flash", "client", "heroku", "google-app-engine"
-                // If this is a client-side event, be sure to specify the platform and use a post_client_item access token.
+                "timestamp"    => time(),
                 "platform"     => "linux",
-
-                // Optional: language
-                // The name of the language your code is written in.
                 "language"     => "python",
-
-                // Optional: context
-                // An identifier for which part of your application this event came from.
-                // Items can be searched by context (prefix search)
-                // For example, in a Rails app, this could be `controller#action`.
-                // In a single-page javascript app, it could be the name of the current screen or route.
                 "context"      => "project#index",
-
-                // Optional: request
-                // Data about the request this event occurred in.
                 "request"      => array(
-                    // Can contain any arbitrary keys. Rollbar understands the following:
-
-                    // url: full URL where this event occurred
                     "url"          => "https://rollbar.com/project/1",
-
-                    // method: the request method
                     "method"       => "GET",
-
-                    // headers: object containing the request headers.
                     "headers"      => array(
-                        // Header names should be formatted like they are in HTTP.
                         "Accept" => "text/html", "Referer" => "https://rollbar.com/"
                     ),
-
-                    // params: any routing parameters (i.e. for use with Rails Routes)
                     "params"       => array(
                         "controller" => "project", "action" => "index"
                     ),
-
-                    // GET: query string params
                     "GET"          => array(),
-
-                    // query_string: the raw query string
                     "query_string" => "",
-
-                    // POST: POST params
                     "POST"         => array(),
-
-                    // body: the raw POST body
                     "body"         => "",
-
-                    // user_ip: the user's IP address as a string.
-                    // Can also be the special value "$remote_ip", which will be replaced with the source IP of the API request.
-                    // Will be indexed, as long as it is a valid IPv4 address.
-                    "user_ip"      => "100.51.43.14"
+                    "user_ip"      => rand(1,255).'.'.rand(1,255).'.'.rand(1,255).'.'.rand(1,255)
 
                 ),
 
-                // Optional: person
-                // The user affected by this event. Will be indexed by ID, username, and email.
-                // People are stored in Rollbar keyed by ID. If you send a multiple different usernames/emails for the
-                // same ID, the last received values will overwrite earlier ones.
                 "person"       => array(
-                    // Required: id
-                    // A string up to 40 characters identifying this user in your system.
                     "id"       => "12345",
-
-                    // Optional: username
-                    // A string up to 255 characters
                     "username" => "brianr",
-
-                    // Optional: email
-                    // A string up to 255 characters
                     "email"    => "brian@rollbar.com"
                 ),
 
-                // Optional: server
-                // Data about the server related to this event.
                 "server"       => array(
-                    // Can contain any arbitrary keys. Rollbar understands the following:
-
-                    // host: The server hostname. Will be indexed.
                     "host"         => "web4",
-
-                    // root: Path to the application code root, not including the final slash.
-                    // Used to collapse non-project code when displaying tracebacks.
                     "root"         => "/Users/brian/www/mox",
-
-                    // branch: Name of the checked-out source control branch. Defaults to "master"
                     "branch"       => "master",
-
-                    // Optiona: code_version
-                    // String describing the running code version on the server
-                    // See note about "code_version" above
                     "code_version" => "b6437f45b7bbbb15f5eddc2eace4c71a8625da8c",
-
-                    // (Deprecated) sha: Git SHA of the running code revision. Use the full sha.
                     "sha"          => "b6437f45b7bbbb15f5eddc2eace4c71a8625da8c"
                 ),
 
-                // Optional: client
-                // Data about the client device this event occurred on.
-                // As there can be multiple client environments for a given event (i.e. Flash running inside
-                // an HTML page), data should be namespaced by platform.
                 "client"       => array(
-                    // Can contain any arbitrary keys. Rollbar understands the following:
-
                     "javascript" => array(
-
-                        // Optional: browser
-                        // The user agent string
                         "browser"               => "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.154 Safari/537.36 OPR/20.0.1387.82",
-
-                        // Optional: code_version
-                        // String describing the running code version in javascript
-                        // See note about "code_version" above
                         "code_version"          => "b6437f45b7bbbb15f5eddc2eace4c71a8625da8c",
-
-                        // Optional: source_map_enabled
-                        // Set to true to enable source map deobfuscation
-                        // See the "Source Maps" guide for more details.
                         "source_map_enabled"    => false,
-
-                        // Optional: guess_uncaught_frames
-                        // Set to true to enable frame guessing
-                        // See the "Source Maps" guide for more details.
                         "guess_uncaught_frames" => false
-
                     )
                 ),
-
-                // Optional: custom
-                // Any arbitrary metadata you want to send. "custom" itself should be an object.
                 "custom"       => array(),
-
-                // Optional: title
-                // A string that will be used as the title of the Item occurrences will be grouped into.
-                // Max length 255 characters.
-                // If omitted, we'll determine this on the backend.
                 "title"        => "NameError when setting last project in views/project.py",
-
-
             )
         );
         $parser = new RollbarErrorSaver();
         $parser->save(json_encode($demo));
+    }
+
+    public function actionTestGraylog() {
+        $json = '{"_access_token":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","version":"1.0","host":"legal-video.dev","short_message":"Invalid controller specified (asdasdas) (code #oeej5pvr30)","full_message":"app: legalporn\npost: empty\nget: empty\nparams: empty\nsession: Array\n(\n    [isset] => ok\n    [ip] => 127.0.0.1\n    [country] => US\n    [location_hash] => 0c01eed56bc773624017535283e281c2\n    [user_log] => Array\n        (\n            [0] => 2015-04-16 09:45:02\tAuto login: f6b6f8768d7dca1b22d0e00ebfecdf59\n            [1] => 2015-04-16 14:48:12\tTry refresh token 94bb3e2020b43930d2c39fb282661200\n            [2] => 2015-04-16 14:48:20\tFailed refresh token:\n            [3] => 2015-04-16 14:48:20\tDelete oauth token\n            [4] => 2015-04-16 14:48:20\tDelete oauth token\n        )\n\n)\n\nurl: http:\/\/legal-video.dev\/asdasdas\/\n[core]Engine\/Zend.php:44\nArgs:Array\n(\n)\n\n[other]Z:\/home\/legal-video.dev\/public\/index.php:20\nArgs:Array\n(\n)\n","level":5,"timestamp":1429181361.8467,"facility":"master","file":"Engine\/Zend.php","line":44,"_server":"Array\n(\n    [REDIRECT_STATUS] => 200\n    [HTTP_HOST] => legal-video.dev\n    [HTTP_CONNECTION] => keep-alive\n    [HTTP_ACCEPT] => text\/html,application\/xhtml+xml,application\/xml;q=0.9,image\/webp,*\/*;q=0.8\n    [HTTP_USER_AGENT] => Mozilla\/5.0 (Windows NT 6.1; WOW64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/33.0.1750.154 Safari\/537.36 OPR\/20.0.1387.82\n    [HTTP_ACCEPT_ENCODING] => gzip,deflate,lzma,sdch\n    [HTTP_ACCEPT_LANGUAGE] => ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4\n    [HTTP_COOKIE] => track=18709; JDIALOG3=AEO4CS3DG6IQQSH6V4D013GXQCEY5P8TBJ4N9P6BAF51J1P9T2; DISABLE_CACHE=1; __utmx=266084498.-r6DC-mMTN6rdwPjeLh6pg$0:1; __utmxx=266084498.-r6DC-mMTN6rdwPjeLh6pg$0:1425973482:8035200; ACCIDSESSID=8am26hcuujsvobpreq10ecqpo7; JDIALOG3=4AQ4B732AJYW97YXH91S0D8FC0CR4B59EH4PLVLVLIDTKGPR9W; OLD_JDIALOG=AEO4CS3DG6IQQSH6V4D013GXQCEY5P8TBJ4N9P6BAF51J1P9T2; _ga=GA1.2.1291934655.1425973483; _gat=1; USER_DATA=1%3A56cab09a87c1a7f8eaeff256e066ad3f2b08c210\n    [PATH] => \\usr\\local\\ImageMagick;\\usr\\local\\php5;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files (x86)\\PC Connectivity Solution\\;C:\\Program Files (x86)\\Intel\\iCLS Client\\;C:\\Program Files\\Intel\\iCLS Client\\;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files\\TortoiseHg\\;C:\\Program Files\\nodejs\\;C:\\Program Files (x86)\\nodejs\\;C:\\Program Files (x86)\\Groovy\\Groovy-2.1.6\\bin;C:\\Program Files (x86)\\Intel\\OpenCL SDK\\2.0\\bin\\x86;C:\\Program Files (x86)\\Intel\\OpenCL SDK\\2.0\\bin\\x64;C:\\Program Files (x86)\\Skype\\Phone\\;C:\\Users\\ZyManch\\Documents\\cmd;C:\\Program Files (x86)\\Git\\bin\\;E:\\Denwer\\usr\\local\\php5;C:\\Program Files (x86)\\OpenVPN\\bin;C:\\Users\\ZyManch\\AppData\\Roaming\\npm\\;C:\\Program Files\\mongo\\bin;C:\\Program Files\\nodejs;C:\\Users\\ZyManch\\Documents\\cmd\n    [SystemRoot] => C:\\Windows\n    [COMSPEC] => C:\\Windows\\system32\\cmd.exe\n    [PATHEXT] => .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.groovy;.gy\n    [WINDIR] => C:\\Windows\n    [SERVER_SIGNATURE] => <address>Apache\/2.2.22 (Win32) mod_ssl\/2.2.22 OpenSSL\/1.0.1c PHP\/5.3.13 Server at legal-video.dev Port 80<\/address>\n\n    [SERVER_SOFTWARE] => Apache\/2.2.22 (Win32) mod_ssl\/2.2.22 OpenSSL\/1.0.1c PHP\/5.3.13\n    [SERVER_NAME] => legal-video.dev\n    [SERVER_ADDR] => 127.0.0.1\n    [SERVER_PORT] => 80\n    [REMOTE_ADDR] => 127.0.0.1\n    [DOCUMENT_ROOT] => Z:\/home\/legal-video.dev\/public\n    [SERVER_ADMIN] => admin@example.com\n    [SCRIPT_FILENAME] => Z:\/home\/legal-video.dev\/public\/index.php\n    [REMOTE_PORT] => 49247\n    [REDIRECT_URL] => \/asdasdas\n    [GATEWAY_INTERFACE] => CGI\/1.1\n    [SERVER_PROTOCOL] => HTTP\/1.1\n    [REQUEST_METHOD] => GET\n    [QUERY_STRING] => \n    [REQUEST_URI] => \/asdasdas\/\n    [SCRIPT_NAME] => \/index.php\n    [PHP_SELF] => \/index.php\n    [REQUEST_TIME] => 1429181361\n    [argv] => Array\n        (\n        )\n\n    [argc] => 0\n)\n","_environment":"master","_hostname":"pc","_user_agent":"Mozilla\/5.0 (Windows NT 6.1; WOW64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/33.0.1750.154 Safari\/537.36 OPR\/20.0.1387.82","_remote_addr":"127.0.0.1","_url":"http:\/\/legal-video.dev\/asdasdas\/","_timestamp":1429181361,"_application":"legal-video-app","_module":"404"}';
+        $parser = new GraylogErrorSaver();
+        $parser->save($json);
     }
 }

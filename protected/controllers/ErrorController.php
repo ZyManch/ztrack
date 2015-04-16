@@ -24,7 +24,7 @@ class ErrorController extends Controller
 	public function accessRules() {
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','viewRequest'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -51,6 +51,13 @@ class ErrorController extends Controller
 		));
 	}
 
+
+    public function actionViewRequest($request_id) {
+        $request = Request::model()->findByPk($request_id);
+        $this->render('viewRequest',array(
+            'model'=>$request,
+        ));
+    }
 	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.

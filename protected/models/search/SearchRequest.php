@@ -36,7 +36,7 @@ class SearchRequest extends CRequest {
 
     public function rules()	{
         return array(
-            array('id, browser_id, os_id, user_ip, code, method_id, url_id, referer_url_id, server_id, branch_id, status, changed', 'safe', 'on'=>'search'),
+            array('id, error_id,browser_id, os_id, user_ip, code, method_id, url_id, referer_url_id, server_id, branch_id, status, changed', 'safe', 'on'=>'search'),
         );
     }
 
@@ -44,19 +44,27 @@ class SearchRequest extends CRequest {
 
         $criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id,true);
-		$criteria->compare('browser_id',$this->browser_id,true);
-		$criteria->compare('os_id',$this->os_id,true);
-		$criteria->compare('user_ip',$this->user_ip,true);
-		$criteria->compare('code',$this->code,true);
-		$criteria->compare('method_id',$this->method_id,true);
-		$criteria->compare('url_id',$this->url_id,true);
-		$criteria->compare('referer_url_id',$this->referer_url_id,true);
-		$criteria->compare('server_id',$this->server_id,true);
-		$criteria->compare('branch_id',$this->branch_id,true);
-		$criteria->compare('status',$this->status,true);
-		$criteria->compare('changed',$this->changed,true);
-
+		$criteria->compare('t.id',$this->id);
+		$criteria->compare('t.error_id',$this->error_id);
+		$criteria->compare('t.browser_id',$this->browser_id);
+		$criteria->compare('t.os_id',$this->os_id);
+		$criteria->compare('t.user_ip',$this->user_ip);
+		$criteria->compare('t.code',$this->code);
+		$criteria->compare('t.method_id',$this->method_id);
+		$criteria->compare('t.url_id',$this->url_id);
+		$criteria->compare('t.referer_url_id',$this->referer_url_id);
+		$criteria->compare('t.server_id',$this->server_id);
+		$criteria->compare('t.status',$this->status);
+		$criteria->compare('t.changed',$this->changed);
+        $criteria->with = array(
+            'browser',
+            'os',
+            'method',
+            'server',
+            'url',
+            'refererUrl'
+        );
+        $criteria->order = 't.changed DESC';
         return new CActiveDataProvider('Request', array(
             'criteria'=>$criteria,
             'pagination'=>array('pageSize'=>40)

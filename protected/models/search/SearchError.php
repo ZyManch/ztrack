@@ -40,7 +40,7 @@ class SearchError extends CError {
 		$criteria->compare('trace_line',$this->trace_line);
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('changed',$this->changed,true);
-
+        $criteria->order = 't.changed DESC';
         return new CActiveDataProvider('Error', array(
             'criteria'=>$criteria,
             'pagination'=>array('pageSize'=>40)

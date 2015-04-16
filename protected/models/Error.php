@@ -4,8 +4,15 @@
 * This is the model class for table "error".
 *
 * The followings are the available columns in table 'error':
+ * @property Request $lastRequest
 */
 class Error extends CError {
+
+    protected function _extendedRelations()	{
+        return array(
+            'lastRequest' => array(self::HAS_ONE, 'Request', 'error_id','order'=>'lastRequest.changed DESC'),
+        );
+    }
 
     public function getGroupedOs() {
         $criteria = new CDbCriteria();
@@ -78,6 +85,15 @@ class Error extends CError {
             $result[$request->country->code] = $request;
         }
         return $result;
+    }
+
+    /**
+     * @return SearchRequest
+     */
+    public function getRequestSearch() {
+        $requestSearch = new SearchRequest('search');
+        $requestSearch->error_id = $this->id;
+        return $requestSearch;
     }
 
 }

@@ -51,3 +51,39 @@ tr.immediately td, .label.label-immediately {
     position: relative;
     z-index: 1000;
 }
+.highlight {
+    position: relative;
+    background-color: transparent;
+}
+.highlight .highlight-active-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 18px;
+    background-color: #ffdeb5;
+}
+.highlight .highlight-lines {
+    width: 49px;
+    float: left;
+    font-size: 13px;
+    line-height: 1.42857143;
+    position: relative;
+    z-index: 1;
+}
+.highlight pre.highlight-code {
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+    margin: 0 0 0 50px;
+    font-size: 13px;
+    line-height: 1.42857143;
+    position: relative;
+    z-index: 1;
+    overflow-x: hidden;
+}
+.non-bordered {
+    border: 0;
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+}

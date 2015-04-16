@@ -60,7 +60,7 @@ abstract class AbstractErrorSaver {
         ));
         if ($error) {
             $error->total_count+=1;
-            $error->save(false);
+            $error->save(false,array('total_count'));
         } else {
             $error = new Error();
             $error->attributes = array(
@@ -69,6 +69,7 @@ abstract class AbstractErrorSaver {
                 'branch_id' => $branch->id,
                 'project_id' => $project->id,
                 'hash' => $hash,
+                'total_count' => 1,
                 'trace_file' => $traceFile ? $traceFile : null,
                 'trace_line' => $traceLine ? $traceLine : null,
             );
@@ -273,6 +274,13 @@ abstract class AbstractErrorSaver {
         return $data;
     }
 
+    protected function _addContext(Request $request, $key, $value) {
+        $context = new RequestData();
+        $context->type = $key;
+        $context->request_id = $request->id;
+        $context->data = $value;
+        return $context->save(false);
+    }
 
 
 }
