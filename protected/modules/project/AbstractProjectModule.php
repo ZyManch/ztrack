@@ -104,6 +104,9 @@ abstract class AbstractProjectModule extends SystemModule {
         ));
     }
 
+    /**
+     * @return Project
+     */
     protected function _getProject() {
         $projectId = Yii::app()->request->getParam('id');
         return Project::model()->findByPk($projectId);

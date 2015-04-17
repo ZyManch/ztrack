@@ -23,7 +23,7 @@ class SettingsProjectModule extends AbstractProjectModule {
         return  array_merge(
             array(
                 array('allow',
-                    'actions' => array('index','toggleGroup'),
+                    'actions' => array('index','delete','save','toggleGroup'),
                     'users'=>array('*'),
                 )
             ),
@@ -33,19 +33,67 @@ class SettingsProjectModule extends AbstractProjectModule {
 
     public function actionIndex() {
         $project = $this->_getProject();
-        if (isset($_POST['modules'])) {
-            $this->_saveModules($project, $_POST['modules']);
-            $this->redirect(array());
-        }
         $groups = $this->_getGroups($project);
         $this->renderPartial(
             '_view',
             array(
                 'project' => $project,
-                'settings' => $this->_getAllSettings(),
+                'modules' => $this->_getAllModules(),
                 'groups' => $groups
             )
         );
+    }
+
+    public function actionSave() {
+        $project = $this->_getProject();
+        try {
+            $systemModuleId = Yii::app()->request->getParam('system_module_id');
+            $systemModule = SystemModule::model()->findByAttributes(array(
+                'id' => $systemModuleId,
+                'type' => SystemModule::TYPE_PROJECT
+            ));
+            if (!$systemModule) {
+                throw new Exception('System module not found');
+            }
+            if (!$project->haveSystemModule($systemModule)) {
+                $project->addProjectModule($systemModule);
+            }
+            $newGroups = Yii::app()->request->getParam('groups',array());
+            if (!is_array($newGroups)) {
+                $newGroups = array();
+            }
+            $groups = $this->_getGroups($project);
+            foreach ($groups as $group) {
+                $alreadyEnabled = ($group->groupProject && isset($group->groupProject->groupProjectModules[$systemModule->id]));
+                $needEnabled = in_array($modules[$systemModule->id]);
+                if ($alreadyEnabled && !$needEnabled) {
+                    $project->removeProjectModule($systemModule);
+                } else if ($needEnabled && !$alreadyEnabled) {
+                    $project->addProjectModule($systemModule);
+                }
+            }
+        } catch (Exception $e) {
+            Yii::app()->user->setFlash('error',$e->getMessage());
+        }
+        $this->redirect(array());
+    }
+
+    public function actionDelete() {
+        $project = $this->_getProject();
+        try {
+            $systemModuleId = Yii::app()->request->getParam('system_module_id');
+            $systemModule = SystemModule::model()->findByAttributes(array(
+                'id' => $systemModuleId,
+                'type' => SystemModule::TYPE_PROJECT
+            ));
+            if (!$systemModule) {
+                throw new Exception('System module not found');
+            }
+            $project->removeProjectModule($systemModule);
+        } catch (Exception $e) {
+            Yii::app()->user->setFlash('error',$e->getMessage());
+        }
+        $this->redirect(array());
     }
 
     public function actionToggleGroup() {
@@ -67,23 +115,6 @@ class SettingsProjectModule extends AbstractProjectModule {
         $this->redirect(array('action'=>'index'));
     }
 
-    protected function _saveModules(Project $project, $modules) {
-        if (!is_array($modules) || !$modules) {
-            $modules = array();
-        }
-        $systemModules = $this->_getAllSettings();
-        $alreadyEnabledModules = $project->systemModules;
-        foreach ($systemModules as $systemModule) {
-            $alreadyEnabled = isset($alreadyEnabledModules[$systemModule->id]);
-            $needEnabled = isset($modules[$systemModule->id]);
-            if ($alreadyEnabled && !$needEnabled) {
-                $project->removeProjectModule($systemModule);
-            } else if ($needEnabled && !$alreadyEnabled) {
-                $project->addProjectModule($systemModule);
-            }
-        }
-    }
-
     /**
      * @param Project $project
      * @return Group[]
@@ -91,22 +122,22 @@ class SettingsProjectModule extends AbstractProjectModule {
     protected function _getGroups(Project $project) {
         $criteria = new CDbCriteria();
         $criteria->with = array(
-            'groupProjects' => array('on'=>'groupProjects.project_id=:project'),
-            'groupProjects.groupProjectModules' => array()
+            'groupProject' => array('on'=>'groupProject.project_id=:project'),
+            'groupProject.groupProjectModules' => array()
         );
         $criteria->params[':project'] = $project->id;
-        $criteria->group = 't.id';
         $criteria->index = 'id';
         return Group::model()->findAll($criteria);
     }
 
 
-    protected function _getAllSettings() {
+    protected function _getAllModules() {
         return SystemModule::getSystemModules(
             SystemModule::TYPE_PROJECT,
             array(
                 SystemModule::INSTALLATION_INSTALL,
                 SystemModule::INSTALLATION_NOT_INSTALL,
+                SystemModule::INSTALLATION_FORCE,
             )
         );
     }
