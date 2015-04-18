@@ -11,7 +11,8 @@ class DashboardUserModule extends AbstractUserModule {
         return array(
             array(
                 'label' => 'Dashboard',
-                'url' => array('dashboard/index')
+                'url' => array('dashboard/index'),
+                'icon'=>'area-chart'
             )
         );
     }

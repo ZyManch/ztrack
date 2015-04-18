@@ -11,6 +11,20 @@ class ProfileUserModule extends AbstractUserModule {
         return array(
             array(
                 'template' => '//modules/user/_profileMain'
+            ),
+            array(
+                'label' => 'Profile',
+                'items' => array(
+                    array(
+                        'label' => 'Settings',
+                        'url' => array('user/profile'),
+                    ),
+                    array(
+                        'label' => 'Logout',
+                        'url' => array('site/logout'),
+                    )
+                ),
+                'icon'=>'user'
             )
         );
     }

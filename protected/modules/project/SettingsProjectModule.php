@@ -64,12 +64,14 @@ class SettingsProjectModule extends AbstractProjectModule {
             }
             $groups = $this->_getGroups($project);
             foreach ($groups as $group) {
-                $alreadyEnabled = ($group->groupProject && isset($group->groupProject->groupProjectModules[$systemModule->id]));
-                $needEnabled = in_array($modules[$systemModule->id]);
-                if ($alreadyEnabled && !$needEnabled) {
-                    $project->removeProjectModule($systemModule);
-                } else if ($needEnabled && !$alreadyEnabled) {
-                    $project->addProjectModule($systemModule);
+                if ($group->groupProject) {
+                    $alreadyEnabled = isset($group->groupProject->groupProjectModules[$systemModule->id]);
+                    $needEnabled = in_array($group->id, $newGroups);
+                    if ($alreadyEnabled && !$needEnabled) {
+                        $group->groupProject->removeProjectModule($systemModule);
+                    } else if ($needEnabled && !$alreadyEnabled) {
+                        $group->groupProject->addProjectModule($systemModule);
+                    }
                 }
             }
         } catch (Exception $e) {
@@ -104,8 +106,8 @@ class SettingsProjectModule extends AbstractProjectModule {
             throw new Exception('Group not found');
         }
         $group = $groups[$groupId];
-        if ($group->groupProjects) {
-            $group->groupProjects[0]->delete();
+        if ($group->groupProject) {
+            $group->groupProject->delete();
         } else {
             $groupProject = new GroupProject();
             $groupProject->group_id = $group->id;

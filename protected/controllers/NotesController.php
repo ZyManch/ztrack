@@ -21,7 +21,7 @@ class NotesController extends Controller
 	public function accessRules() {
 		return array(
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('index','create','update','admin','delete'),
+				'actions'=>array('index','create','update','sort','delete'),
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
@@ -35,16 +35,18 @@ class NotesController extends Controller
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
 	public function actionCreate($id = null) {
-		$model=new Page;
+		$model=new NotePage();
         $parent = null;
         $topPage = null;
         if ($id) {
             $parent = $this->loadModel($id);
             $topPage = $parent->getTopPage();
         }
-		if(isset($_POST['Page'])) {
-			$model->attributes=$_POST['Page'];
+		if(isset($_POST['NotePage'])) {
+			$model->attributes=$_POST['NotePage'];
             $model->parent_page_id = ($parent ? $parent->id : null);
+            $model->page_type_id = PAGE_TYPE_NOTES;
+            $model->author_user_id = Yii::app()->user->id;
 			if($model->save()) {
                 $this->redirect(array('index','id'=>$model->getTopPage()->id));
             }
@@ -56,6 +58,24 @@ class NotesController extends Controller
 		));
 	}
 
+    public function actionSort($id) {
+        $notes = Yii::app()->user->getUser()->mainNotes;
+        if (!$notes) {
+            $this->redirect(array('notes/create'));
+        }
+        if (!$id) {
+            $noteIds = array_keys($notes);
+            $id = $noteIds[0];
+        }
+        if (!isset($notes[$id])) {
+            throw new Exception('Note not found');
+        }
+        $mainNote = $notes[$id];
+        $mainNote->sort(
+            Yii::app()->request->getParam('notes')
+        );
+    }
+
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
@@ -64,8 +84,8 @@ class NotesController extends Controller
 	public function actionUpdate($id) {
 		$model=$this->loadModel($id);
 
-		if(isset($_POST['Page'])) {
-			$model->attributes=$_POST['Page'];
+		if(isset($_POST['NotePage'])) {
+			$model->attributes=$_POST['NotePage'];
 			if($model->save()) {
 				$this->redirect(array('index','id'=>$model->getTopPage()->id));
             }
@@ -102,7 +122,11 @@ class NotesController extends Controller
             $this->redirect(array('notes/create'));
         }
         if (!$id) {
-            $id = $notes[0]->id;
+            $noteIds = array_keys($notes);
+            $id = $noteIds[0];
+        }
+        if (!isset($notes[$id])) {
+            throw new Exception('Note not found');
         }
 		$this->render('index',array(
             'id' => $id,
@@ -110,22 +134,6 @@ class NotesController extends Controller
 		));
 	}
 
-	/**
-	 * Manages all models.
-	 */
-	public function actionAdmin($id = null) {
-        $notes = Yii::app()->user->getUser()->mainNotes;
-        if (!$notes) {
-            $this->redirect(array('notes/create'));
-        }
-        if (!$id) {
-            $id = $notes[0]->id;
-        }
-		$this->render('admin',array(
-            'id' => $id,
-            'notes' => $notes,
-		));
-	}
 
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.

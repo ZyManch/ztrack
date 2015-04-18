@@ -16,7 +16,7 @@ $url =  CHtml::normalizeUrl($menu['url']);
     <li>
         <a href="<?php echo CHtml::encode($url);?>">
             <?php if ($isTopMenu):?>
-                <i class="fa fa-th-large"></i>
+                <i class="fa fa-<?php if(isset($menu['icon'])):?><?php echo $menu['icon'];?><?php else:?>question<?php endif;?>"></i>
                 <span class="nav-label"><?php echo CHtml::encode($menu['label']);?></span>
                 <span class="fa arrow"></span>
             <?php else:?>
@@ -33,7 +33,7 @@ $url =  CHtml::normalizeUrl($menu['url']);
     <li>
         <a href="<?php echo CHtml::encode($url);?>">
             <?php if ($isTopMenu):?>
-                <i class="fa fa-diamond"></i>
+                <i class="fa fa-<?php if(isset($menu['icon'])):?><?php echo $menu['icon'];?><?php else:?>question<?php endif;?>"></i>
                 <span class="nav-label"><?php echo CHtml::encode($menu['label']);?></span>
             <?php else:?>
                 <?php echo CHtml::encode($menu['label']);?>

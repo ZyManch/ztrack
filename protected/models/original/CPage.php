@@ -14,6 +14,7 @@
     * @property string $body
     * @property integer $progress
     * @property string $level_id
+    * @property integer $position
     * @property string $status
     * @property string $created
     * @property string $changed
@@ -39,7 +40,7 @@ class CPage extends ActiveRecord {
     public function rules()	{
         return array(
             array('author_user_id, page_type_id, body', 'required'),
-			array('progress', 'numerical', 'integerOnly'=>true),
+			array('progress, position', 'numerical', 'integerOnly'=>true),
 			array('parent_page_id, author_user_id, page_type_id, project_id, level_id', 'length', 'max'=>10),
 			array('url', 'length', 'max'=>64),
 			array('title', 'length', 'max'=>128),
@@ -77,6 +78,7 @@ class CPage extends ActiveRecord {
             'body' => 'Body',
             'progress' => 'Progress',
             'level_id' => 'Level',
+            'position' => 'Position',
             'status' => 'Status',
             'created' => 'Created',
             'changed' => 'Changed',

@@ -48,11 +48,13 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 <?php if ($project->haveSystemModule($module)):?>
                     <button type="submit" class="btn btn-primary">Save</button>
+                    <?php if ($module->installation != SystemModule::INSTALLATION_FORCE):?>
                     <?php echo CHtml::link(
                         'Delete',
                         array('project/view','id'=>$project->id,'module'=>'settings','action'=>'delete','system_module_id'=>$module->id),
                         array('class'=>'btn btn-danger')
                     );?>
+                    <?php endif;?>
                 <?php else:?>
                     <button type="submit" class="btn btn-primary">Install</button>
                 <?php endif;?>

@@ -29,7 +29,8 @@ class ProjectsUserModule extends AbstractUserModule {
                 $item = array(
                     'label' => $project->title,
                     'url' => array('project/view','id'=>$project->id),
-                    'items' => array()
+                    'items' => array(),
+                    'icon'=>'folder'
                 );
                 $list[$project->id] = &$item;
                 if (!$project->parent_id) {

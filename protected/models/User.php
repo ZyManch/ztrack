@@ -28,7 +28,7 @@ class User extends CUser {
         return array(
             'groups' => array(self::MANY_MANY,'Group','user_group(user_id,group_id)','index'=>'id'),
             'systemModules' => array(self::MANY_MANY, 'SystemModule','user_system_module(user_id,system_module_id)', 'order' => 'systemModules.position ASC','index'=>'id'),
-            'mainNotes' => array(self::HAS_MANY, 'Page','author_user_id', 'on' => 'mainNotes.page_type_id='.PAGE_TYPE_NOTES.' AND mainNotes.parent_page_id IS  null'),
+            'mainNotes' => array(self::HAS_MANY, 'Page','author_user_id', 'on' => 'mainNotes.page_type_id='.PAGE_TYPE_NOTES.' AND mainNotes.parent_page_id IS  null','index'=>'id'),
         );
     }
 

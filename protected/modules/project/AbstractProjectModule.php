@@ -19,6 +19,14 @@ abstract class AbstractProjectModule extends SystemModule {
 
     }
 
+    public function beforeAddAccess(GroupProject $groupProject) {
+
+    }
+
+    public function beforeRemoveAccess(GroupProject $groupProject) {
+
+    }
+
     public function getTabs() {
         return array();
     }

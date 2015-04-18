@@ -102,3 +102,33 @@ tr.immediately td, .label.label-immediately {
     color: white;
     text-decoration: underline;
 }
+
+
+.dd-list .note-title {
+    border: 1px solid #e7eaec;
+    background-color: white;
+    padding: 5px 5px 5px 45px;
+
+}
+.dd-list .dragtable-lines,.dd-list .dragtable-lines:hover {
+    position: absolute;
+    left: 15px;
+    top: 6px;
+    border: 3px solid #e7eaec;
+    background-color: #ffffff;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    width:10px;
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+    cursor: move;
+    height: 30px;
+}
+.dd-list .note-title > a {
+    line-height: 30px;
+
+}
+.dd-list hr {
+    margin: 0;
+}

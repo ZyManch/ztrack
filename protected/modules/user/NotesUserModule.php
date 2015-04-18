@@ -11,7 +11,8 @@ class NotesUserModule extends AbstractUserModule {
         return array(
             array(
                 'label' => 'Notes',
-                'url' => array('notes/index')
+                'url' => array('notes/index'),
+                'icon'=>'book'
             )
         );
     }
