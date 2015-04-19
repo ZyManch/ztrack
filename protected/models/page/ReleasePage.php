@@ -27,16 +27,17 @@ class ReleasePage extends Page {
     public function _getUsers($isActive) {
         $criteria = new CDbCriteria();
         $criteria->select = array(
-            '*',
-            'count(distinct page.id) as count'
+            '*'
         );
+        if ($isActive) {
+            $criteria->select[] = 'sum(if(page.status<>"Active",100,page.progress))/100 as count';
+        } else {
+            $criteria->select[] = 'count(page.id) as count';
+        }
         $criteria->with = array(
             'assignedUserPages.page'
         );
         $criteria->compare('page.parent_page_id',$this->id);
-        if ($isActive) {
-            $criteria->addCondition('page.progress < 100');
-        }
         $criteria->group = 't.id';
         /** @var User $query */
         $query = User::model();

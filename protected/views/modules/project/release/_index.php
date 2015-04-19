@@ -99,7 +99,7 @@ Yii::app()->clientScript->registerCssFile('/css/custom.css');
                         $graph = Graph::model()->findByPk(GRAPH_FLOT_BAR);
 
                         $users = $release->_getUsers(true);
-                        $graph->addData(new GraphData('Открытых задач',CHtml::listData($users,'username','count')));
+                        $graph->addData(new GraphData('Выполнено задач',CHtml::listData($users,'username','count')));
 
                         $users = $release->_getUsers(false);
                         $graph->addData(new GraphData('Всего задач',CHtml::listData($users,'username','count')));

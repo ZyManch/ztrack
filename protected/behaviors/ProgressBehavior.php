@@ -26,6 +26,11 @@ class ProgressBehavior extends CActiveRecordBehavior  {
             $totalProgress+=$child->getProgressValue();
         }
         $parent->progress = $maxProgress ? round(100*$totalProgress / $maxProgress) : 0;
+        if ($model->progress == 100) {
+            $model->status = ActiveRecord::STATUS_CLOSED;
+        } else {
+            $model->status = ActiveRecord::STATUS_ACTIVE;
+        }
         $parent->save(false);
         return true;
     }

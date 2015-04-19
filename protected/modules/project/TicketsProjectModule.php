@@ -89,6 +89,16 @@ class TicketsProjectModule extends AbstractProjectModule {
         $status = Yii::app()->request->getParam('status');
         try {
             $model->status = $status;
+            if ($status == ActiveRecord::STATUS_ACTIVE) {
+                if ($model->progress==100) {
+                    $model->progress = 99;
+                }
+            } else if ($status == ActiveRecord::STATUS_CLOSED) {
+                if ($model->progress!=100) {
+                    $model->progress = 100;
+                }
+            }
+
             if (!$model->save()) {
                 throw new Exception('Error save model: '.$model->getErrorsAsText());
             }
