@@ -163,9 +163,9 @@ class Page extends CPage {
         return $this->progress;
     }
 
-    public function getProgressPie($size) {
-        $pie = new NativePieGraph($size);
-        $pie->addData('Progress',array($this->getProgressValue()));
+    public function getProgressPie() {
+        $pie = Graph::model()->findByPk(GRAPH_NATIVE_PIE);
+        $pie->addData(new GraphData('Progress',array($this->getProgressValue())));
         return $pie;
     }
 

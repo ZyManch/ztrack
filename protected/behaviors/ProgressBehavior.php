@@ -25,7 +25,7 @@ class ProgressBehavior extends CActiveRecordBehavior  {
         foreach ($childs as $child) {
             $totalProgress+=$child->getProgressValue();
         }
-        $parent->progress = round(100*$totalProgress / $maxProgress);
+        $parent->progress = $maxProgress ? round(100*$totalProgress / $maxProgress) : 0;
         $parent->save(false);
         return true;
     }

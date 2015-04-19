@@ -19,6 +19,9 @@ class PageHistoryBehavior extends CActiveRecordBehavior  {
     public function afterSave($event) {
         /** @var Page $model */
         $model = $event->sender;
+        if ($model->isNewRecord) {
+            return true;
+        }
         $newAttributes = $this->_getModelAttributes($model);
         if (!$this->_isChanged($newAttributes)) {
             return true;
@@ -31,7 +34,7 @@ class PageHistoryBehavior extends CActiveRecordBehavior  {
         if ($lastHistory) {
             $history->previous_page_history_id = $lastHistory->id;
         }
-        if (!$history->save()) {
+        if (!$history->save(false)) {
             Yii::app()->user->setFlash('error','Error save history:'.$history->getErrorsAsText());
         }
 

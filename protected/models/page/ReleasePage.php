@@ -15,11 +15,35 @@ class ReleasePage extends Page {
         return array(
             array('author_user_id, page_type_id,title', 'required'),
             array('body', 'safe'),
+            array('title', 'match','allowEmpty'=>false,'pattern'=>'/^[a-zA-Z0-9\.]+$/',
+                'message'=>'Release name must contain only latin chars,numbers and dot.'),
             array('progress, parent_page_id, author_user_id, page_type_id, project_id, level_id', 'numerical', 'integerOnly'=>true),
             array('title', 'length', 'max'=>128),
             array('status', 'length', 'max'=>7),
 
         );
+    }
+
+    public function _getUsers($isActive) {
+        $criteria = new CDbCriteria();
+        $criteria->select = array(
+            '*',
+            'count(distinct page.id) as count'
+        );
+        $criteria->with = array(
+            'assignedUserPages.page'
+        );
+        $criteria->compare('page.parent_page_id',$this->id);
+        if ($isActive) {
+            $criteria->addCondition('page.progress < 100');
+        }
+        $criteria->group = 't.id';
+        /** @var User $query */
+        $query = User::model();
+        if (!$isActive) {
+            $query->resetScope();
+        }
+        return $query->findAll($criteria);
     }
 
     public function __toString() {

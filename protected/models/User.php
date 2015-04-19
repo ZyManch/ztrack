@@ -4,10 +4,22 @@
  * @property Group[] $groups
  * @property AbstractUserModule[] $systemModules
  * @property Page[] $mainNotes
+ * @property UserPage[] $assignedUserPages
  */
 class User extends CUser {
 
     const AVATAR_COUNT = 9;
+
+    public $count;
+
+    public function rules() {
+        return array_merge(
+            parent::rules(),
+            array(
+                array('count','safe')
+            )
+        );
+    }
 
     public function checkPassword($password) {
         return $this->password == $this->_encrypt($password);
@@ -29,6 +41,7 @@ class User extends CUser {
             'groups' => array(self::MANY_MANY,'Group','user_group(user_id,group_id)','index'=>'id'),
             'systemModules' => array(self::MANY_MANY, 'SystemModule','user_system_module(user_id,system_module_id)', 'order' => 'systemModules.position ASC','index'=>'id'),
             'mainNotes' => array(self::HAS_MANY, 'Page','author_user_id', 'on' => 'mainNotes.page_type_id='.PAGE_TYPE_NOTES.' AND mainNotes.parent_page_id IS  null','index'=>'id'),
+            'assignedUserPages' => array(self::HAS_MANY,'UserPage','user_id','on'=>'assignedUserPages.is_assigned="Yes"')
         );
     }
 

@@ -44,6 +44,9 @@ abstract class GraphAbstract extends Graph {
         if (!isset($htmlOptions['id'])) {
             $htmlOptions['id'] = CHtml::ID_PREFIX.CHtml::$count++;
         }
+        if (!$this->name) {
+            throw new Exception('Use graph from BD');
+        }
         if (!isset(self::$_includedAssets[$this->name])) {
             $this->_includeAssets();
             self::$_includedAssets[$this->name] = true;
