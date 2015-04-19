@@ -31,6 +31,7 @@
 class SearchPage extends CPage {
 
     public $assign_user_id;
+    public $error_id;
 
     public function __construct($scenario = 'search') {
         parent::__construct($scenario);
@@ -39,7 +40,7 @@ class SearchPage extends CPage {
     public function rules()	{
         return array(
             array('id, parent_page_id, author_user_id, assign_user_id, page_type_id', 'safe', 'on'=>'search'),
-            array('project_id, url, title, body, progress, level_id, status, changed', 'safe', 'on'=>'search'),
+            array('project_id, url, title, body, progress, level_id, error_id, status, changed', 'safe', 'on'=>'search'),
         );
     }
 
@@ -66,6 +67,13 @@ class SearchPage extends CPage {
 		$criteria->compare('t.level_id',$this->level_id);
 		$criteria->compare('t.status',$this->status,true);
 		$criteria->compare('t.changed',$this->changed,true);
+        if ($this->error_id) {
+            $criteria->compare('pageErrors.error_id', $this->error_id);
+            $criteria->with['pageErrors'] = array(
+                'select'=>false,
+                'joinType'=>'inner join',
+            );
+        }
         $criteria->order = 'level.weight DESC,t.changed DESC';
         $criteria->together = true;
         return new CActiveDataProvider('Page', array(

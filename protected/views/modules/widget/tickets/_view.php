@@ -48,7 +48,7 @@
             'type' => 'raw',
             'value' => function(Page $page) {
                 $title = CHtml::link(
-                    CHtml::encode($page->title),
+                    CHtml::encode($page->getTitle()),
                     array(
                         'project/view',
                         'id'=>$page->project_id,
@@ -74,7 +74,7 @@
             'headerHtmlOptions' => array('class'=>''),
             'type' => 'raw',
             'value' => function(Page $page) {
-                return CHtml::tag('small',array(),''.$page->progress.'%').
+                return CHtml::tag('small',array(),''.$page->getProgressValue().'%').
                     CHtml::tag(
                         'div',
                         array('class'=>'progress progress-mini'),

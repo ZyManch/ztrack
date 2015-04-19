@@ -60,6 +60,8 @@ class Page extends CPage {
                 return new ReleasePage(null);
             case PAGE_TYPE_TICKETS:
                 return new TicketPage(null);
+            case PAGE_TYPE_ERROR:
+                return new ErrorPage(null);
         }
         throw new Exception('Undefined page type: '.$attributes['page_type_id']);
     }

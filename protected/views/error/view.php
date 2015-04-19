@@ -6,6 +6,7 @@
     <div class="row">
         <div class="col-md-6">
             <?php $this->renderPartial('//error/_widgets/_info',array('error'=>$model));?>
+            <?php $this->renderPartial('//error/_widgets/_tickets',array('error'=>$model));?>
         </div>
         <div class="col-md-6">
             <?php $this->renderPartial('//error/_widgets/_geo',array('error'=>$model));?>

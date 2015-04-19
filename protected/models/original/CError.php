@@ -20,6 +20,7 @@
         * @property Level $level
         * @property Project $project
         * @property Branch $branch
+        * @property PageError[] $pageErrors
         * @property Request[] $requests
 */
 class CError extends ActiveRecord {
@@ -47,6 +48,7 @@ class CError extends ActiveRecord {
             'level' => array(self::BELONGS_TO, 'Level', 'level_id'),
             'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
             'branch' => array(self::BELONGS_TO, 'Branch', 'branch_id'),
+            'pageErrors' => array(self::HAS_MANY, 'PageError', 'error_id'),
             'requests' => array(self::HAS_MANY, 'Request', 'error_id'),
         );
     }

@@ -16,7 +16,7 @@
             <div class="col-md-6">
                 <?php
                 $oss = $error->getGroupedOs();
-                $graph = new ChartPieGraph();
+                $graph = Graph::model()->findByPk(GRAPH_CHART_PIE);
                 foreach ($oss as $os) {
                     $graph->addData(new GraphData($os->os,array(intval($os->count))));
                 }
@@ -26,7 +26,7 @@
             <div class="col-md-6">
                 <?php
                 $browsers = $error->getGroupedBrowsers();
-                $graph = new ChartPieGraph();
+                $graph = Graph::model()->findByPk(GRAPH_CHART_PIE);
                 foreach ($browsers as $browser) {
                     $graph->addData(new GraphData($browser->browser,array(intval($browser->count))));
                 }
