@@ -24,9 +24,9 @@ class Controller extends CController
         $this->topMenu = array(
             array('label'=>'Главная', 'url'=>array('site/index')),
             array('label'=>'Аккаунт'.(!$isGuest ? ' ('.Yii::app()->user->name.')':''), 'items' => array(
-                array('label'=>'Выход', 'url'=>array('site/logout'), 'visible'=>!$isGuest),
-                array('label'=>'Войти', 'url'=>array('site/login'), 'visible'=>$isGuest),
-                array('label'=>'Регистрация', 'url'=>array('site/register'), 'visible'=>$isGuest),
+                array('label'=>'Выход', 'url'=>array('user/logout'), 'visible'=>!$isGuest),
+                array('label'=>'Войти', 'url'=>array('user/login'), 'visible'=>$isGuest),
+                array('label'=>'Регистрация', 'url'=>array('user/register'), 'visible'=>$isGuest),
             ))
         );
     }

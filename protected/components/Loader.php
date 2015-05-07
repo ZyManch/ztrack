@@ -22,6 +22,7 @@ class Loader extends CComponent {
         }
         PageType::loadConstants();
         Graph::loadConstants();
+        Permission::loadConstants();
         return true;
     }
 

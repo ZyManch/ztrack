@@ -24,6 +24,7 @@
         * @property UserGroup[] $userGroups
         * @property UserMessage[] $userMessages
         * @property UserPage[] $userPages
+        * @property UserPermission[] $userPermissions
         * @property UserSystemModule[] $userSystemModules
 */
 class CUser extends ActiveRecord {
@@ -56,6 +57,7 @@ class CUser extends ActiveRecord {
             'userGroups' => array(self::HAS_MANY, 'UserGroup', 'user_id'),
             'userMessages' => array(self::HAS_MANY, 'UserMessage', 'user_id'),
             'userPages' => array(self::HAS_MANY, 'UserPage', 'user_id'),
+            'userPermissions' => array(self::HAS_MANY, 'UserPermission', 'user_id'),
             'userSystemModules' => array(self::HAS_MANY, 'UserSystemModule', 'user_id'),
         );
     }

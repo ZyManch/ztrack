@@ -51,6 +51,9 @@ return array(
         'loader' => array(
             'class'=>'Loader',
         ),
+        'authManager'=>array(
+            'class' => 'AuthManager',
+        ),
     ),
     'params'=>array(
         'adminEmail'=>'webmaster@example.com',
