@@ -7,9 +7,120 @@
  */
 class UserController extends Controller {
 
-    public function actionProfile() {
-        $model = Yii::app()->user->getUser();
-        $this->render('profile',array('model'=>$model));
+    /**
+     * @return array action filters
+     */
+    public function filters() {
+        return array(
+            'accessControl', // perform access control for CRUD operations
+        );
+    }
+
+
+    public function accessRules() {
+        return array(
+            array('allow',  // allow all users to perform 'index' and 'view' actions
+                'actions'=>array('login'),
+                'users'=>array('*'),
+            ),
+            array('allow',  // allow all users to perform 'index' and 'view' actions
+                'actions'=>array('logout','index','view'),
+                'users'=>array('@'),
+            ),
+            array(
+                'allow',
+                'actions' => array('addPermission','removePermission','addGroup','removeGroup','delete','create'),
+                'roles' => array(PERMISSION_USER_MANAGE)
+            ),
+            array('deny',  // deny all users
+                'users'=>array('*'),
+            ),
+        );
+    }
+
+    public function actionCreate() {
+        $model = new User;
+        $this->render('create',array(
+            'model'=>$model,
+        ));
+    }
+
+    public function actionIndex() {
+        $dataProvider=new CActiveDataProvider('User');
+        $this->render('index',array(
+            'dataProvider'=>$dataProvider,
+        ));
+    }
+
+    public function actionDelete($id) {
+        $model = $this->loadModel($id);
+        if ($model->id == Yii::app()->user->id) {
+            throw new Exception('Cant delete yourself');
+        }
+        if (Yii::app()->request->isPostRequest) {
+            $model->delete();
+            $this->redirect(array('user/index'));
+        }
+        $this->render('delete',array(
+            'model'=>$model,
+        ));
+    }
+
+    public function actionView($id) {
+        $model = $this->loadModel($id);
+        $permissions = Permission::model()->getTree();
+        $groups = Group::model()->findAll();
+        $this->render('view',array(
+            'model'=>$model,
+            'permissions' => $permissions,
+            'groups' => $groups
+        ));
+    }
+
+    public function actionAddPermission($id) {
+        $user = $this->loadModel($id);
+        $permission = Permission::model()->findByPk(
+            Yii::app()->request->getParam('permission_id')
+        );
+        if (!$permission) {
+            throw new CHttpException(404,'Permission not found');
+        }
+        $user->addPermission($permission);
+    }
+
+    public function actionRemovePermission($id) {
+        $user = $this->loadModel($id);
+        $permission = Permission::model()->findByPk(
+            Yii::app()->request->getParam('permission_id')
+        );
+        if (!$permission) {
+            throw new CHttpException(404,'Permission not found');
+        }
+        $user->removePermission($permission);
+    }
+
+    public function actionAddGroup($id) {
+        $user = $this->loadModel($id);
+        $group = Group::model()->findByAttributes(array(
+            'id' => Yii::app()->request->getParam('group_id'),
+            'company_id' => $user->company_id
+        ));
+        if (!$group) {
+            throw new CHttpException(404,'Group not found');
+        }
+        $user->addGroup($group);
+    }
+
+    public function actionRemoveGroup($id) {
+        $user = $this->loadModel($id);
+        $group = Group::model()->findByAttributes(array(
+            'id' => Yii::app()->request->getParam('group_id'),
+            'company_id' => $user->company_id
+        ));
+        if (!$group) {
+            throw new CHttpException(404,'Group not found');
+        }
+        $user->removeGroup($group);
     }
 
     /**
@@ -43,5 +154,13 @@ class UserController extends Controller {
     public function actionLogout() {
         Yii::app()->user->logout();
         $this->redirect(Yii::app()->homeUrl);
+    }
+
+    public function loadModel($id) {
+        $model=User::model()->findByPk($id);
+        if($model===null) {
+            throw new CHttpException(404,'The requested page does not exist.');
+        }
+        return $model;
     }
 }

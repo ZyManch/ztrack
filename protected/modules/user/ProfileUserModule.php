@@ -17,11 +17,11 @@ class ProfileUserModule extends AbstractUserModule {
                 'items' => array(
                     array(
                         'label' => 'Settings',
-                        'url' => array('user/profile'),
+                        'url' => array('user/view','id'=>Yii::app()->user->id),
                     ),
                     array(
                         'label' => 'Logout',
-                        'url' => array('site/logout'),
+                        'url' => array('user/logout'),
                     )
                 ),
                 'icon'=>'user'

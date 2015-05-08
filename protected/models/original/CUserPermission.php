@@ -20,8 +20,8 @@ class CUserPermission extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('id, user_id, permission_id', 'required'),
-			array('id, user_id, permission_id', 'length', 'max'=>10)        );
+            array('user_id, permission_id', 'required'),
+			array('user_id, permission_id', 'length', 'max'=>10)        );
     }
 
     /**

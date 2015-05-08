@@ -6,7 +6,6 @@
 * The followings are the available columns in table 'user':
     * @property string $id
     * @property string $company_id
-    * @property string $login
     * @property string $username
     * @property string $email
     * @property string $password
@@ -35,10 +34,10 @@ class CUser extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('company_id, login, username, email, password', 'required'),
+            array('company_id, username, email, password', 'required'),
 			array('company_id', 'length', 'max'=>10),
-			array('login, password', 'length', 'max'=>32),
 			array('username, email', 'length', 'max'=>128),
+			array('password', 'length', 'max'=>32),
 			array('status', 'length', 'max'=>7)        );
     }
 
@@ -66,7 +65,6 @@ class CUser extends ActiveRecord {
         return array(
             'id' => 'ID',
             'company_id' => 'Company',
-            'login' => 'Login',
             'username' => 'Username',
             'email' => 'Email',
             'password' => 'Password',

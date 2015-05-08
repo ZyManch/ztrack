@@ -29,6 +29,9 @@ class AuthManager implements IAuthManager {
             return false;
         }
         $userPermissions = $this->getUserPermissions($userId, $itemName);
+        if (in_array(PERMISSION_ROOT,$userPermissions)) {
+            return true;
+        }
         return in_array($itemName, $userPermissions, true);
     }
 

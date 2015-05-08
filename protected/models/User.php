@@ -4,6 +4,7 @@
  * @property Group[] $groups
  * @property AbstractUserModule[] $systemModules
  * @property Page[] $mainNotes
+ * @property Permission[] $permissions
  * @property UserPage[] $assignedUserPages
  */
 class User extends CUser {
@@ -39,6 +40,7 @@ class User extends CUser {
     protected function _extendedRelations() {
         return array(
             'groups' => array(self::MANY_MANY,'Group','user_group(user_id,group_id)','index'=>'id'),
+            'permissions' => array(self::MANY_MANY,'Permission','user_permission(user_id,permission_id)','index'=>'id'),
             'systemModules' => array(self::MANY_MANY, 'SystemModule','user_system_module(user_id,system_module_id)', 'order' => 'systemModules.position ASC','index'=>'id'),
             'mainNotes' => array(self::HAS_MANY, 'Page','author_user_id', 'on' => 'mainNotes.page_type_id='.PAGE_TYPE_NOTES.' AND mainNotes.parent_page_id IS  null','index'=>'id'),
             'assignedUserPages' => array(self::HAS_MANY,'UserPage','user_id','on'=>'assignedUserPages.is_assigned="Yes"')
@@ -114,6 +116,51 @@ class User extends CUser {
         if ($link && $module->type == SystemModule::TYPE_USER) {
             $link->delete();
         }
+    }
+
+    public function addPermission(Permission $permission) {
+        if (!isset($this->permissions[$permission->id])) {
+            $link = new UserPermission();
+            $link->user_id = $this->id;
+            $link->permission_id = $permission->id;
+            $link->save(false);
+        }
+        return true;
+    }
+
+    public function removePermission(Permission $permission) {
+        if ($permission->id == PERMISSION_ROOT && $this->id == Yii::app()->user->id) {
+            return false;
+        }
+        $link = UserPermission::model()->findByAttributes(array(
+            'user_id' => $this->id,
+            'permission_id' => $permission->id
+        ));
+        if ($link) {
+            $link->delete();
+        }
+        return true;
+    }
+
+    public function addGroup(Group $group) {
+        if (!isset($this->groups[$group->id])) {
+            $link = new UserGroup();
+            $link->user_id = $this->id;
+            $link->group_id = $group->id;
+            $link->save(false);
+        }
+        return true;
+    }
+
+    public function removeGroup(Group $group) {
+        $link = UserGroup::model()->findByAttributes(array(
+            'user_id' => $this->id,
+            'group_id' => $group->id
+        ));
+        if ($link) {
+            $link->delete();
+        }
+        return true;
     }
 
     public function getGravatarUrl($size) {

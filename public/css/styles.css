@@ -132,3 +132,18 @@ tr.immediately td, .label.label-immediately {
 .dd-list hr {
     margin: 0;
 }
+.checkbox-list td,.checkbox-list th {
+    border-width: 0 !important;
+}
+.checkbox-list .checkbox-item label {
+    width: 100%;
+    cursor: pointer;
+}
+.checkbox-list .checkbox-item input {
+    float: left;
+    margin-right: 5px;
+}
+.checkbox-list .checkbox-item.checked {
+    color: #1ab394;
+
+}

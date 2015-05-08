@@ -54,6 +54,10 @@ return array(
         'authManager'=>array(
             'class' => 'AuthManager',
         ),
+        'user'=>array(
+            'loginUrl'=>array('user/login'),
+            'allowAutoLogin'=>true,
+        ),
     ),
     'params'=>array(
         'adminEmail'=>'webmaster@example.com',

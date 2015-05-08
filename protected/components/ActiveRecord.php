@@ -32,7 +32,7 @@ class ActiveRecord extends CActiveRecord {
     }
 
     protected function _hasStatus() {
-        return isset($this->tableSchema->columnNames['status']);
+        return in_array('status', $this->tableSchema->columnNames);
     }
 
     public function defaultScope() {

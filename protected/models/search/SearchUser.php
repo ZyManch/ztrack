@@ -6,19 +6,18 @@
 * The followings are the available columns in table 'user':
     * @property string $id
     * @property string $company_id
-    * @property string $login
     * @property string $email
     * @property string $password
     * @property string $status
     * @property string $changed
     *
     * The followings are the available model relations:
-            * @property Page[] $pages
-            * @property Page[] $pages1
-            * @property Company $company
-            * @property UserAccess[] $userAccesses
-            * @property UserGroup[] $userGroups
-            * @property UserSystemModule[] $userSystemModules
+    * @property Page[] $pages
+    * @property Page[] $pages1
+    * @property Company $company
+    * @property UserAccess[] $userAccesses
+    * @property UserGroup[] $userGroups
+    * @property UserSystemModule[] $userSystemModules
     */
 class SearchUser extends CUser {
 
@@ -28,7 +27,7 @@ class SearchUser extends CUser {
 
     public function rules()	{
         return array(
-            array('id, company_id, login, email, password, status, changed', 'safe', 'on'=>'search'),
+            array('id, company_id, email, password, status, changed', 'safe', 'on'=>'search'),
         );
     }
 
@@ -38,7 +37,6 @@ class SearchUser extends CUser {
 
 		$criteria->compare('id',$this->id,true);
 		$criteria->compare('company_id',$this->company_id,true);
-		$criteria->compare('login',$this->login,true);
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('password',$this->password,true);
 		$criteria->compare('status',$this->status,true);

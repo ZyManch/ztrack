@@ -9,6 +9,7 @@
     * @property string $title
     * @property integer $group
     * @property integer $position
+    * @property string $default_checked
     * @property string $status
     * @property string $changed
     *
@@ -27,6 +28,7 @@ class CPermission extends ActiveRecord {
             array('constant, title, group, position', 'required'),
 			array('group, position', 'numerical', 'integerOnly'=>true),
 			array('constant, title', 'length', 'max'=>64),
+			array('default_checked', 'length', 'max'=>3),
 			array('status', 'length', 'max'=>7)        );
     }
 
@@ -47,6 +49,7 @@ class CPermission extends ActiveRecord {
             'title' => 'Title',
             'group' => 'Group',
             'position' => 'Position',
+            'default_checked' => 'Default Checked',
             'status' => 'Status',
             'changed' => 'Changed',
         );
