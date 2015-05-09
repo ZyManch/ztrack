@@ -706,7 +706,6 @@ class m150316_110848_init extends EDbMigration
         $this->dropTable('label');
         $this->dropTable('level');
         $this->dropTable('method');
-        $this->dropTable('migration');
         $this->dropTable('os');
         $this->dropTable('page');
         $this->dropTable('page_label');
@@ -725,5 +724,13 @@ class m150316_110848_init extends EDbMigration
         $this->dropTable('user_access');
         $this->dropTable('user_group');
         $this->dropTable('user_system_module');
+    }
+
+    public function dropTable($table) {
+        try {
+            parent::dropTable($table);
+        } catch (Exception $e) {
+
+        }
     }
 }

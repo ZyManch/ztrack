@@ -6,8 +6,7 @@ class m150404_110815_drop_user_access extends EDbMigration {
 	}
 
 	public function down(){
-		echo "m150404_110815_drop_user_access does not support migration down.\n";
-		return false;
+
 	}
 
 }

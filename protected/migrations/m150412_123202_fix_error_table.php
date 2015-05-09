@@ -9,8 +9,7 @@ class m150412_123202_fix_error_table extends EDbMigration
 
 	public function down()
 	{
-		echo "m150412_123202_fix_error_table does not support migration down.\n";
-		return false;
+
 	}
 
 }

@@ -64,7 +64,7 @@ class m150404_130047_statistic extends EDbMigration
 	{
         $this->dropTable('group_statistic');
         $this->dropTable('statistic_point');
-		$this->dropTable('statistic');
+        $this->dropTable('statistic');
 
 
 	}

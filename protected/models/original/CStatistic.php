@@ -14,6 +14,7 @@
     * The followings are the available model relations:
         * @property GroupStatistic[] $groupStatistics
         * @property Company $company
+        * @property StatisticColumn[] $statisticColumns
         * @property StatisticPoint[] $statisticPoints
 */
 class CStatistic extends ActiveRecord {
@@ -38,6 +39,7 @@ class CStatistic extends ActiveRecord {
         return array(
             'groupStatistics' => array(self::HAS_MANY, 'GroupStatistic', 'statistic_id'),
             'company' => array(self::BELONGS_TO, 'Company', 'company_id'),
+            'statisticColumns' => array(self::HAS_MANY, 'StatisticColumn', 'statistic_id'),
             'statisticPoints' => array(self::HAS_MANY, 'StatisticPoint', 'statistic_id'),
         );
     }

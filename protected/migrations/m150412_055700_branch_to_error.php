@@ -23,13 +23,17 @@ class m150412_055700_branch_to_error extends EDbMigration
 
 	public function down()
 	{
-        $this->dropForeignKey('error_ibfk_3','error');
-        $this->dropColumn('error','branch_id');
-        $this->execute(
-            'ALTER TABLE `request` ADD `branch_id` int(10) unsigned NOT NULL AFTER `server_id`,
-            ADD INDEX (  `branch_id` )'
-        );
-        $this->addForeignKey('request_ibfk_1','request', 'branch_id', 'branch', 'id', 'CASCADE', 'CASCADE');
+        try {
+            $this->dropForeignKey('error_ibfk_3', 'error');
+            $this->dropColumn('error', 'branch_id');
+            $this->execute(
+                'ALTER TABLE `request` ADD `branch_id` int(10) unsigned NOT NULL AFTER `server_id`,
+                ADD INDEX (  `branch_id` )'
+            );
+            $this->addForeignKey('request_ibfk_1', 'request', 'branch_id', 'branch', 'id', 'CASCADE', 'CASCADE');
+        } catch (Exception $e) {
+
+        }
 	}
 
 	/*

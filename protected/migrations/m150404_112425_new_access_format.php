@@ -37,8 +37,7 @@ class m150404_112425_new_access_format extends EDbMigration{
 	}
 
 	public function down() {
-		echo "m150404_112425_new_access_format does not support migration down.\n";
-		return false;
+
 	}
 
 }

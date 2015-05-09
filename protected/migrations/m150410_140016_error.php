@@ -20,8 +20,12 @@ class m150410_140016_error extends EDbMigration
 
 	public function down()
 	{
-        $this->dropColumn('request','error_id');
-        $this->renameTable('error','exception');
+        try {
+            $this->renameTable('error', 'exception');
+            $this->dropColumn('request', 'error_id');
+        } catch (Exception $e) {
+
+        }
 
 	}
 
