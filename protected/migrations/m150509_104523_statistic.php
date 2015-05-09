@@ -61,7 +61,7 @@ class m150509_104523_statistic extends EDbMigration
             'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
             'statistic_column_id' => 'int(10) unsigned NOT NULL',
             'statistic_point_id' => 'int(10) unsigned NOT NULL',
-            'value' => 'date NOT NULL',
+            'value' => 'datetime NOT NULL',
             'PRIMARY KEY (`id`)',
             'KEY `statistic_column_id` (`statistic_column_id`)',
             'KEY `statistic_point_id` (`statistic_point_id`)'
@@ -158,10 +158,6 @@ class m150509_104523_statistic extends EDbMigration
 
 	public function down()
 	{
-		$this->dropForeignKey('statistic_column_ibfk_1','statistic_column');
-        $this->dropTable('statistic_column');
-        $this->addColumn('statistic_point','date','timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP');
-        $this->addColumn('statistic_point','date','value','decimal(12,4) NOT NULL');
         $this->dropForeignKey('statistic_data_string_ibfk_3','statistic_data_string');
         $this->dropForeignKey('statistic_data_string_ibfk_2','statistic_data_string');
         $this->dropForeignKey('statistic_data_string_ibfk_1','statistic_data_string');
@@ -170,11 +166,18 @@ class m150509_104523_statistic extends EDbMigration
         $this->dropForeignKey('statistic_data_float_ibfk_1','statistic_data_float');
         $this->dropForeignKey('statistic_data_float_ibfk_2','statistic_data_float');
         $this->dropForeignKey('statistic_data_date_ibfk_2','statistic_data_date');
-        $this->dropTable('statistic_data_string_value');
+        $this->dropForeignKey('statistic_column_ibfk_1','statistic_column');
+
         $this->dropTable('statistic_data_string');
+        $this->dropTable('statistic_data_string_value');
         $this->dropTable('statistic_data_int');
         $this->dropTable('statistic_data_float');
         $this->dropTable('statistic_data_date');
+        $this->dropTable('statistic_column');
+        $this->addColumn('statistic_point','date','timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP');
+        $this->addColumn('statistic_point','value','decimal(12,4) NOT NULL');
+
+
 	}
 
 }

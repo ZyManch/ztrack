@@ -32,7 +32,7 @@
             'config[statistics]',
             isset($config['statistics']) ? $config['statistics'] : array(),
             CHtml::listData(Yii::app()->user->getUser()->getAvailableStatistics(),'id','title'),
-            array('class'=>'form-control','id'=>'config-projects','multiple'=>'multiple')
+            array('class'=>'form-control','id'=>'config-projects')
         ); ?>
     </div>
 </div>
