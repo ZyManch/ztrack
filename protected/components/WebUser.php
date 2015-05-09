@@ -24,6 +24,10 @@ class WebUser extends CWebUser {
             return $this->_user;
         }
         $this->_user = User::model()->findByPk($this->id);
+        if (!$this->_user) {
+            $this->logout();
+            Yii::app()->request->redirect('user/login');
+        }
         return $this->_user;
     }
 
