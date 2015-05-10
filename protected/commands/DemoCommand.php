@@ -29,25 +29,29 @@ class DemoCommand extends CConsoleCommand {
             $oldUsersStatId = $db->lastInsertID;
             $query->insert('statistic_column',array(
                 'statistic_id'=>$statId,
-                'name' => 'Юзеров',
+                'label' => 'Юзеров',
+                'name' => 'users',
                 'type' => 'Int'
             ));
             $usersColumnId = $db->lastInsertID;
             $query->insert('statistic_column',array(
                 'statistic_id'=>$statId,
-                'name' => 'Доход',
+                'label' => 'Доход',
+                'name' => 'income',
                 'type' => 'Float'
             ));
             $incomeColumnId = $db->lastInsertID;
             $query->insert('statistic_column',array(
                 'statistic_id'=>$statId,
-                'name' => 'Дата',
+                'label' => 'Дата',
+                'name' => 'date',
                 'type' => 'Date'
             ));
             $dateColumnId = $db->lastInsertID;
             $query->insert('statistic_column',array(
                 'statistic_id'=>$statId,
-                'name' => 'Тип',
+                'label' => 'Тип',
+                'name' => 'type',
                 'type' => 'String'
             ));
             $typeColumnId = $db->lastInsertID;

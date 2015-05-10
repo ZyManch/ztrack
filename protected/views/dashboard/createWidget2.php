@@ -7,6 +7,7 @@
  * @var AbstractWidgetModule $systemModule
  * @var Dashboard $dashboard
  * @var DashboardController $this
+ * @var DashboardSystemModule $dashboardSystemModule
  */
 ?>
 <div class="wrapper wrapper-content ">

@@ -28,4 +28,13 @@ class Dashboard extends CDashboard {
         return Dashboard::model()->findAll($criteria);
     }
 
+    public function getMaxPosition() {
+        $position = 0;
+        foreach ($this->dashboardSystemModules as $systemModule) {
+            if ($position < $systemModule->position) {
+                $position = $systemModule->position;
+            }
+        }
+        return $position;
+    }
 }

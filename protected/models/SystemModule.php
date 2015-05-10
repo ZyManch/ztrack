@@ -54,4 +54,8 @@ class SystemModule extends CSystemModule {
         return $items;
     }
 
+    public function checkAccess() {
+        return Yii::app()->user->checkAccess($this->permission_id);
+    }
+
 }

@@ -7,6 +7,7 @@
     * @property string $id
     * @property string $statistic_id
     * @property string $name
+    * @property string $label
     * @property string $description
     * @property string $type
     * @property string $status
@@ -27,9 +28,9 @@ class CStatisticColumn extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('statistic_id, name, type', 'required'),
+            array('statistic_id, name, label, type', 'required'),
 			array('statistic_id', 'length', 'max'=>10),
-			array('name', 'length', 'max'=>64),
+			array('name, label', 'length', 'max'=>64),
 			array('type', 'length', 'max'=>6),
 			array('status', 'length', 'max'=>7),
 			array('description', 'safe')        );
@@ -53,6 +54,7 @@ class CStatisticColumn extends ActiveRecord {
             'id' => 'ID',
             'statistic_id' => 'Statistic',
             'name' => 'Name',
+            'label' => 'Label',
             'description' => 'Description',
             'type' => 'Type',
             'status' => 'Status',

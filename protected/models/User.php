@@ -84,15 +84,13 @@ class User extends CUser {
         }
         $result = array();
         $criteria = new CDbCriteria();
-        $criteria->with = array('statistic');
-        $criteria->addInCondition('t.group_id',array_keys($this->groups));
-        $groupStatistics = GroupStatistic::model()->
-            findAll($criteria);
-        foreach ($groupStatistics as $groupStatistic) {
-            $result[$groupStatistic->statistic_id] = array(
-                'id' => $groupStatistic->statistic_id,
-                'title' => $groupStatistic->statistic->name
-            );
+        $criteria->with = array(
+            'groupStatistics' => array('joinType' => 'INNER JOIN','select' => false)
+        );
+        $criteria->addInCondition('groupStatistics.group_id',array_keys($this->groups));
+        $statistics = Statistic::model()->findAll($criteria);
+        foreach ($statistics as $statistic) {
+            $result[$statistic->id] = $statistic;
         }
         return $result;
     }

@@ -13,6 +13,12 @@ class Statistic extends CStatistic {
     const INTERVAL_WEEK = 'Week';
     const INTERVAL_MONTH = 'Month';
 
+    public function _extendedRelations() {
+        return array(
+            'statisticColumns' => array(self::HAS_MANY, 'StatisticColumn', 'statistic_id','index'=>'id'),
+        );
+    }
+
     public function getLastPoints($count) {
         $criteria = new CDbCriteria();
         $criteria->params[':count']  = $count;

@@ -18,6 +18,7 @@ return array(
         'application.models.search.*',
         'application.models.graph.common.*',
         'application.models.graph.*',
+        'application.models.statisticColumn.*',
         'application.models.*',
         'application.forms.*',
         'application.components.*',

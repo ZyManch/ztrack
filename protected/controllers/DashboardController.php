@@ -153,7 +153,7 @@ class DashboardController extends Controller {
         /** @var AbstractWidgetModule $systemModule */
         $systemModule = SystemModule::model()->findByPk($system_module_id);
 
-        if (!$systemModule || $systemModule->type != SystemModule::TYPE_WIDGET) {
+        if (!$systemModule || $systemModule->type != SystemModule::TYPE_WIDGET || !$systemModule->checkAccess()) {
             throw new CHttpException(404,'Widget not found');
         }
         $link = new DashboardSystemModule();
@@ -172,6 +172,7 @@ class DashboardController extends Controller {
                 $link->attributes = array(
                     'dashboard_id' => $dashboard->id,
                     'system_module_id' => $systemModule->id,
+                    'position' => $dashboard->getMaxPosition()+1,
                     'params' => json_encode($configure)
                 );
                 if (!$link->save()) {

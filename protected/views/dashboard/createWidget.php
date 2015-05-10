@@ -22,17 +22,19 @@
                 <div class="hr-line-dashed"></div>
                 <div class="row">
                     <?php foreach ($modules as $module):?>
-                        <div class="col-xs-4">
-                            <a href="<?php echo CHtml::normalizeUrl(array(
-                                'dashboard/createWidget2',
-                                'id' => $dashboard->id,
-                                'system_module_id' => $module->id
-                            ));?>" class="btn btn-white btn-block">
-                                <strong><?php echo $module->title;?></strong>
-                                <br>
-                                <?php echo $module->description;?>
-                            </a>
-                        </div>
+                        <?php if ($module->checkAccess()):?>
+                            <div class="col-xs-4">
+                                <a href="<?php echo CHtml::normalizeUrl(array(
+                                    'dashboard/createWidget2',
+                                    'id' => $dashboard->id,
+                                    'system_module_id' => $module->id
+                                ));?>" class="btn btn-white btn-block">
+                                    <strong><?php echo $module->title;?></strong>
+                                    <br>
+                                    <?php echo $module->description;?>
+                                </a>
+                            </div>
+                        <?php endif;?>
                     <?php endforeach;?>
                 </div>
                 <div class="hr-line-dashed clear"></div>
