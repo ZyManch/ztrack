@@ -24,18 +24,20 @@ class ProjectTicketsWidgetModule extends AbstractWidgetModule {
     }
 
 
-    public function renderWidget() {
+    protected function _renderWidget() {
         /** @var GraphAbstract $graph */
         $graph = Graph::model()->findByPk($this->_config['graph_id']);
         foreach ($this->_getData() as $row) {
             $graph->addData($row);
         }
-        Yii::app()->controller->renderPartial(
-            '//modules/widget/projectTickets/_view',
-            array(
+        try {
+            Yii::app()->controller->renderPartial('//modules/widget/projectTickets/_view', array(
                 'graph' => $graph,
-            )
-        );
+            ));
+        } catch (Exception $e) {
+            ob_end_clean();
+            throw $e;
+        }
     }
 
     public function convertPostToConfigure($postData) {

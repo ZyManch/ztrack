@@ -25,13 +25,18 @@ class TicketsWidgetModule extends AbstractWidgetModule {
         return $postData;
     }
 
-    public function renderWidget() {
-        Yii::app()->controller->renderPartial(
-            '//modules/widget/tickets/_view',
-            array(
-                'search_model' => $this->_getTicketsSearchModel()
-            )
-        );
+    protected function _renderWidget() {
+        try {
+            Yii::app()->controller->renderPartial(
+                '//modules/widget/tickets/_view',
+                array(
+                    'search_model' => $this->_getTicketsSearchModel()
+                )
+            );
+        } catch (Exception $e) {
+            ob_end_clean();
+            throw $e;
+        }
     }
 
     protected function _getTicketsSearchModel() {

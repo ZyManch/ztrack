@@ -9,11 +9,20 @@ abstract class AbstractWidgetModule extends SystemModule {
 
     abstract public function getTitle();
 
-    abstract public function renderWidget();
+    abstract protected function _renderWidget();
 
     abstract public function configure($config);
 
     abstract public function convertPostToConfigure($postData);
+
+
+    public function renderWidget() {
+        try {
+            $this->_renderWidget();
+        } catch (Exception $e) {
+            echo CHtml::tag('div',array('class'=>'alert alert-danger'),$e->getMessage());
+        }
+    }
 
     public function renderConfigure(CActiveForm $form, $config = null) {
         Yii::app()->controller->renderPartial('//modules/widget/'.$this->name.'/_settings',array(

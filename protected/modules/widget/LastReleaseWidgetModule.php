@@ -43,14 +43,19 @@ class LastReleaseWidgetModule extends AbstractWidgetModule {
         return $postData;
     }
 
-    public function renderWidget() {
-        Yii::app()->controller->renderPartial(
-            '//modules/widget/lastRelease/_view',
-            array(
-                'search_model' => $this->_searchModel,
-                'last_release' => $this->_lastRelease
-            )
-        );
+    protected function _renderWidget() {
+        try {
+            Yii::app()->controller->renderPartial(
+                '//modules/widget/lastRelease/_view',
+                array(
+                    'search_model' => $this->_searchModel,
+                    'last_release' => $this->_lastRelease
+                )
+            );
+        } catch (Exception $e) {
+            ob_end_clean();
+            throw $e;
+        }
     }
 
 

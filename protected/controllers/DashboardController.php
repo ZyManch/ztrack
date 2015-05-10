@@ -21,7 +21,7 @@ class DashboardController extends Controller {
 
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('index', 'create','update','createWidget','createWidget2','cancel'),
+                'actions'=>array('index', 'create','update','createWidget','createWidget2','cancel','configure'),
                 'users'=>array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
