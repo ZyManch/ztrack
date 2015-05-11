@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: елена
+ * User: Helen
  * Date: 05.04.2015
  * Time: 22:46
  * @var DashboardSystemModule $dashboardSystemModule
@@ -22,7 +22,7 @@ $systemModule = $dashboardSystemModule->systemModule;
     <div class="col-lg-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>Редактирование</h5>
+                <h5>Configuration</h5>
             </div>
             <div class="ibox-content">
                 <?php $form=$this->beginWidget('CActiveForm', array(

@@ -53,7 +53,7 @@ if ($selectedDashboard) {
     <div class="col-xs-4 text-right">
         <?php if ($selectedDashboard):?>
             <?php echo CHtml::link(
-                'Добавить виджет',
+                'Add widget',
                 array('dashboard/createWidget','id'=>$selectedDashboard->id),
                 array('class'=>'btn btn-primary')
             );?>

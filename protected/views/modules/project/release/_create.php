@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: елена
+ * User: Helen
  * Date: 19.04.2015
  * Time: 9:57
  * @var $this ProjectController
@@ -17,7 +17,7 @@
             <div class="ibox-content">
                 <div class="row">
                     <div class="col-md-9">
-                        <h1>Создание релиза</h1>
+                        <h1>Create release</h1>
                     </div>
                     <div class="col-md-3 text-right">
 

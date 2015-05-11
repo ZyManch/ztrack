@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: елена
+ * User: Helen
  * Date: 05.04.2015
  * Time: 22:51
  * @var $system_module AbstractWidgetModule
@@ -12,7 +12,7 @@ $projectIds = array_keys(Yii::app()->user->getUser()->getAvailableProjects());
 ?>
 <div class="form-group">
     <?php echo CHtml::label(
-        'Тип графика',
+        'Graph type',
         'config-graph-id',
         array('class'=>'col-sm-3 control-label')
     ); ?>

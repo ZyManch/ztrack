@@ -11,7 +11,7 @@ $this->breadcrumbs=array(
     <div class="row">
         <div class="col-xs-4">
             <div class="page-header">
-                <h1>Вход на сайт</h1>
+                <h1>Log in</h1>
             </div>
         </div>
     </div>
@@ -34,7 +34,7 @@ $this->breadcrumbs=array(
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-4 control-label">Пароль:</label>
+                    <label class="col-sm-4 control-label">Password:</label>
                     <div class="col-sm-8">
                         <?php echo $form->passwordField($model,'password',array('class'=>'form-control')); ?>
                     </div>
@@ -44,7 +44,7 @@ $this->breadcrumbs=array(
                         <div class="checkbox">
                             <label>
                                 <?php echo $form->checkBox($model,'rememberMe'); ?>
-                                Запомнить меня
+                                Save me
                             </label>
                         </div>
                     </div>

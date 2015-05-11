@@ -9,7 +9,7 @@
 ?>
 <div class="ibox float-e-margins">
     <div class="ibox-title">
-        <h5>Система</h5>
+        <h5>System</h5>
     </div>
     <div class="ibox-content">
         <div class="row">

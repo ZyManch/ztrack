@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: елена
+ * User: Helen
  * Date: 18.04.2015
  * Time: 23:01
  * @var $project Project
@@ -90,7 +90,7 @@ Yii::app()->clientScript->registerCssFile('/css/custom.css');
     <div class="col-lg-6">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>Статистика</h5>
+                <h5>Statistic</h5>
             </div>
             <div class="ibox-content">
                 <div>
@@ -99,17 +99,17 @@ Yii::app()->clientScript->registerCssFile('/css/custom.css');
                         $graph = Graph::model()->findByPk(GRAPH_FLOT_BAR);
 
                         $users = $release->_getUsers(true);
-                        $graph->addData(new GraphData('Выполнено задач',CHtml::listData($users,'username','count')));
+                        $graph->addData(new GraphData('Closed tasks',CHtml::listData($users,'username','count')));
 
                         $users = $release->_getUsers(false);
-                        $graph->addData(new GraphData('Всего задач',CHtml::listData($users,'username','count')));
+                        $graph->addData(new GraphData('Total tasks',CHtml::listData($users,'username','count')));
 
 
 
                         echo $graph->render(array('style'=>'width:100%;height:200px'));
                         ?>
                     <?php else:?>
-                        Статистика отсутсвует
+                        Empty
                     <?php endif;?>
                 </div>
             </div>

@@ -17,29 +17,29 @@
                 <?php foreach ($data->getChangesAttributes() as $attribute):?>
                     <li>
                     <?php if ($attribute == 'assign_user_id'):?>
-                        Параметр <b><?php echo $data->getAttributeLabel($attribute);?></b> изменился
+                        Attribute <b><?php echo $data->getAttributeLabel($attribute);?></b> is changed
                         <?php if ($data->previousPageHistory->assign_user_id):?>
-                            с <?php echo CHtml::link(
+                            from <?php echo CHtml::link(
                                 CHtml::encode($data->previousPageHistory->assignUser->username),
                                 array('user/view','id'=>$data->previousPageHistory->assignUser->id)
                             );?>
                         <?php endif;?>
-                        на
+                        to
                         <?php echo CHtml::link(
                             CHtml::encode($data->assignUser->username),
                             array('user/view','id'=>$data->assignUser->id)
                         );?>
                     <?php elseif ($attribute == 'body') :?>
-                        <b>Описание</b> обновлено (<?php echo CHtml::link('diff',array(
+                        <b>Description</b> changed (<?php echo CHtml::link('diff',array(
                             'history/view',
                             'id'=>$data->id
                         ));?>)
                     <?php else:?>
-                         Параметр <b><?php echo $data->getAttributeLabel($attribute);?></b> изменился
+                         Attribute <b><?php echo $data->getAttributeLabel($attribute);?></b> changed
                         <?php if ($data->previousPageHistory->$attribute):?>
-                            с <?php echo CHtml::encode($data->previousPageHistory->$attribute);?>
+                            from <?php echo CHtml::encode($data->previousPageHistory->$attribute);?>
                         <?php endif;?>
-                        на
+                        to
                         <?php echo CHtml::encode($data->$attribute);?>
                     <?php endif;?>
                     </li>

@@ -20,7 +20,7 @@
             <div class="ibox-content">
                 <div class="row">
                     <div class="form-group col-xs-6">
-                        <?php echo $form->textField($model,'title',array('placeholder'=>'Введите заголовок','class'=>'form-control'));?>
+                        <?php echo $form->textField($model,'title',array('placeholder'=>'Title','class'=>'form-control'));?>
                     </div>
                     <div class="col-xs-6 text-right">
                         <input type="submit" value="Submit" class="btn btn-primary btn-xs">

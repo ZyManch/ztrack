@@ -5,7 +5,7 @@
 
 ?>
 <div class="row wrapper border-bottom white-bg page-heading">
-    <h2>Администрирование Statistics</h2>
+    <h2>Statistics</h2>
 </div>
 
 <div class="wrapper wrapper-content animated fadeInRight">

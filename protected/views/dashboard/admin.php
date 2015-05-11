@@ -18,7 +18,7 @@ $('.search-form form').submit(function(){
 ?>
 
 <div class="row wrapper border-bottom white-bg page-heading">
-    <h2>Администрирование Dashboards</h2>
+    <h2> Dashboards</h2>
     <div class="ibox-tools">
         <?php echo CHtml::link('Advanced Search','#',array('class'=>'btn btn-primary btn-xs search-button')); ?>    </div>
 </div>

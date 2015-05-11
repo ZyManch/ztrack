@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: елена
+ * User: Helen
  * Date: 05.04.2015
  * Time: 15:55
  * @var $dashboard_system_module DashboardSystemModule
@@ -21,7 +21,7 @@ $systemModule = $dashboard_system_module->getSystemModule();
                 ),
                 array(
                     'class'=>'btn btn-xs',
-                    'title'=>'Редактировать виджет'
+                    'title'=>'Edit widget'
                 )
             );?>
             <?php echo CHtml::link(
@@ -33,7 +33,7 @@ $systemModule = $dashboard_system_module->getSystemModule();
                 ),
                 array(
                     'class'=>'btn btn-xs',
-                    'title'=>'Удалить виджет'
+                    'title'=>'Delete widget'
                 )
             );?>
         </div>

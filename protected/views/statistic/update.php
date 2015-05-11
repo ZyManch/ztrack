@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="page-header">
-                <h1>Правка Statistic <?php echo $model->id; ?></h1>
+                <h1>Update Statistic <?php echo $model->id; ?></h1>
             </div>
         </div>
     </div>

@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: елена
+ * User: Helen
  * Date: 05.04.2015
  * Time: 22:46
  * @var SystemModule[] $modules
@@ -13,7 +13,7 @@
     <div class="col-xs-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>Добавлени виджета в <?php echo CHtml::encode($dashboard->name);?></h5>
+                <h5>Add widget to <?php echo CHtml::encode($dashboard->name);?></h5>
             </div>
             <div class="ibox-content">
                 <p>

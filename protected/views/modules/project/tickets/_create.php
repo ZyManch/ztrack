@@ -11,7 +11,7 @@
             <div class="ibox-content">
                 <div class="row">
                     <div class="col-md-9">
-                 <h1>Создание тикета</h1>
+                 <h1>Create ticket</h1>
                 </div>
                 <div class="col-md-3 text-right">
 

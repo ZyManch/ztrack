@@ -9,7 +9,7 @@
 ?>
 <a class="list-group-item active" href="#">
     <h4 class="list-group-item-heading">
-        Назначено
+        Assigned
         <?php echo $user->username;?>
     </h4>
     <p class="list-group-item-text">

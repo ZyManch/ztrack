@@ -10,7 +10,7 @@
 ?>
 <div class="form-group">
     <?php echo CHtml::label(
-        'Название виджета',
+        'Widget name',
         'widget-title',
         array('class'=>'col-sm-3 control-label')
     ); ?>
@@ -24,7 +24,7 @@
 </div>
 <div class="form-group">
     <?php echo CHtml::label(
-        'Размер виджета',
+        'Widget size',
         'widget-rows',
         array('class'=>'col-sm-3 control-label')
     ); ?>
@@ -38,7 +38,7 @@
 </div>
 <div class="form-group">
     <?php echo CHtml::label(
-        'Форма виджета',
+        'Widget type',
         'widget-type',
         array('class'=>'col-sm-3 control-label')
     ); ?>

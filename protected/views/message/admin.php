@@ -20,7 +20,7 @@ $('.search-form form').submit(function(){
 <div class="row">
     <div class="col-xs-12">
         <div class="page-header">
-            <h1>Администрирование Messages</h1>
+            <h1>Messages</h1>
         </div>
     </div>
 </div>

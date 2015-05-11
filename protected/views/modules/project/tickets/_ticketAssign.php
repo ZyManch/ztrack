@@ -38,7 +38,7 @@ Yii::app()->clientScript->registerScript(
 ?>
 <a class="list-group-item assign-new-user-to-ticket <?php if (!$model->userPages):?> active<?php endif;?>" href="#">
     <h4 class="list-group-item-heading">
-        Назначить
+        Assign
     </h4>
     <div class="list-group-item-text users" <?php if ($model->userPages):?>style="display: none"<?php endif;?>>
         <?php foreach ($model->project->getUsersThatHaveProject() as $user):?>

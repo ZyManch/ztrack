@@ -8,7 +8,7 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="page-header">
-            <h1>Создание Project</h1>
+            <h1>Create Project</h1>
         </div>
     </div>
 </div>

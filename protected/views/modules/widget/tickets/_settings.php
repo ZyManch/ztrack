@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: елена
+ * User: Helen
  * Date: 05.04.2015
  * Time: 22:51
  * @var $system_module AbstractWidgetModule
@@ -13,7 +13,7 @@
 
 <div class="form-group">
     <?php echo CHtml::label(
-        'Номер тикета',
+        'Ticket number',
         'config-id',
         array('class'=>'col-sm-3 control-label')
     ); ?>
@@ -27,7 +27,7 @@
 </div>
 <div class="form-group">
     <?php echo CHtml::label(
-        'Номер родительского тикета',
+        'Parent ticket',
         'config-parent-id',
         array('class'=>'col-sm-3 control-label')
     ); ?>
@@ -41,7 +41,7 @@
 </div>
 <div class="form-group">
     <?php echo CHtml::label(
-        'Номер проекта',
+        'Project number',
         'config-project-id',
         array('class'=>'col-sm-3 control-label')
     ); ?>
@@ -55,7 +55,7 @@
 </div>
 <div class="form-group">
     <?php echo CHtml::label(
-        'Название тикета',
+        'Ticket name',
         'config-title',
         array('class'=>'col-sm-3 control-label')
     ); ?>
@@ -69,7 +69,7 @@
 </div>
 <div class="form-group">
     <?php echo CHtml::label(
-        'Описание тикета',
+        'Ticket description',
         'config-body',
         array('class'=>'col-sm-3 control-label')
     ); ?>
@@ -111,7 +111,7 @@
 </div>
 <div class="form-group">
     <?php echo CHtml::label(
-        'Статус',
+        'Status',
         'config-status',
         array('class'=>'col-sm-3 control-label')
     ); ?>
@@ -125,7 +125,7 @@
 </div>
 <div class="form-group">
     <?php echo CHtml::label(
-        'Дата последнего изменения',
+        'Last changed date',
         'config-changed',
         array('class'=>'col-sm-3 control-label')
     ); ?>

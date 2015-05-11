@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="page-header">
-                <h1>Правка Page <?php echo $model->id; ?></h1>
+                <h1>Edit note <?php echo $model->id; ?></h1>
             </div>
         </div>
     </div>

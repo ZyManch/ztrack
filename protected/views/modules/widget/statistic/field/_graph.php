@@ -10,7 +10,7 @@
 ?>
 <div class="form-group">
     <?php echo CHtml::label(
-        'Тип графика',
+        'Graph type',
         'config-graph-id',
         array('class'=>'col-sm-3 control-label')
     ); ?>

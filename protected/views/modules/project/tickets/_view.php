@@ -110,7 +110,7 @@ Yii::app()->clientScript->registerCssFile('/css/custom.css');
                         <?php if ($model->getRelated('pages',true,array('resetScope'=>true))):?>
                         <div class="row">
                             <div class="col-lg-12">
-                                <h4>Связанные задачи</h4>
+                                <h4>Related tasks</h4>
                             </div>
                         </div>
                         <div class="row">

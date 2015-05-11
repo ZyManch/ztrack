@@ -18,7 +18,7 @@ Yii::app()->clientScript->registerScript(
 ?>
 <div class="form-group">
     <?php echo CHtml::label(
-        'Статистика',
+        'Statistic',
         'config-statistics',
         array('class'=>'col-sm-3 control-label')
     ); ?>
