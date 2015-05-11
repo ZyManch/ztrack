@@ -13,5 +13,7 @@ abstract class AbstractDataFormatter {
         $this->_column = $column;
     }
 
+    abstract function formatLabel($label);
+
     abstract function __toString();
 }

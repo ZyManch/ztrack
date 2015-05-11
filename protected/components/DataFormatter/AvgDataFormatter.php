@@ -10,4 +10,8 @@ class AvgDataFormatter extends  AbstractDataFormatter{
     public function __toString() {
         return 'AVG('.$this->_column.')';
     }
+
+    public function formatLabel($label) {
+        return 'Avg of '.$label;
+    }
 }

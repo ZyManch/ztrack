@@ -10,4 +10,8 @@ class DayDataFormatter extends  AbstractDataFormatter{
     public function __toString() {
         return 'DATE_FORMAT('.$this->_column.',"%Y-%m-%d")';
     }
+
+    public function formatLabel($label) {
+        return 'Day of '.$label;
+    }
 }

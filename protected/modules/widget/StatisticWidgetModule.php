@@ -121,8 +121,11 @@ class StatisticWidgetModule  extends AbstractWidgetModule {
         $result = array();
         foreach ($this->_config['axis-y'] as $index => $axisY) {
             $label = $stat->statisticColumns[$axisY['column']]->label;
+            $filterClass = ucfirst($axisY['format']).'DataFormatter';
+            /** @var AbstractDataFormatter $filter */
+            $filter = new $filterClass(null);
             $result[] = new GraphData(
-                $label,
+                $filter->formatLabel($label),
                 CHtml::listData($dataRows,'value_key','value_'.$index)
             );
         }

@@ -10,4 +10,8 @@ class UnchangedDataFormatter extends  AbstractDataFormatter{
     public function __toString() {
         return $this->_column;
     }
+
+    public function formatLabel($label) {
+        return $label;
+    }
 }

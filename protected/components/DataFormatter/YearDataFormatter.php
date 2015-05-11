@@ -10,4 +10,8 @@ class YearDataFormatter extends  AbstractDataFormatter{
     public function __toString() {
         return 'DATE_FORMAT('.$this->_column.',"%Y")';
     }
+
+    public function formatLabel($label) {
+        return 'Year of '.$label;
+    }
 }

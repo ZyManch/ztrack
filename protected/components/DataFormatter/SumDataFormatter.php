@@ -10,4 +10,8 @@ class SumDataFormatter extends  AbstractDataFormatter{
     public function __toString() {
         return 'SUM('.$this->_column.')';
     }
+
+    public function formatLabel($label) {
+        return 'Sum of '.$label;
+    }
 }

@@ -10,4 +10,8 @@ class MinDataFormatter extends  AbstractDataFormatter{
     public function __toString() {
         return 'MIN('.$this->_column.')';
     }
+
+    public function formatLabel($label) {
+        return 'Min of '.$label;
+    }
 }

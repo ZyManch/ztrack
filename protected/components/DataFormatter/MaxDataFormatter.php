@@ -10,4 +10,8 @@ class MaxDataFormatter extends  AbstractDataFormatter{
     public function __toString() {
         return 'MAX('.$this->_column.')';
     }
+
+    public function formatLabel($label) {
+        return 'Max of '.$label;
+    }
 }

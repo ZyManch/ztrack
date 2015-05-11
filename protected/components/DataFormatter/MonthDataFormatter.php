@@ -10,4 +10,8 @@ class MonthDataFormatter extends  AbstractDataFormatter{
     public function __toString() {
         return 'DATE_FORMAT('.$this->_column.',"%Y %M")';
     }
+
+    public function formatLabel($label) {
+        return 'Month of '.$label;
+    }
 }
