@@ -13,7 +13,7 @@ class ProjectTicketsWidgetModule extends AbstractWidgetModule {
     );
 
     public function getTitle() {
-        return 'Статистика проектов';
+        return 'Project statistics';
     }
 
     public function configure($config) {

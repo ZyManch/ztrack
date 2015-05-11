@@ -40,10 +40,10 @@ class DashboardSystemModule extends CDashboardSystemModule {
 
     public static function getTypeVariants() {
         return array(
-            'Default' => 'Стандарт',
-            'Warning' => 'Оповещение',
-            'Info' => 'Информация',
-            'Danger' => 'Важно'
+            'Default' => 'Default',
+            'Warning' => 'Warning',
+            'Info' => 'Info',
+            'Danger' => 'Danger'
         );
     }
 

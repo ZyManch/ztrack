@@ -37,7 +37,7 @@ Yii::app()->clientScript->registerCssFile('/css/custom.css');
         <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <h5>
-                    Релиз <?php echo CHtml::encode($release->title);?>
+                    Release <?php echo CHtml::encode($release->title);?>
                     (<?php echo $release->progress;?>%)
                 </h5>
             </div>
@@ -82,7 +82,7 @@ Yii::app()->clientScript->registerCssFile('/css/custom.css');
                         <?php endforeach;?>
                     </table>
                 <?php else:?>
-                    Тикеты отсутсвуют
+                    Empty
                 <?php endif;?>
             </div>
         </div>

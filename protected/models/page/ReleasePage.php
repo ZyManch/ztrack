@@ -8,7 +8,7 @@
 class ReleasePage extends Page {
 
     public function getTitle() {
-        return 'Релиз '.$this->title;
+        return 'Release '.$this->title;
     }
 
     public function rules()	{

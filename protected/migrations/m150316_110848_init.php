@@ -473,7 +473,7 @@ class m150316_110848_init extends EDbMigration
         $this->insert('page_type',array(
             'id' => 1,
             'constant' => 'PAGE_TYPE_TICKETS',
-            'title' => 'Тикеты',
+            'title' => 'Ticket',
             'status' => 'Active',
             'changed' => '2015-03-09 12:54:08'
         ));
@@ -489,7 +489,7 @@ class m150316_110848_init extends EDbMigration
         $this->insert('page_type',array(
             'id' => 3,
             'constant' => 'PAGE_TYPE_NOTES',
-            'title' => 'Пометки',
+            'title' => 'Note',
             'status' => 'Active',
             'changed' => '2015-03-09 12:54:20'
         ));
@@ -497,7 +497,7 @@ class m150316_110848_init extends EDbMigration
         $this->insert('page_type',array(
             'id' => 4,
             'constant' => 'PAGE_TYPE_RELEASE',
-            'title' => 'Релиз',
+            'title' => 'Release',
             'status' => 'Active',
             'changed' => '2015-03-13 22:43:53'
         ));

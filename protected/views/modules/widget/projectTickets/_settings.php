@@ -27,7 +27,7 @@ $projectIds = array_keys(Yii::app()->user->getUser()->getAvailableProjects());
 </div>
 <div class="form-group">
     <?php echo CHtml::label(
-        'Проекты',
+        'Projects',
         'config-projects',
         array('class'=>'col-sm-3 control-label')
     ); ?>

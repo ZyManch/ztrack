@@ -52,19 +52,19 @@ class m150507_113347_permission extends EDbMigration
             'SET NULL',
             'CASCADE'
         );
-        $this->insert('permission', array('id' => 1, 'constant' => 'PERMISSION_ROOT', 'title' => 'Супер Администратор', 'group' => 1, 'position' => 0));
-        $this->insert('permission', array('id' => 2, 'constant' => 'PERMISSION_INVITE', 'title' => 'Добавление пользователей', 'group' => 1, 'position' => 1));
-        $this->insert('permission', array('id' => 3, 'constant' => 'PERMISSION_PROJECT_MANAGE', 'title' => 'Редактировать проекты', 'group' => 2, 'position' => 1));
-        $this->insert('permission', array('id' => 4, 'constant' => 'PERMISSION_GROUP_MANAGE', 'title' => 'Редактировать группы пользователей', 'group' => 1, 'position' => 2));
-        $this->insert('permission', array('id' => 5, 'constant' => 'PERMISSION_PROJECT_VIEW', 'title' => 'Просматривать проекты', 'group' => 2, 'position' => 0));
-        $this->insert('permission', array('id' => 6, 'constant' => 'PERMISSION_TICKET_VIEW', 'title' => 'Просматривать тикеты', 'group' => 3, 'position' => 0));
-        $this->insert('permission', array('id' => 7, 'constant' => 'PERMISSION_TICKET_MANAGE', 'title' => 'Редактировать тикеты', 'group' => 3, 'position' => 1));
-        $this->insert('permission', array('id' => 8, 'constant' => 'PERMISSION_WIKI_VIEW', 'title' => 'Просматривать Wiki', 'group' => 4, 'position' => 0));
-        $this->insert('permission', array('id' => 9, 'constant' => 'PERMISSION_WIKI_MANAGE', 'title' => 'Редактировать Wiki', 'group' => 4, 'position' => 1));
-        $this->insert('permission', array('id' => 11, 'constant' => 'PERMISSION_ERROR_VIEW', 'title' => 'Просмотр ошибок', 'group' => 5, 'position' => 0));
-        $this->insert('permission', array('id' => 12, 'constant' => 'PERMISSION_ERROR_MANAGE', 'title' => 'Редактирование ошибок', 'group' => 5, 'position' => 1));
-        $this->insert('permission', array('id' => 13, 'constant' => 'PERMISSION_STATISTIC_VIEW', 'title' => 'Просмотр статистики', 'group' => 6 , 'position' => 0));
-        $this->insert('permission', array('id' => 14, 'constant' => 'PERMISSION_STATISTIC_MANAGE', 'title' => 'Настройка статистики', 'group' => 6, 'position' => 1));
+        $this->insert('permission', array('id' => 1, 'constant' => 'PERMISSION_ROOT', 'title' => 'Super root', 'group' => 1, 'position' => 0));
+        $this->insert('permission', array('id' => 2, 'constant' => 'PERMISSION_INVITE', 'title' => 'Invite users', 'group' => 1, 'position' => 1));
+        $this->insert('permission', array('id' => 3, 'constant' => 'PERMISSION_PROJECT_MANAGE', 'title' => 'Manage projects', 'group' => 2, 'position' => 1));
+        $this->insert('permission', array('id' => 4, 'constant' => 'PERMISSION_GROUP_MANAGE', 'title' => 'Manage user groups', 'group' => 1, 'position' => 2));
+        $this->insert('permission', array('id' => 5, 'constant' => 'PERMISSION_PROJECT_VIEW', 'title' => 'View projects', 'group' => 2, 'position' => 0));
+        $this->insert('permission', array('id' => 6, 'constant' => 'PERMISSION_TICKET_VIEW', 'title' => 'View tickets', 'group' => 3, 'position' => 0));
+        $this->insert('permission', array('id' => 7, 'constant' => 'PERMISSION_TICKET_MANAGE', 'title' => 'Manage tickets', 'group' => 3, 'position' => 1));
+        $this->insert('permission', array('id' => 8, 'constant' => 'PERMISSION_WIKI_VIEW', 'title' => 'View Wiki', 'group' => 4, 'position' => 0));
+        $this->insert('permission', array('id' => 9, 'constant' => 'PERMISSION_WIKI_MANAGE', 'title' => 'Manage Wiki', 'group' => 4, 'position' => 1));
+        $this->insert('permission', array('id' => 11, 'constant' => 'PERMISSION_ERROR_VIEW', 'title' => 'View errors', 'group' => 5, 'position' => 0));
+        $this->insert('permission', array('id' => 12, 'constant' => 'PERMISSION_ERROR_MANAGE', 'title' => 'Manage errors', 'group' => 5, 'position' => 1));
+        $this->insert('permission', array('id' => 13, 'constant' => 'PERMISSION_STATISTIC_VIEW', 'title' => 'View statistic', 'group' => 6 , 'position' => 0));
+        $this->insert('permission', array('id' => 14, 'constant' => 'PERMISSION_STATISTIC_MANAGE', 'title' => 'Manage statistic', 'group' => 6, 'position' => 1));
         $this->update('system_module', array('permission_id' => 5), 'id = 2');
         $this->update('system_module', array('permission_id' => 6), 'id = 7');
         $this->update('system_module', array('permission_id' => 8), 'id = 8');

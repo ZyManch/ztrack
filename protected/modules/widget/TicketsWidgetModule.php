@@ -11,7 +11,7 @@ class TicketsWidgetModule extends AbstractWidgetModule {
     protected $_page;
 
     public function getTitle() {
-        return 'Текущий список задач';
+        return 'Current ticket list';
     }
 
     public function configure($config) {

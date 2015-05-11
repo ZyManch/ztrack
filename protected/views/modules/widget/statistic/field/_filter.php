@@ -41,7 +41,7 @@ $clientScript->registerScript(
 ?>
 <div class="form-group">
     <?php echo CHtml::label(
-        'Фильтр',
+        'Filter',
         'filter-'.$index.'-'.$statistic->id,
         array('class'=>'col-sm-3 control-label')
     ); ?>

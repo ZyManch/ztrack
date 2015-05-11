@@ -53,7 +53,7 @@ $this->breadcrumbs=array(
 
 
                 <div class="form-actions col-sm-offset-4 col-sm-8">
-                    <input type="submit" value="Войти" class="btn btn-primary"/>
+                    <input type="submit" value="Login" class="btn btn-primary"/>
                 </div>
 
             <?php $this->endWidget(); ?>

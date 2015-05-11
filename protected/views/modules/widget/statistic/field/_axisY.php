@@ -40,7 +40,7 @@ $clientScript->registerScript(
 ?>
 <div class="form-group">
     <?php echo CHtml::label(
-        'Ось Y',
+        'Axis Y',
         'axis-y-'.$index.'-'.$statistic->id,
         array('class'=>'col-sm-3 control-label')
     ); ?>

@@ -34,7 +34,7 @@
     <div class="col-lg-6">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>Мои тикеты</h5>
+                <h5>My tickets</h5>
             </div>
             <div class="ibox-content">
                 <?php $my_tickets_widget->renderWidget();?>

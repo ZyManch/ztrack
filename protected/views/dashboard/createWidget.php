@@ -17,7 +17,7 @@
             </div>
             <div class="ibox-content">
                 <p>
-                    Выберите тип модуля для продолжения
+                    Choice module type to continue
                 </p>
                 <div class="hr-line-dashed"></div>
                 <div class="row">

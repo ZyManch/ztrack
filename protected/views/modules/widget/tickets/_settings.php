@@ -83,7 +83,7 @@
 </div>
 <div class="form-group">
     <?php echo CHtml::label(
-        'Прогресс',
+        'Progress',
         'config-progress',
         array('class'=>'col-sm-3 control-label')
     ); ?>
@@ -97,7 +97,7 @@
 </div>
 <div class="form-group">
     <?php echo CHtml::label(
-        'Приоритет',
+        'Priority',
         'config-level-id',
         array('class'=>'col-sm-3 control-label')
     ); ?>

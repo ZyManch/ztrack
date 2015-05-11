@@ -6,7 +6,7 @@
 ?>
 
 <div class="row wrapper border-bottom white-bg page-heading">
-    <h2>Ошибки</h2>
+    <h2>Errors</h2>
     <div class="ibox-tools">
 
     </div>

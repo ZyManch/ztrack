@@ -14,7 +14,7 @@ class StatisticWidgetModule  extends AbstractWidgetModule {
     );
 
     public function getTitle() {
-        return 'Статистика';
+        return 'Statistic';
     }
 
 

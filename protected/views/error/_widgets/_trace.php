@@ -9,7 +9,7 @@
 ?>
 <div class="ibox float-e-margins">
     <div class="ibox-title">
-        <h5>Трейс</h5>
+        <h5>Trace</h5>
     </div>
     <div class="ibox-content">
         <div class="panel-group" id="trace">

@@ -19,17 +19,17 @@ class DateFormatter extends CDateFormatter {
         }
         $betweenMinutes = ($timestampTo-$timestampFrom)/60;
         if ($betweenMinutes < 60) {
-            return round($betweenMinutes).' минут';
+            return round($betweenMinutes).' minutes';
         }
         $betweenHours = $betweenMinutes/60;
         if ($betweenHours < 24) {
-            return round($betweenHours).' часа';
+            return round($betweenHours).' hours';
         }
         $betweenDays = $betweenHours / 24;
         if ($betweenDays < 365) {
-            return round($betweenDays).' дней';
+            return round($betweenDays).' days';
         }
-        return round($betweenDays,1).' лет';
+        return round($betweenDays,1).' years';
     }
 
     public static function getCurrentTimestamp()

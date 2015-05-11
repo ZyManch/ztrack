@@ -12,7 +12,7 @@
     <div class="col-md-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5><?php echo CHtml::encode($model->title?$model->title:'Без имени');?></h5>
+                <h5><?php echo CHtml::encode($model->title?$model->title:'Unknown');?></h5>
                 <div class="ibox-tools">
                     <?php echo CHtml::link(
                         'Edit',

@@ -6,7 +6,7 @@ class m150507_125538_permissions extends EDbMigration
 	{
         $this->update('permission',array(
             'constant' =>  'PERMISSION_USER_MANAGE',
-            'title' =>  'Администрировать пользователей'
+            'title' =>  'Manage users'
         ),'id =2');
 	}
 
