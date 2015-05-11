@@ -18,13 +18,13 @@
     * @property string $created
     *
     * The followings are the available model relations:
+        * @property User $user
         * @property PageHistory $previousPageHistory
         * @property PageHistory[] $pageHistories
         * @property Page $page
         * @property Project $project
         * @property Level $level
         * @property User $assignUser
-        * @property User $user
 */
 class CPageHistory extends ActiveRecord {
 
@@ -47,13 +47,13 @@ class CPageHistory extends ActiveRecord {
     */
     protected function _baseRelations()	{
         return array(
+            'user' => array(self::BELONGS_TO, 'User', 'user_id'),
             'previousPageHistory' => array(self::BELONGS_TO, 'PageHistory', 'previous_page_history_id'),
             'pageHistories' => array(self::HAS_MANY, 'PageHistory', 'previous_page_history_id'),
             'page' => array(self::BELONGS_TO, 'Page', 'page_id'),
             'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
             'level' => array(self::BELONGS_TO, 'Level', 'level_id'),
             'assignUser' => array(self::BELONGS_TO, 'User', 'assign_user_id'),
-            'user' => array(self::BELONGS_TO, 'User', 'user_id'),
         );
     }
 

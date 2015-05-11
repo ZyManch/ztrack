@@ -19,6 +19,7 @@ return array(
         'application.models.graph.common.*',
         'application.models.graph.*',
         'application.models.statisticColumn.*',
+        'application.models.messenger.*',
         'application.models.*',
         'application.forms.*',
         'application.components.*',

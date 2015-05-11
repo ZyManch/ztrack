@@ -11,8 +11,8 @@
     * @property string $changed
     *
     * The followings are the available model relations:
-        * @property User $user
         * @property Group $group
+        * @property User $user
 */
 class CUserGroup extends ActiveRecord {
 
@@ -32,8 +32,8 @@ class CUserGroup extends ActiveRecord {
     */
     protected function _baseRelations()	{
         return array(
-            'user' => array(self::BELONGS_TO, 'User', 'user_id'),
             'group' => array(self::BELONGS_TO, 'Group', 'group_id'),
+            'user' => array(self::BELONGS_TO, 'User', 'user_id'),
         );
     }
 

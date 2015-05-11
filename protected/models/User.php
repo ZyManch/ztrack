@@ -9,6 +9,7 @@
  */
 class User extends CUser {
 
+    const EMPTY_PASSWORD = 'Empty';
     const AVATAR_COUNT = 9;
 
     public $count;
@@ -186,6 +187,17 @@ class User extends CUser {
             CHtml::encode($this->username),
             array('width'=>$size.'px','height'=>$size.'px')
         );
+    }
+
+    public function invite() {
+        if ($this->isNewRecord) {
+            return false;
+        }
+        if ($this->password != self::EMPTY_PASSWORD) {
+            return false;
+        }
+
+        return true;
     }
 
     public function __toString() {

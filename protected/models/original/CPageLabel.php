@@ -11,8 +11,8 @@
     * @property string $changed
     *
     * The followings are the available model relations:
-        * @property Page $page
         * @property Label $label
+        * @property Page $page
 */
 class CPageLabel extends ActiveRecord {
 
@@ -32,8 +32,8 @@ class CPageLabel extends ActiveRecord {
     */
     protected function _baseRelations()	{
         return array(
-            'page' => array(self::BELONGS_TO, 'Page', 'page_id'),
             'label' => array(self::BELONGS_TO, 'Label', 'label_id'),
+            'page' => array(self::BELONGS_TO, 'Page', 'page_id'),
         );
     }
 

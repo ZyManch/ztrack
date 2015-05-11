@@ -43,7 +43,9 @@ class UserController extends Controller {
         if (isset($_POST['User'])) {
             $model->attributes = $_POST['User'];
             $model->company_id = Yii::app()->user->getUser()->company_id;
+            $model->password = User::EMPTY_PASSWORD;
             if ($model->save()) {
+                $model->invite();
                 $this->redirect(array('user/view','id'=>$model->id));
             }
         }
