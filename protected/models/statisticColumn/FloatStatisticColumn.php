@@ -11,7 +11,7 @@ class FloatStatisticColumn extends AbstractStatisticColumn {
 
     public function getFormatList() {
         return array(
-            '' => '',
+            'unchanged' => '',
             'count' => 'count',
             'sum' => 'sum',
             'min' => 'min',
@@ -27,6 +27,11 @@ class FloatStatisticColumn extends AbstractStatisticColumn {
             'lt' => 'less',
             'gt' => 'greater',
         );
+    }
+
+
+    public function getCompareRelationName() {
+        return 'statisticDataFloats.value';
     }
 
 }

@@ -12,4 +12,6 @@ abstract class AbstractStatisticColumn extends StatisticColumn {
 
     abstract public function getFilterList();
 
+    abstract public function getCompareRelationName();
+
 }

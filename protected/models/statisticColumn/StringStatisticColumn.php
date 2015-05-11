@@ -11,7 +11,7 @@ class StringStatisticColumn extends AbstractStatisticColumn {
 
     public function getFormatList() {
         return array(
-            '' => '',
+            'unchanged' => '',
             'count' => 'count'
         );
     }
@@ -21,6 +21,10 @@ class StringStatisticColumn extends AbstractStatisticColumn {
             'eq' => 'equal',
             'neq' => 'not equal',
         );
+    }
+
+    public function getCompareRelationName() {
+        return 'statisticDataStringValue.value';
     }
 
 }

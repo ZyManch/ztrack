@@ -11,7 +11,7 @@ class DateStatisticColumn extends AbstractStatisticColumn {
 
     public function getFormatList() {
         return array(
-            '' => '',
+            'unchanged' => '',
             'hour' => 'hour',
             'day' => 'day',
             'month' => 'month',
@@ -30,6 +30,11 @@ class DateStatisticColumn extends AbstractStatisticColumn {
             'lt' => 'less',
             'gt' => 'greater',
         );
+    }
+
+
+    public function getCompareRelationName() {
+        return 'statisticDataDates.value';
     }
 
 }

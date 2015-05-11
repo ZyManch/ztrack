@@ -21,7 +21,8 @@ class DashboardController extends Controller {
 
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('index', 'create','update','createWidget','createWidget2','cancel','configure'),
+                'actions'=>array('index', 'create','update','createWidget','createWidget2',
+                    'cancel','configure','deleteWidget'),
                 'users'=>array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -56,9 +57,10 @@ class DashboardController extends Controller {
         }
         /** @var DashboardSystemModule $dashboardSystemModule */
         $dashboardSystemModule = $dashboardSystemModules[$dashboard_system_module_id];
-
         if (Yii::app()->request->isPostRequest) {
-            $config = Yii::app()->request->getParam('config');
+            $config = $dashboardSystemModule->systemModule->convertPostToConfigure(
+                Yii::app()->request->getParam('config',array())
+            );
             $newParams = Yii::app()->request->getParam('widget');
             $dashboardSystemModule->attributes = $newParams;
             $dashboardSystemModule->params = json_encode($config);
@@ -131,6 +133,7 @@ class DashboardController extends Controller {
         /** @var DashboardSystemModule $dashboardSystemModule */
         $dashboardSystemModule = $dashboardSystemModules[$dashboard_system_module_id];
         $dashboardSystemModule->delete();
+        Yii::app()->user->setFlash('success',$dashboardSystemModule->title);
         $this->redirect(array('dashboard/cancel','id'=>$id));
     }
 

@@ -85,22 +85,22 @@ class DemoCommand extends CConsoleCommand {
                     'value' => rand(10,40)
                 ));
                 $query->insert('statistic_data_float',array(
-                    'statistic_column_id' => $usersColumnId,
+                    'statistic_column_id' => $incomeColumnId,
                     'statistic_point_id' => $pointId1,
                     'value' => rand(100,400)/10
                 ));
                 $query->insert('statistic_data_float',array(
-                    'statistic_column_id' => $usersColumnId,
+                    'statistic_column_id' => $incomeColumnId,
                     'statistic_point_id' => $pointId2,
                     'value' => rand(100,400)/10
                 ));
                 $query->insert('statistic_data_string',array(
-                    'statistic_column_id' => $usersColumnId,
+                    'statistic_column_id' => $typeColumnId,
                     'statistic_point_id' => $pointId1,
                     'statistic_data_string_value_id' => $newUsersStatId
                 ));
                 $query->insert('statistic_data_string',array(
-                    'statistic_column_id' => $usersColumnId,
+                    'statistic_column_id' => $typeColumnId,
                     'statistic_point_id' => $pointId2,
                     'statistic_data_string_value_id' => $oldUsersStatId
                 ));

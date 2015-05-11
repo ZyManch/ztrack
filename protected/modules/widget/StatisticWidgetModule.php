@@ -7,6 +7,8 @@
  */
 class StatisticWidgetModule  extends AbstractWidgetModule {
 
+    protected $_columns = array();
+
     protected $_config = array(
         'graph_id' => GRAPH_CHART_LINE,
     );
@@ -109,14 +111,74 @@ class StatisticWidgetModule  extends AbstractWidgetModule {
     }
 
     protected function _getData() {
-        $stats = Statistic::model()->findAllByPk($this->_config['statistics']);
+        $availableStats = Yii::app()->user->getUser()->getAvailableStatistics();
+        if (!isset($availableStats[$this->_config['statistic_id']])) {
+            throw new Exception('You haven`t access to this statistic');
+        }
+        /** @var Statistic $stat */
+        $stat = $availableStats[$this->_config['statistic_id']];
+        $dataRows = $this->_getDataRow($stat);
         $result = array();
-        foreach ($stats as $stat) {
+        foreach ($this->_config['axis-y'] as $index => $axisY) {
+            $label = $stat->statisticColumns[$axisY['column']]->label;
             $result[] = new GraphData(
-                $stat->name,
-                $stat->getLastPoints($this->_config['count'])
+                $label,
+                CHtml::listData($dataRows,'value_key','value_'.$index)
             );
         }
+
         return $result;
+    }
+
+    protected function _getDataRow(Statistic $statistic) {
+        $select = array();
+        $query = Yii::app()->db->createCommand();
+        $query->from('statistic_point t');
+        $axisX = $this->_config['axis-x'];
+        $this->_joinStatData($statistic,$query,$axisX['column']);
+        $filterClass = ucfirst($axisX['format']).'DataFormatter';
+        $filter = new $filterClass(
+            sprintf('col%d.value',$axisX['column'])
+        );
+        $select[] = $filter.' as value_key';
+        $query->group(array((string)$filter));
+        $query->order($filter.' ASC');
+        foreach ($this->_config['axis-y'] as $index => $axisY) {
+            $this->_joinStatData($statistic,$query,$axisY['column']);
+            $filterClass = ucfirst($axisY['format']).'DataFormatter';
+            $filter = new $filterClass(
+                sprintf('col%d.value',$axisY['column'])
+            );
+            $select[] = $filter.' as value_'.$index;
+        }
+        foreach ($this->_config['filter'] as $filter) {
+            $this->_joinStatData($statistic,$query,$filter['column']);
+            $dataFilterClass = ucfirst($filter['comparison']).'DataFilter';
+            /** @var AbstractDataFilter $dataFilter */
+            $dataFilter = new $dataFilterClass($filter['value']);
+            $dataFilter->applyToQuery(
+                $query,
+                sprintf('col%d.value',$filter['column'])
+            );
+        }
+
+        $query->select($select);
+        return $query->queryAll();
+    }
+
+    protected function _joinStatData(Statistic $statistic, CDbCommand $query, $column) {
+        if (in_array($column,$this->_columns)) {
+            return false;
+        }
+        if (!isset($statistic->statisticColumns[$column])) {
+            throw new Exception('Column '.$column.' not found');
+        }
+        $this->_columns[] = $column;
+        $columnInfo = $statistic->statisticColumns[$column];
+        $query->leftJoin(
+            sprintf('statistic_data_%s col%d',strtolower($columnInfo->type),$column),
+            sprintf('col%1$d.statistic_point_id=t.id AND col%1$d.statistic_column_id=%1$d',$column)
+        );
+        return true;
     }
 }

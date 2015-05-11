@@ -1,9 +1,9 @@
 <?php
 /* @var $this StatisticController */
 /* @var $data Statistic */
-$graphData = new GraphData($data->name,$data->getLastPoints(10));
-$graph = new ChartLineGraph();
-$graph->addData($graphData);
+//$graphData = new GraphData($data->name,$data->getLastPoints(10));
+//$graph = new ChartLineGraph();
+//$graph->addData($graphData);
 ?>
 
 <div class="ibox float-e-margins col-xs-6">
@@ -19,7 +19,7 @@ $graph->addData($graphData);
     </div>
     <div class="ibox-content">
         <div>
-            <?php echo $graph->render(array('height'=>100,'style'=>'height:100px'));?>
+            <?php //echo $graph->render(array('height'=>100,'style'=>'height:100px'));?>
         </div>
     </div>
 </div>

@@ -11,7 +11,7 @@ class IntStatisticColumn extends AbstractStatisticColumn {
 
     public function getFormatList() {
         return array(
-            '' => '',
+            'unchanged' => '',
             'count' => 'count',
             'sum' => 'sum',
             'min' => 'min',
@@ -27,5 +27,9 @@ class IntStatisticColumn extends AbstractStatisticColumn {
             'lt' => 'less',
             'gt' => 'greater',
         );
+    }
+
+    public function getCompareRelationName() {
+        return 'statisticDataInts.value';
     }
 }
