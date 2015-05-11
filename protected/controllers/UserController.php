@@ -40,6 +40,13 @@ class UserController extends Controller {
 
     public function actionCreate() {
         $model = new User;
+        if (isset($_POST['User'])) {
+            $model->attributes = $_POST['User'];
+            $model->company_id = Yii::app()->user->getUser()->company_id;
+            if ($model->save()) {
+                $this->redirect(array('user/view','id'=>$model->id));
+            }
+        }
         $this->render('create',array(
             'model'=>$model,
         ));

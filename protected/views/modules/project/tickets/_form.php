@@ -35,14 +35,14 @@ $projectIds = array_keys(Yii::app()->user->getUser()->getAvailableProjects());
 		<?php echo $form->labelEx($model,'parent_page_id',array('class'=>'col-sm-2 control-label')); ?>
         <div class="col-sm-4">
 		    <?php echo $form->textField($model,'parent_page_id',array('size'=>10,'maxlength'=>10,'class'=>'form-control')); ?>
-            <?php echo $form->error($model,'parent_page_id'); ?>
+            <?php echo $form->error($model,'parent_page_id',array('class'=>'label label-danger')); ?>
         </div>
 
 
         <?php echo $form->labelEx($model,'project_id',array('class'=>'col-sm-2 control-label')); ?>
         <div class="col-sm-4">
             <?php echo $form->dropDownList($model,'project_id',Project::getProjectsAsList($projectIds),array('class'=>'form-control')); ?>
-            <?php echo $form->error($model,'project_id'); ?>
+            <?php echo $form->error($model,'project_id',array('class'=>'label label-danger')); ?>
         </div>
 
 	</div>
@@ -53,8 +53,9 @@ $projectIds = array_keys(Yii::app()->user->getUser()->getAvailableProjects());
 		<?php echo $form->labelEx($model,'title',array('class'=>'col-sm-2 control-label')); ?>
         <div class="col-sm-10">
 		    <?php echo $form->textField($model,'title',array('size'=>60,'maxlength'=>128,'class'=>'form-control')); ?>
+            <?php echo $form->error($model,'title',array('class'=>'label label-danger')); ?>
         </div>
-		<?php echo $form->error($model,'title'); ?>
+
 	</div>
 
 
@@ -64,8 +65,9 @@ $projectIds = array_keys(Yii::app()->user->getUser()->getAvailableProjects());
 		<?php echo $form->labelEx($model,'body',array('class'=>'col-sm-2 control-label')); ?>
         <div class="col-sm-10">
             <?php echo Yii::app()->user->getUser()->company->editor->getHtmlEditor($model,'body',array('rows'=>6, 'cols'=>50,'class'=>'form-control')); ?>
+            <?php echo $form->error($model,'body',array('class'=>'label label-danger')); ?>
         </div>
-		<?php echo $form->error($model,'body'); ?>
+
 	</div>
 
     <div class="hr-line-dashed"></div>
@@ -75,8 +77,9 @@ $projectIds = array_keys(Yii::app()->user->getUser()->getAvailableProjects());
         <div class="col-sm-10">
             <div id="progress-bar" class=""></div>
 		    <?php echo $form->hiddenField($model,'progress',array('id'=>'progress-input')); ?>
+            <?php echo $form->error($model,'progress',array('class'=>'label label-danger')); ?>
         </div>
-		<?php echo $form->error($model,'progress'); ?>
+
 	</div>
 
     <div class="hr-line-dashed"></div>
@@ -85,8 +88,9 @@ $projectIds = array_keys(Yii::app()->user->getUser()->getAvailableProjects());
 		<?php echo $form->labelEx($model,'level_id',array('class'=>'col-sm-2 control-label')); ?>
         <div class="col-sm-10">
 		    <?php echo $form->dropDownList($model,'level_id',Level::getVariants(),array('class'=>'form-control')); ?>
+            <?php echo $form->error($model,'level_id',array('class'=>'label label-danger')); ?>
         </div>
-		<?php echo $form->error($model,'level_id'); ?>
+
 	</div>
 
 

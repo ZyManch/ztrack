@@ -27,6 +27,16 @@ class CompanyCommand extends CConsoleCommand {
             return;
         }
         printf("User %s created \n",$login);
+        $permission = new UserPermission();
+        $permission->user_id = $user->id;
+        $permission->permission_id = PERMISSION_ROOT;
+        if (!$permission->save()) {
+            echo $permission->getErrorsAsText();
+            $comp->delete();
+            $user->delete();
+            return;
+        }
+        print ("Root permission added \n");
     }
 
 }

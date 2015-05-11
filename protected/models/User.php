@@ -12,12 +12,14 @@ class User extends CUser {
     const AVATAR_COUNT = 9;
 
     public $count;
+    public $group_id;
 
     public function rules() {
         return array_merge(
             parent::rules(),
             array(
-                array('count','safe')
+                array('count','safe'),
+                array('group_id','numerical'),
             )
         );
     }

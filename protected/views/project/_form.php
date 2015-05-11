@@ -22,25 +22,25 @@
 	<div class="row">
 		<?php echo $form->labelEx($model,'title'); ?>
 		<?php echo $form->textField($model,'title',array('size'=>60,'maxlength'=>64)); ?>
-		<?php echo $form->error($model,'title'); ?>
+		<?php echo $form->error($model,'title',array('class'=>'label label-danger')); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'parent_id'); ?>
 		<?php echo $form->textField($model,'parent_id',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'parent_id'); ?>
+		<?php echo $form->error($model,'parent_id',array('class'=>'label label-danger')); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'status'); ?>
 		<?php echo $form->textField($model,'status',array('size'=>7,'maxlength'=>7)); ?>
-		<?php echo $form->error($model,'status'); ?>
+		<?php echo $form->error($model,'status',array('class'=>'label label-danger')); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'changed'); ?>
 		<?php echo $form->textField($model,'changed'); ?>
-		<?php echo $form->error($model,'changed'); ?>
+		<?php echo $form->error($model,'changed',array('class'=>'label label-danger')); ?>
 	</div>
 
 	<div class="row buttons">

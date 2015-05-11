@@ -24,8 +24,9 @@
 		<?php echo $form->labelEx($model,'title',array('class'=>'col-sm-2 control-label')); ?>
         <div class="col-sm-2">
 		    <?php echo $form->textField($model,'title',array('maxlength'=>128,'class'=>'form-control')); ?>
+            <?php echo $form->error($model,'title',array('class'=>'label label-danger')); ?>
         </div>
-		<?php echo $form->error($model,'title'); ?>
+
 	</div>
 
 
@@ -35,8 +36,9 @@
 		<?php echo $form->labelEx($model,'body',array('class'=>'col-sm-2 control-label')); ?>
         <div class="col-sm-10">
             <?php echo Yii::app()->user->getUser()->company->editor->getHtmlEditor($model,'body',array('rows'=>6, 'cols'=>50,'class'=>'form-control')); ?>
+            <?php echo $form->error($model,'body',array('class'=>'label label-danger')); ?>
         </div>
-		<?php echo $form->error($model,'body'); ?>
+
 	</div>
 
     <div class="hr-line-dashed"></div>

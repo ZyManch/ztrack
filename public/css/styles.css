@@ -147,3 +147,6 @@ tr.immediately td, .label.label-immediately {
     color: #1ab394;
 
 }
+.form-horizontal .control-label.error {
+    margin-left: 0;
+}

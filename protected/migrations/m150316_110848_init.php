@@ -2,6 +2,8 @@
 
 class m150316_110848_init extends EDbMigration
 {
+    protected $_alreadyDropped = array();
+
 	public function up() {
         $this->createTable('access',array(
             'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
@@ -685,52 +687,66 @@ class m150316_110848_init extends EDbMigration
 	}
 
 	public function down() {
-		$this->_dropTables();
-		$this->_dropTables();
-		$this->_dropTables();
-		$this->_dropTables();
-		$this->_dropTables();
-		$this->_dropTables();
+        $step = 0;
+        while ($this->_dropTables() && $step < 20) {
+            $step++;
+        }
 	}
 
     protected function _dropTables() {
-        $this->dropTable('access');
-        $this->dropTable('branch');
-        $this->dropTable('browser');
-        $this->dropTable('company');
-        $this->dropTable('editor');
-        $this->dropTable('exception');
-        $this->dropTable('group');
-        $this->dropTable('group_access');
-        $this->dropTable('guest_system_module');
-        $this->dropTable('label');
-        $this->dropTable('level');
-        $this->dropTable('method');
-        $this->dropTable('os');
-        $this->dropTable('page');
-        $this->dropTable('page_label');
-        $this->dropTable('page_type');
-        $this->dropTable('project');
-        $this->dropTable('project_system_module');
-        $this->dropTable('request');
-        $this->dropTable('request_data');
-        $this->dropTable('server');
-        $this->dropTable('system_module');
-        $this->dropTable('trace');
-        $this->dropTable('trace_argument');
-        $this->dropTable('trace_code');
-        $this->dropTable('url');
-        $this->dropTable('user');
-        $this->dropTable('user_access');
-        $this->dropTable('user_group');
-        $this->dropTable('user_system_module');
+        $tables = array(
+            'access',
+            'branch',
+            'browser',
+            'company',
+            'editor',
+            'exception',
+            'group_project_module',
+            'group_project',
+            'group_access',
+            'group',
+            'guest_system_module',
+            'label',
+            'level',
+            'method',
+            'os',
+            'page',
+            'page_label',
+            'page_type',
+            'project',
+            'project_system_module',
+            'request',
+            'request_data',
+            'server',
+            'system_module',
+            'trace',
+            'trace_argument',
+            'trace_code',
+            'url',
+            'user',
+            'user_access',
+            'user_group',
+            'user_system_module'
+        );
+        $deleted = 0;
+        foreach ($tables as $table) {
+            if ($this->dropTable($table)) {
+                $deleted++;
+            }
+        }
+        return $deleted;
     }
 
     public function dropTable($table) {
+        if (in_array($table,$this->_alreadyDropped)) {
+            return false;
+        }
         try {
             parent::dropTable($table);
+            $this->_alreadyDropped[] = $table;
+            return true;
         } catch (Exception $e) {
-
+            return false;
         }
     }
 }
