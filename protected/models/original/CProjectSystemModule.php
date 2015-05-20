@@ -11,8 +11,8 @@
     * @property string $changed
     *
     * The followings are the available model relations:
-        * @property SystemModule $systemModule
         * @property Project $project
+        * @property SystemModule $systemModule
 */
 class CProjectSystemModule extends ActiveRecord {
 
@@ -32,8 +32,8 @@ class CProjectSystemModule extends ActiveRecord {
     */
     protected function _baseRelations()	{
         return array(
-            'systemModule' => array(self::BELONGS_TO, 'SystemModule', 'system_module_id'),
             'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
+            'systemModule' => array(self::BELONGS_TO, 'SystemModule', 'system_module_id'),
         );
     }
 

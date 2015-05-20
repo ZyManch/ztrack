@@ -67,13 +67,23 @@ $isMe = (Yii::app()->user->id == $model->id);
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-8">
             <div class="ibox ">
                 <div class="ibox-title">
                     <h5>Permissions</h5>
                 </div>
                 <div class="ibox-content">
                     <?php $this->renderPartial('//user/view/_permissions',array('model'=>$model,'permissions'=>$permissions));?>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>Modules</h5>
+                </div>
+                <div class="ibox-content">
+                    <?php $this->renderPartial('//user/view/_modules',array('model'=>$model,'modules' => $modules));?>
                 </div>
             </div>
         </div>

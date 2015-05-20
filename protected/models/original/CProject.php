@@ -17,9 +17,9 @@
         * @property GroupProject[] $groupProjects
         * @property Page[] $pages
         * @property PageHistory[] $pageHistories
-        * @property Company $company
         * @property Project $parent
         * @property Project[] $projects
+        * @property Company $company
         * @property ProjectSystemModule[] $projectSystemModules
         * @property Token[] $tokens
 */
@@ -47,9 +47,9 @@ class CProject extends ActiveRecord {
             'groupProjects' => array(self::HAS_MANY, 'GroupProject', 'project_id'),
             'pages' => array(self::HAS_MANY, 'Page', 'project_id'),
             'pageHistories' => array(self::HAS_MANY, 'PageHistory', 'project_id'),
-            'company' => array(self::BELONGS_TO, 'Company', 'company_id'),
             'parent' => array(self::BELONGS_TO, 'Project', 'parent_id'),
             'projects' => array(self::HAS_MANY, 'Project', 'parent_id'),
+            'company' => array(self::BELONGS_TO, 'Company', 'company_id'),
             'projectSystemModules' => array(self::HAS_MANY, 'ProjectSystemModule', 'project_id'),
             'tokens' => array(self::HAS_MANY, 'Token', 'project_id'),
         );

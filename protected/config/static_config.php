@@ -25,6 +25,7 @@ return array(
         'application.components.*',
         'application.components.DataFilter.*',
         'application.components.DataFormatter.*',
+        'application.components.ErrorSaver.*',
         'application.controllers.*',
         'application.modules.user.*',
         'application.modules.project.*',

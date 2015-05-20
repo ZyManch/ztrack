@@ -29,7 +29,9 @@ class UserController extends Controller {
             ),
             array(
                 'allow',
-                'actions' => array('addPermission','removePermission','addGroup','removeGroup','delete','create'),
+                'actions' => array(
+                    'addPermission','removePermission','addGroup','removeGroup',
+                    'delete','create','addUserModule','removeUserModule'),
                 'roles' => array(PERMISSION_USER_MANAGE)
             ),
             array('deny',  // deny all users
@@ -79,10 +81,15 @@ class UserController extends Controller {
         $model = $this->loadModel($id);
         $permissions = Permission::model()->getTree();
         $groups = Group::model()->findAll();
+        $modules = SystemModule::getSystemModules('user',array(
+            SystemModule::INSTALLATION_INSTALL,
+            SystemModule::INSTALLATION_NOT_INSTALL
+        ));
         $this->render('view',array(
             'model'=>$model,
             'permissions' => $permissions,
-            'groups' => $groups
+            'groups' => $groups,
+            'modules' => $modules
         ));
     }
 
@@ -130,6 +137,30 @@ class UserController extends Controller {
             throw new CHttpException(404,'Group not found');
         }
         $user->removeGroup($group);
+    }
+
+    public function actionAddUserModule($id) {
+        $user = $this->loadModel($id);
+        $systemModule = SystemModule::model()->findByAttributes(array(
+            'id' => Yii::app()->request->getParam('system_module_id'),
+            'type' => 'user'
+        ));
+        if (!$systemModule) {
+            throw new CHttpException(404,'System module not found');
+        }
+        $user->addUserModule($systemModule);
+    }
+
+    public function actionRemoveUserModule($id) {
+        $user = $this->loadModel($id);
+        $systemModule = SystemModule::model()->findByAttributes(array(
+            'id' => Yii::app()->request->getParam('system_module_id'),
+            'type' => 'user'
+        ));
+        if (!$systemModule) {
+            throw new CHttpException(404,'System module not found');
+        }
+        $user->removeUserModule($systemModule);
     }
 
     /**
