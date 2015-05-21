@@ -20,7 +20,7 @@
                         <h2>Groups</h2>
                         <div>
                             <?php foreach ($groups as $group):?>
-                                <?php $this->renderPartial('//modules/project/settings/_group',array('group'=>$group,'project'=>$project));?>
+                                <?php $this->renderPartial('//project/settings/_group',array('group'=>$group,'project'=>$project));?>
                             <?php endforeach;?>
                         </div>
                     </div>
@@ -29,13 +29,13 @@
                     <div class="col-sm-6">
                         <h2>Installed modules</h2>
                         <?php foreach ($modules as $module):?>
-                        <?php $this->renderPartial('//modules/project/settings/_module',array('module'=>$module,'project'=>$project,'groups'=>$groups,'showInstalled'=>true));?>
+                        <?php $this->renderPartial('//project/settings/_module',array('module'=>$module,'project'=>$project,'groups'=>$groups,'showInstalled'=>true));?>
                         <?php endforeach;?>
                     </div>
                     <div class="col-sm-6">
                         <h2>Not installed modules</h2>
                         <?php foreach ($modules as $module):?>
-                            <?php $this->renderPartial('//modules/project/settings/_module',array('module'=>$module,'project'=>$project,'groups'=>$groups,'showInstalled'=>false));?>
+                            <?php $this->renderPartial('//project/settings/_module',array('module'=>$module,'project'=>$project,'groups'=>$groups,'showInstalled'=>false));?>
                         <?php endforeach;?>
                     </div>
                 </div>
@@ -46,5 +46,5 @@
 </div>
 
 <?php foreach ($modules as $module):?>
-    <?php $this->renderPartial('//modules/project/settings/_moduleDialog',array('module'=>$module,'groups'=>$groups,'project'=>$project));?>
+    <?php $this->renderPartial('//project/settings/_moduleDialog',array('module'=>$module,'groups'=>$groups,'project'=>$project));?>
 <?php endforeach;?>

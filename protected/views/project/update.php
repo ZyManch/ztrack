@@ -26,13 +26,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="ibox ">
-                <div class="ibox-content">
-                    <?php $this->renderPartial('_groups', array('model'=>$model,'groups'=>$groups)); ?>
-                </div>
-            </div>
-        </div>
-    </div>
+
+    <?php $this->renderPartial('//project/settings/_view', array('project'=>$model,'groups'=>$groups,'modules' => $modules)); ?>
+
 </div>

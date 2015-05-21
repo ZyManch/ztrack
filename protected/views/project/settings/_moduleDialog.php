@@ -13,7 +13,7 @@
     <div class="modal-dialog">
         <?php $form=$this->beginWidget('CActiveForm', array(
             'enableAjaxValidation'=>false,
-            'action' => array('project/view','id'=>$project->id,'module'=>'settings','action'=>'save','system_module_id'=>$module->id),
+            'action' => array('project/updateModule','id'=>$project->id,'system_module_id'=>$module->id),
             'htmlOptions' => array()
         )); ?>
         <div class="modal-content">
@@ -51,7 +51,7 @@
                     <?php if ($module->installation != SystemModule::INSTALLATION_FORCE):?>
                     <?php echo CHtml::link(
                         'Delete',
-                        array('project/view','id'=>$project->id,'module'=>'settings','action'=>'delete','system_module_id'=>$module->id),
+                        array('project/removeModule','id'=>$project->id,'system_module_id'=>$module->id),
                         array('class'=>'btn btn-danger')
                     );?>
                     <?php endif;?>

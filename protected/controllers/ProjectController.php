@@ -25,7 +25,8 @@ class ProjectController extends Controller
 				'roles'=>array(PERMISSION_PROJECT_VIEW),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','addGroup','removeGroup','sort'),
+				'actions'=>array('create','update','addGroup','removeGroup','sort',
+                    'index','removeModule','updateModule','toggleGroup'),
 				'roles'=>array(PERMISSION_PROJECT_MANAGE),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -37,6 +38,8 @@ class ProjectController extends Controller
 			),
 		);
 	}
+
+
 
 	/**
 	 * Displays a particular model.
@@ -116,9 +119,10 @@ class ProjectController extends Controller
 				$this->redirect(array('view','id'=>$model->id));
             }
 		}
-        $groups = Group::getVariants();
+        $groups = $this->_getGroups($model);
 		$this->render('update',array(
 			'model'=>$model,
+            'modules' => $this->_getAllModules(),
             'groups' => $groups
 		));
 	}
@@ -147,6 +151,106 @@ class ProjectController extends Controller
 			'projects'=>$projects,
 		));
 	}
+
+    public function actionUpdateModule($id) {
+        $project = $this->loadModel($id);
+        try {
+            $systemModuleId = Yii::app()->request->getParam('system_module_id');
+            $systemModule = SystemModule::model()->findByAttributes(array(
+                'id' => $systemModuleId,
+                'type' => SystemModule::TYPE_PROJECT
+            ));
+            if (!$systemModule) {
+                throw new Exception('System module not found');
+            }
+            if (!$project->haveSystemModule($systemModule)) {
+                $project->addProjectModule($systemModule);
+            }
+            $newGroups = Yii::app()->request->getParam('groups',array());
+            if (!is_array($newGroups)) {
+                $newGroups = array();
+            }
+            $groups = $this->_getGroups($project);
+            foreach ($groups as $group) {
+                if ($group->groupProject) {
+                    $alreadyEnabled = isset($group->groupProject->groupProjectModules[$systemModule->id]);
+                    $needEnabled = in_array($group->id, $newGroups);
+                    if ($alreadyEnabled && !$needEnabled) {
+                        $group->groupProject->removeProjectModule($systemModule);
+                    } else if ($needEnabled && !$alreadyEnabled) {
+                        $group->groupProject->addProjectModule($systemModule);
+                    }
+                }
+            }
+        } catch (Exception $e) {
+            Yii::app()->user->setFlash('error',$e->getMessage());
+        }
+        $this->redirect(array('project/update','id'=>$project->id));
+    }
+
+    public function actionRemoveModule($id) {
+        $project = $this->loadModel($id);;
+        try {
+            $systemModuleId = Yii::app()->request->getParam('system_module_id');
+            $systemModule = SystemModule::model()->findByAttributes(array(
+                'id' => $systemModuleId,
+                'type' => SystemModule::TYPE_PROJECT
+            ));
+            if (!$systemModule) {
+                throw new Exception('System module not found');
+            }
+            $project->removeProjectModule($systemModule);
+        } catch (Exception $e) {
+            Yii::app()->user->setFlash('error',$e->getMessage());
+        }
+        $this->redirect(array('project/update','id'=>$project->id));
+    }
+
+    public function actionToggleGroup($id) {
+        $project = $this->loadModel($id);;
+        $groups = $this->_getGroups($project);
+        $groupId = Yii::app()->request->getParam('group_id');
+        if (!isset($groups[$groupId])) {
+            throw new Exception('Group not found');
+        }
+        $group = $groups[$groupId];
+        if ($group->groupProject) {
+            $group->groupProject->delete();
+        } else {
+            $groupProject = new GroupProject();
+            $groupProject->group_id = $group->id;
+            $groupProject->project_id = $project->id;
+            $groupProject->save(false);
+        }
+        $this->redirect(array('project/update','id'=>$project->id));
+    }
+
+    /**
+     * @param Project $project
+     * @return Group[]
+     */
+    protected function _getGroups(Project $project) {
+        $criteria = new CDbCriteria();
+        $criteria->with = array(
+            'groupProject' => array('on'=>'groupProject.project_id=:project'),
+            'groupProject.groupProjectModules' => array()
+        );
+        $criteria->params[':project'] = $project->id;
+        $criteria->index = 'id';
+        return Group::model()->findAll($criteria);
+    }
+
+
+    protected function _getAllModules() {
+        return SystemModule::getSystemModules(
+            SystemModule::TYPE_PROJECT,
+            array(
+                SystemModule::INSTALLATION_INSTALL,
+                SystemModule::INSTALLATION_NOT_INSTALL,
+                SystemModule::INSTALLATION_FORCE,
+            )
+        );
+    }
 
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
