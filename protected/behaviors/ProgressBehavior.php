@@ -7,11 +7,24 @@
  */
 class ProgressBehavior extends CActiveRecordBehavior  {
 
+    public function beforeSave($event) {
+        /** @var Page $model */
+        $model = $event->sender;
+        if (!$this->_haveProgressLogic($model)) {
+            return true;
+        }
+        if ($model->progress == 100) {
+            $model->status = ActiveRecord::STATUS_CLOSED;
+        } else {
+            $model->status = ActiveRecord::STATUS_ACTIVE;
+        }
+        return true;
+    }
 
     public function afterSave($event) {
         /** @var Page $model */
         $model = $event->sender;
-        if (!in_array($model->page_type_id,array(PAGE_TYPE_RELEASE,PAGE_TYPE_TICKETS))) {
+        if (!$this->_haveProgressLogic($model)) {
             return true;
         }
         if (!$model->parentPage) {
@@ -26,13 +39,12 @@ class ProgressBehavior extends CActiveRecordBehavior  {
             $totalProgress+=$child->getProgressValue();
         }
         $parent->progress = $maxProgress ? round(100*$totalProgress / $maxProgress) : 0;
-        if ($model->progress == 100) {
-            $model->status = ActiveRecord::STATUS_CLOSED;
-        } else {
-            $model->status = ActiveRecord::STATUS_ACTIVE;
-        }
         $parent->save(false);
         return true;
+    }
+
+    protected function _haveProgressLogic(Page $model) {
+        return in_array($model->page_type_id,array(PAGE_TYPE_RELEASE,PAGE_TYPE_TICKETS));
     }
 
 

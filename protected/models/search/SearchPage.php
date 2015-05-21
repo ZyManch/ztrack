@@ -65,7 +65,7 @@ class SearchPage extends CPage {
 		$criteria->compare('t.body',$this->body,true);
 		$criteria->compare('t.progress',$this->progress);
 		$criteria->compare('t.level_id',$this->level_id);
-		$criteria->compare('t.status',$this->status,true);
+		$criteria->compare('t.status',$this->status);
 		$criteria->compare('t.changed',$this->changed,true);
         if ($this->error_id) {
             $criteria->compare('pageErrors.error_id', $this->error_id);

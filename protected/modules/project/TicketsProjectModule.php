@@ -35,8 +35,7 @@ class TicketsProjectModule extends AbstractProjectModule {
         $this->renderPartial(
             '_index',
             array(
-                'my_tickets_widget' => $this->_getMyTicketsWidget(),
-                'second_widget' => $this->_getSecondWidget()
+                'widgets' => $this->_getAvailableWidgets(),
             )
         );
     }
@@ -166,25 +165,67 @@ class TicketsProjectModule extends AbstractProjectModule {
         );
     }
 
+    protected function _getAvailableWidgets() {
+        $result = array();
+        $lastReleaseWidget = $this->_getLastReleaseWidget();
+        if ($lastReleaseWidget->getLastRelease()) {
+            $result[] = array(
+                'label' => 'Last release',
+                'name' => 'release',
+                'widget' => $lastReleaseWidget,
+            );
+        }
+        $result[] = array(
+            'label' => 'Assigned to me',
+            'name' => 'assigned_to_me',
+            'widget' => $this->_getAssignedToMeTicketsWidget(),
+        );
+        $result[] = array(
+            'label' => 'Created by me',
+            'name' => 'created_by_me',
+            'widget' => $this->_getCreatedByMyTicketsWidget(),
+        );
+        $result[] = array(
+            'label' => 'All tickets',
+            'name' => 'all',
+            'widget' => $this->_getAllTicketsWidget(),
+        );
+        return $result;
+    }
 
-    protected function  _getSecondWidget() {
+    /**
+     * @return LastReleaseWidgetModule
+     * @throws Exception
+     */
+    protected function _getLastReleaseWidget() {
         $projectId = Yii::app()->request->getParam('id');
         $widget = new LastReleaseWidgetModule();
         $widget->configure(array('project_id'=>$projectId));
-        if ($widget->getLastRelease()) {
-            return $widget;
-        }
+        return $widget;
+    }
+
+    protected function  _getAllTicketsWidget() {
+        $projectId = Yii::app()->request->getParam('id');
         $widget = new TicketsWidgetModule();
         $widget->configure(array('project_id' => $projectId));
         return $widget;
     }
 
-
-    protected function _getMyTicketsWidget() {
+    protected function _getAssignedToMeTicketsWidget() {
         $widget = new TicketsWidgetModule();
         $widget->configure(array(
             'project_id' => Yii::app()->request->getParam('id'),
-            //'assign_user_id' => Yii::app()->user->id
+            'assign_user_id' => Yii::app()->user->id,
+            'status' => array(ActiveRecord::STATUS_ACTIVE)
+        ));
+        return $widget;
+    }
+
+    protected function _getCreatedByMyTicketsWidget() {
+        $widget = new TicketsWidgetModule();
+        $widget->configure(array(
+            'project_id' => Yii::app()->request->getParam('id'),
+            'author_user_id' => Yii::app()->user->id
         ));
         return $widget;
     }

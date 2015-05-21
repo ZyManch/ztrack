@@ -17,7 +17,7 @@
     'columns'=>array(
         array(
             'name' => 'id',
-            'htmlOptions' => array('class'=>'project-status'),
+            'htmlOptions' => array('class'=>'project-status','style'=>'width:50px'),
             'headerHtmlOptions' => array('class'=>''),
             'type' => 'raw',
             'value' => function(Page $page) {
@@ -47,8 +47,13 @@
             'headerHtmlOptions' => array('class'=>''),
             'type' => 'raw',
             'value' => function(Page $page) {
+                if ($page->getProgressValue() == 100) {
+                    $title = CHtml::tag('strike',array(),CHtml::encode($page->getTitle()));
+                } else {
+                    $title = CHtml::encode($page->getTitle());
+                }
                 $title = CHtml::link(
-                    CHtml::encode($page->getTitle()),
+                    $title,
                     array(
                         'project/view',
                         'id'=>$page->project_id,
