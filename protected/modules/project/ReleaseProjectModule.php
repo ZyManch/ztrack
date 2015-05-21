@@ -35,6 +35,11 @@ class ReleaseProjectModule extends AbstractProjectModule {
     public function actionIndex() {
         $project = $this->_getProject();
         $releases = $this->_getReleases($project);
+        if (!$releases) {
+            $this->redirect(array(
+                'action'=>'create'
+            ));
+        }
         $this->renderPartial(
             '_index',
             array(

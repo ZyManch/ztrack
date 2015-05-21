@@ -22,6 +22,7 @@ foreach ($widgets as $widgetConfig) {
                 <div class="row">
                     <div class="col-md-8">
                         Show ticket list:
+                        &nbsp;
                         <div class="btn-group">
                             <?php foreach ($widgets as $widgetConfig):?>
                                 <?php echo CHtml::link(

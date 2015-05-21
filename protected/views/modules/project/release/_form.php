@@ -49,7 +49,7 @@
 		    <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save',array('class'=>'btn btn-primary')); ?>
             <?php echo CHtml::link('Cancel',array(
                 'project/view',
-                'id' => 2,
+                'id' => $model->project_id,
                 'module'=>'release',
             ),array('class'=>'btn btn-white'));?>
         </div>

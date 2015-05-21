@@ -32,6 +32,13 @@ class TicketsProjectModule extends AbstractProjectModule {
     }
 
     public function actionIndex() {
+        $project = $this->_getProject();
+        $ticketCount = $project->pagesCount;
+        if (!$ticketCount) {
+            $this->redirect(array(
+                'action'=>'create'
+            ));
+        }
         $this->renderPartial(
             '_index',
             array(
