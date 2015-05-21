@@ -11,17 +11,21 @@ class ProjectsUserModule extends AbstractUserModule {
         if (Yii::app()->user->isGuest) {
             return array();
         }
+        /** @var User $user */
         $user = Yii::app()->user->getUser();
-        $projectIds = array();
-        foreach ($user->groups as $group) {
-            foreach ($group->groupProjects as $access) {
-                $projectIds[] = $access->project_id;
-            }
-        }
+        $projectIds = array_keys($user->getAvailableProjects());
         /** @var Project[] $projects */
         $projects = Project::model()->findAllByPk($projectIds);
         $list = array();
         $tree = array();
+        if (Yii::app()->user->checkAccess(PERMISSION_PROJECT_MANAGE)) {
+            $tree[] = array(
+                'label' => 'Projects',
+                'url' => array('project/admin'),
+                'items' => array(),
+                'icon'=>'cubes'
+            );
+        }
         $previousSize = 0 ;
         while (sizeof($projects) > 0 && $previousSize !=sizeof($projects)) {
             $previousSize = sizeof($projects);

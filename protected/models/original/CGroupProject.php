@@ -7,8 +7,6 @@
     * @property string $id
     * @property string $group_id
     * @property string $project_id
-    * @property string $status
-    * @property string $changed
     *
     * The followings are the available model relations:
         * @property Project $project
@@ -24,8 +22,7 @@ class CGroupProject extends ActiveRecord {
     public function rules()	{
         return array(
             array('group_id, project_id', 'required'),
-			array('group_id, project_id', 'length', 'max'=>10),
-			array('status', 'length', 'max'=>7)        );
+			array('group_id, project_id', 'length', 'max'=>10)        );
     }
 
     /**
@@ -44,8 +41,6 @@ class CGroupProject extends ActiveRecord {
             'id' => 'ID',
             'group_id' => 'Group',
             'project_id' => 'Project',
-            'status' => 'Status',
-            'changed' => 'Changed',
         );
     }
 

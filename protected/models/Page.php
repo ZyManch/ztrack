@@ -66,6 +66,13 @@ class Page extends CPage {
         throw new Exception('Undefined page type: '.$attributes['page_type_id']);
     }
 
+    public function defaultScope() {
+        $t = $this->getTableAlias(false, false);
+        return array(
+            'condition' => $t.'.status  in ("'.self::STATUS_ACTIVE.'","'.self::STATUS_CLOSED.'")',
+        );
+    }
+
     public function getTitle() {
         return $this->title;
     }

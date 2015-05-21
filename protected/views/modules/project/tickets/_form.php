@@ -102,7 +102,7 @@ $projectIds = array_keys(Yii::app()->user->getUser()->getAvailableProjects());
             <?php if ($model->parent_page_id):?>
                 <?php echo CHtml::link('Cancel',array(
                     'project/view',
-                    'id' => 2,
+                    'id' => $model->project_id,
                     'module'=>'tickets',
                     'action'=>'view',
                     'ticket_id' => $model->parent_page_id
@@ -110,7 +110,7 @@ $projectIds = array_keys(Yii::app()->user->getUser()->getAvailableProjects());
             <?php else:?>
                 <?php echo CHtml::link('Cancel',array(
                     'project/view',
-                    'id' => 2,
+                    'id' => $model->project_id,
                     'module'=>'tickets',
                 ),array('class'=>'btn btn-white'));?>
             <?php endif;?>

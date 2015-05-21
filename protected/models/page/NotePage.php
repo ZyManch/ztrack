@@ -7,6 +7,19 @@
  */
 class NotePage extends Page {
 
+    public function behaviors() {
+        return array_merge(
+            parent::behaviors(),
+            array(
+                'position' => array(
+                    'class' => 'PositionBehaviour',
+                    'parentProperty' => 'parentPage',
+                    'parentPropertyId' => 'parent_page_id',
+                    'parentChildProperty' => 'pages'
+                )
+            )
+        );
+    }
     public function _extendedRelations() {
         return array_merge(
             parent::_extendedRelations(),

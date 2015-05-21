@@ -28,6 +28,11 @@ class SystemModule extends CSystemModule {
         );
     }
 
+    /**
+     * @param $type
+     * @param $installation
+     * @return SystemModule[]
+     */
     public static function getSystemModules($type,$installation) {
         if (!is_array($installation)) {
             $installation = array($installation);

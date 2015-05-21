@@ -8,6 +8,7 @@
     * @property string $title
     * @property string $company_id
     * @property string $parent_id
+    * @property integer $position
     * @property string $status
     * @property string $changed
     *
@@ -31,7 +32,8 @@ class CProject extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('title, company_id', 'required'),
+            array('title, company_id, position', 'required'),
+			array('position', 'numerical', 'integerOnly'=>true),
 			array('title', 'length', 'max'=>64),
 			array('company_id, parent_id', 'length', 'max'=>10),
 			array('status', 'length', 'max'=>7)        );
@@ -61,6 +63,7 @@ class CProject extends ActiveRecord {
             'title' => 'Title',
             'company_id' => 'Company',
             'parent_id' => 'Parent',
+            'position' => 'Position',
             'status' => 'Status',
             'changed' => 'Changed',
         );

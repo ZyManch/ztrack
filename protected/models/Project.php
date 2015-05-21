@@ -6,8 +6,26 @@
  * The followings are the available columns in table 'branch':
  * @property AbstractProjectModule[] $systemModules
  * @property int $pagesCount
+ * @property Group[] $groups
  */
 class Project extends CProject {
+
+    public function behaviors() {
+        return array_merge(
+            parent::behaviors(),
+            array(
+                'projectSystemModule' => array(
+                    'class'=>'ProjectSystemModuleBehavior'
+                ),
+                'position' => array(
+                    'class' => 'PositionBehaviour',
+                    'parentProperty' => 'parent',
+                    'parentPropertyId' => 'parent_id',
+                    'parentChildProperty' => 'projects'
+                )
+            )
+        );
+    }
 
     public function haveSystemModule(AbstractProjectModule $module) {
         foreach ($this->systemModules as $systemModule) {
@@ -41,6 +59,57 @@ class Project extends CProject {
         }
     }
 
+    public function addGroup(Group $group) {
+        if (!isset($this->groups[$group->id])) {
+            $link = new GroupProject();
+            $link->project_id = $this->id;
+            $link->group_id = $group->id;
+            $link->save(false);
+        }
+        return true;
+    }
+
+    public function removeGroup(Group $group) {
+        $link = GroupProject::model()->findByAttributes(array(
+            'project_id' => $this->id,
+            'group_id' => $group->id
+        ));
+        if ($link) {
+            $link->delete();
+        }
+        return true;
+    }
+
+    public static function sort($projects, $skipIds = array(), $parentProjectId = null) {
+        $sortIndex = 0;
+        foreach ($projects as $projectParam) {
+            /** @var Project $project */
+            $project = Project::model()->
+                findByAttributes(array(
+                    'company_id' => Yii::app()->user->getUser()->company_id,
+                    'id' => $projectParam['id']
+                ));
+            if (!$project) {
+                throw new Exception('Project not found: '.json_encode($projectParam));
+            }
+            if (in_array($project->id, $skipIds)) {
+                throw new Exception('Recursive saving');
+            }
+            $skipIds[] = $project->id;
+            if ($project->parent_id != $parentProjectId) {
+                $project->parent_id = $parentProjectId;
+            }
+            if ($project->position !== $sortIndex) {
+                $project->position = $sortIndex;
+            }
+            $project->save(false);
+            $sortIndex++;
+            if (isset($projectParam['children'])) {
+                self::sort($projectParam['children'], $skipIds, $project->id);
+            }
+        }
+    }
+
     public function getEnabledProjectModules(User $user = null) {
         $modules = $this->systemModules;
         foreach (SystemModule::getForceInstalledSystemModules(SystemModule::TYPE_PROJECT) as $module) {
@@ -49,9 +118,11 @@ class Project extends CProject {
         if (!is_null($user)) {
             $result = array();
             $projects = $user->getAvailableProjects();
-            foreach ($projects[$this->id] as $systemModuleId => $config) {
-                if (isset($modules[$systemModuleId])) {
-                    $result[$systemModuleId] = $modules[$systemModuleId];
+            if (isset($projects[$this->id])) {
+                foreach ($projects[$this->id] as $systemModuleId => $config) {
+                    if (isset($modules[$systemModuleId])) {
+                        $result[$systemModuleId] = $modules[$systemModuleId];
+                    }
                 }
             }
             $modules = $result;
@@ -65,6 +136,7 @@ class Project extends CProject {
         return array(
             'systemModules' => array(self::MANY_MANY, 'SystemModule', 'project_system_module(project_id,system_module_id)', 'order' => 'systemModules.position ASC','index'=>'id'),
             'pagesCount' => array(self::STAT, 'Page', 'project_id'),
+            'groups' => array(self::MANY_MANY, 'Group','group_project(project_id,group_id)', 'index'=>'id'),
         );
     }
 
@@ -92,9 +164,23 @@ class Project extends CProject {
         ));
     }
 
+    public static function getAllProjectsAsTree($skipProjectIds = array()) {
+        $criteria = new CDbCriteria();
+        if ($skipProjectIds) {
+            $criteria->addNotInCondition('id',$skipProjectIds);
+        }
+        $projects = Project::model()->findAll($criteria);
+        return self::_groupProjectsToTree($projects);
+    }
 
-    public static function getProjectsAsTree($projectIds) {
+
+    public static function getProjectsAsTree($projectIds, $skipProjectIds = array()) {
+        $projectIds = array_diff($projectIds, $skipProjectIds);
         $projects = Project::model()->findAllByPk($projectIds);
+        return self::_groupProjectsToTree($projects);
+    }
+
+    protected static function _groupProjectsToTree($projects) {
         $list = array();
         $tree = array();
         $previousSize = 0 ;
@@ -120,8 +206,8 @@ class Project extends CProject {
         return $tree;
     }
 
-    public static function getProjectsAsList($projectIds) {
-        $tree = self::getProjectsAsTree($projectIds);
+    public static function getProjectsAsList($projectIds, $skipProjectIds = array()) {
+        $tree = self::getProjectsAsTree($projectIds, $skipProjectIds);
         $result = self::_getProjectsFromTreeAsList($tree);
         return $result;
 

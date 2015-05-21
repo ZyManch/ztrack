@@ -8,7 +8,7 @@
 class ProgressBehavior extends CActiveRecordBehavior  {
 
 
-    public function beforeSave($event) {
+    public function afterSave($event) {
         /** @var Page $model */
         $model = $event->sender;
         if (!in_array($model->page_type_id,array(PAGE_TYPE_RELEASE,PAGE_TYPE_TICKETS))) {
@@ -19,7 +19,7 @@ class ProgressBehavior extends CActiveRecordBehavior  {
         }
         $parent = $model->parentPage;
         /** @var Page[] $childs */
-        $childs = $parent->getRelated('pages',true,array('resetScope'=>true));
+        $childs = $parent->pages;
         $maxProgress = sizeof($childs) * 100;
         $totalProgress = 0;
         foreach ($childs as $child) {

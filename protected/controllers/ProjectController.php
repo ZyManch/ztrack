@@ -10,7 +10,6 @@ class ProjectController extends Controller
 	public function filters() {
 		return array(
 			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
 
@@ -22,11 +21,11 @@ class ProjectController extends Controller
 	public function accessRules() {
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('view'),
 				'roles'=>array(PERMISSION_PROJECT_VIEW),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','addGroup','removeGroup','sort'),
 				'roles'=>array(PERMISSION_PROJECT_MANAGE),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -49,15 +48,50 @@ class ProjectController extends Controller
 		));
 	}
 
+    public function actionSort() {
+        Project::sort(
+            Yii::app()->request->getParam('projects')
+        );
+    }
+
+    public function actionRemoveGroup($id) {
+        $model = $this->loadModel($id);
+        $user = Yii::app()->user->getUser();
+        $group = Group::model()->findByAttributes(array(
+            'id' => Yii::app()->request->getParam('group_id'),
+            'company_id' => $user->company_id
+        ));
+        if (!$group) {
+            throw new CHttpException(404,'Group not found');
+        }
+        $model->removeGroup($group);
+    }
+
+    public function actionAddGroup($id) {
+        $model = $this->loadModel($id);
+        $user = Yii::app()->user->getUser();
+        $group = Group::model()->findByAttributes(array(
+            'id' => Yii::app()->request->getParam('group_id'),
+            'company_id' => $user->company_id
+        ));
+        if (!$group) {
+            throw new CHttpException(404,'Group not found');
+        }
+        $model->addGroup($group);
+    }
+
 	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate() {
+	public function actionCreate($id = null) {
 		$model=new Project;
-
+        if ($id) {
+            $model->parent_id = $id;
+        }
 		if(isset($_POST['Project'])) {
 			$model->attributes=$_POST['Project'];
+            $model->company_id = Yii::app()->user->getUser()->company_id;
 			if($model->save()) {
 				$this->redirect(array('view','id'=>$model->id));
             }
@@ -82,9 +116,10 @@ class ProjectController extends Controller
 				$this->redirect(array('view','id'=>$model->id));
             }
 		}
-
+        $groups = Group::getVariants();
 		$this->render('update',array(
 			'model'=>$model,
+            'groups' => $groups
 		));
 	}
 
@@ -101,28 +136,15 @@ class ProjectController extends Controller
         }
 	}
 
-	/**
-	 * Lists all models.
-	 */
-	public function actionIndex() {
-		$dataProvider=new CActiveDataProvider('Project');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
-	}
 
 	/**
 	 * Manages all models.
 	 */
 	public function actionAdmin() {
-		$model=new Project('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Project'])) {
-			$model->attributes=$_GET['Project'];
-        }
-
+        $projects = Project::getAllProjectsAsTree();
+        //var_dump($projects);die();
 		$this->render('admin',array(
-			'model'=>$model,
+			'projects'=>$projects,
 		));
 	}
 
