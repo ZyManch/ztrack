@@ -7,7 +7,7 @@
  */
 class ErrorCommand extends CConsoleCommand {
 
-    const LIMIT = 1;
+    const LIMIT = 30;
 
     public function actionIndex() {
         $queue = new QueueAccessor(
@@ -16,11 +16,11 @@ class ErrorCommand extends CConsoleCommand {
         );
         printf("Starting at %s\n",date('Y-m-d H:i:s'));
         for ($i=0;$i<self::LIMIT;$i++) {
-            $data = $queue->pop();
-            if (!$data) {
-                break;
-            }
             try {
+                $data = $queue->pop();
+                if (!$data) {
+                    break;
+                }
                 if (!isset($data['engine']) || !isset($data['token']) || !isset($data['result'])) {
                     throw new Exception('Wrong format of error');
                 }
