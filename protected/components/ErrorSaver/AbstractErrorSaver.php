@@ -43,8 +43,7 @@ abstract class AbstractErrorSaver {
                                       Branch $branch, $environment,
                                       $title, $traceFile, $traceLine
     ) {
-
-
+        $title = trim(preg_replace('/(\(code \#[a-z0-9]+\))/','',$title));
         $hash = md5(implode('|',array(
             $title,
             $level->id,

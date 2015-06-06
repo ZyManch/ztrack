@@ -19,7 +19,7 @@ class ErrorCommand extends CConsoleCommand {
             try {
                 $data = $queue->pop();
                 if (!$data) {
-                    break;
+                    throw new \Phive\Queue\Exception\NoItemException();
                 }
                 if (!isset($data['engine']) || !isset($data['token']) || !isset($data['result'])) {
                     throw new Exception('Wrong format of error');
@@ -27,17 +27,19 @@ class ErrorCommand extends CConsoleCommand {
                 switch ($data['engine']) {
                     case ErrorControllerQueue::ENGINE_GRAYLOG:
                         $parser = new GraylogErrorSaver();
-                        $parser->save($data['token'],$data['result']);
+                        $parser->save($data['token'], $data['result']);
                         print 'G';
                         break;
                     case ErrorControllerQueue::ENGINE_ROLLBAR:
                         $parser = new RollbarErrorSaver();
-                        $parser->save($data['token'],$data['result']);
+                        $parser->save($data['token'], $data['result']);
                         print 'R';
                         break;
                     default:
-                        throw new Exception('Unknown engine:'.$data['engine']);
+                        throw new Exception('Unknown engine:' . $data['engine']);
                 }
+            } catch (\Phive\Queue\Exception\NoItemException $e) {
+                break;
             } catch (Exception $e) {
                 print '-';
             }
