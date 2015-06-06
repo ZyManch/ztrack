@@ -8,9 +8,9 @@
 class RollbarErrorSaver extends AbstractErrorSaver {
 
 
-    public function save($error) {
+    public function save($token, $error) {
         $content = CJSON::decode($error);
-        $token = $this->_getToken($content['access_token']);
+        $token = $this->_getToken($token);
         $companyId = $token->project->company_id;
         $data = $content['data'];
         $level = $this->_getLevel(

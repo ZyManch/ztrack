@@ -1,6 +1,6 @@
 <?php
 
-$yii=dirname(__FILE__).'/../protected/vendor/yiisoft/yii/framework/yii.php';
+$yii=dirname(__FILE__).'/../vendor/yiisoft/yii/framework/yii.php';
 $config=dirname(__FILE__).'/../protected/config/main.php';
 $staticConfig=dirname(__FILE__).'/../protected/config/static_config.php';
 
@@ -17,7 +17,6 @@ $config = require_once $config;
 $staticConfig = require_once $staticConfig;
 require_once dirname(__FILE__).'/../protected/merge.php';
 $mergedConfig = array_merge_config($staticConfig, $config);
-Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../protected/extensions/bootstrap');
-Yii::setPathOfAlias('editable', dirname(__FILE__).'/../protected/extensions/editable');
 $app = Yii::createWebApplication($mergedConfig);
+Yii::setPathOfAlias('vendor', dirname(__FILE__).'/../vendor');
 $app->run();

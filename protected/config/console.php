@@ -11,7 +11,7 @@ return array(
     ),
     'commandMap' => array(
         'migrate' => array(
-            'class' => 'application.vendor.yiiext.migrate-command.EMigrateCommand',
+            'class' => 'vendor.yiiext.migrate-command.EMigrateCommand',
             'migrationTable' => 'migration',
             'applicationModuleName' => 'core',
             'migrationPath' => 'application.migrations',

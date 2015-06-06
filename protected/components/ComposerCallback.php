@@ -53,7 +53,7 @@ use Composer\Script\Event;
  * @since 0.7.1
  */
 
-defined('YII_PATH') or define('YII_PATH', dirname(__FILE__).'/../vendor/yiisoft/yii/framework');
+defined('YII_PATH') or define('YII_PATH', dirname(__FILE__).'/../../vendor/yiisoft/yii/framework');
 
 class ComposerCallback
 {

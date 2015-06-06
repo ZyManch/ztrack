@@ -8,9 +8,9 @@
 class GraylogErrorSaver extends AbstractErrorSaver {
 
 
-    public function save($error) {
+    public function save($token, $error) {
         $content = CJSON::decode($error);
-        $token = $this->_getToken($content['_access_token']);
+        $token = $this->_getToken($token);
         $companyId = $token->project->company_id;
         $level = $this->_getLevel(
             $this->_extractParam($content,'level',3),
@@ -41,7 +41,6 @@ class GraylogErrorSaver extends AbstractErrorSaver {
 
     protected function _saveContext(Request $request, $data) {
         $usedKeys = array(
-            '_access_token',
             'level',
             '_branch',
             '_environment',

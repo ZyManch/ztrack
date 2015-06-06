@@ -66,6 +66,6 @@ return array(
     'params'=>array(
         'adminEmail'=>'webmaster@example.com',
         'salt' => 'salt',
-
+        'error_queue' => 'sqlite:filename='.realpath(dirname(__FILE__).'/../queue/error.sqlite')
     ),
 );

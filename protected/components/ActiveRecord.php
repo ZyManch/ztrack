@@ -18,7 +18,7 @@ class ActiveRecord extends CActiveRecord {
         if ($this->getScenario() == 'search') {
             return array(
                 'ERememberFiltersBehavior' => array(
-                    'class' => 'application.vendor.pentium10.yii-remember-filters-gridview.components.ERememberFiltersBehavior',
+                    'class' => 'vendor.pentium10.yii-remember-filters-gridview.components.ERememberFiltersBehavior',
                     // 'defaults'=>array(),           /* optional line */
                     // 'defaultStickOnClear'=>false   /* optional line */
                 ),

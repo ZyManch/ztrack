@@ -10,7 +10,8 @@
         "pentium10/yii-remember-filters-gridview":"dev-master",
         "sebastian/diff": "dev-master",
         "piwik/device-detector": "dev-master",
-        "camspiers/json-pretty": "dev-master"
+        "camspiers/json-pretty": "dev-master",
+        "zymanch/ztrack-queue": "dev-master"
     },
 
     "autoload": {
@@ -27,7 +28,8 @@
     },
     "repositories": [
         {
-            "packagist": false
+            "type": "git",
+            "url":  "https://github.com/ZyManch/ztrack-queue.git"
         },
         {
             "type":"composer",

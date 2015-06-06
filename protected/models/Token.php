@@ -13,7 +13,9 @@ class Token extends CToken {
     const TYPE_PUBLIC = 'Public';
 
     public function setRandomToken() {
-        $this->hash = md5('random'.microtime(true)).md5(uniqid());
+        $this->hash = md5('random'.microtime(true)).
+            sprintf('%08d',Yii::app()->user->getUser()->company_id).
+            md5(uniqid());
     }
 
 }

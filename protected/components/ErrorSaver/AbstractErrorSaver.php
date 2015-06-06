@@ -9,7 +9,7 @@ abstract class AbstractErrorSaver {
 
     protected $_detector;
 
-    abstract function save($error);
+    abstract function save($token, $error);
 
 
     /**
