@@ -16,7 +16,7 @@ return array(
         'application.models.original.*',
         'application.models.page.*',
         'application.models.search.*',
-        'application.models.graph.common.*',
+        'application.models.graph.Common.*',
         'application.models.graph.*',
         'application.models.statisticColumn.*',
         'application.models.messenger.*',
