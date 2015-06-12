@@ -13,6 +13,7 @@
     * The followings are the available model relations:
         * @property Branch[] $branches
         * @property Editor $editor
+        * @property Environment[] $environments
         * @property Group[] $groups
         * @property Label[] $labels
         * @property Level[] $levels
@@ -42,6 +43,7 @@ class CCompany extends ActiveRecord {
         return array(
             'branches' => array(self::HAS_MANY, 'Branch', 'company_id'),
             'editor' => array(self::BELONGS_TO, 'Editor', 'editor_id'),
+            'environments' => array(self::HAS_MANY, 'Environment', 'company_id'),
             'groups' => array(self::HAS_MANY, 'Group', 'company_id'),
             'labels' => array(self::HAS_MANY, 'Label', 'company_id'),
             'levels' => array(self::HAS_MANY, 'Level', 'company_id'),

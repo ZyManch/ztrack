@@ -40,7 +40,7 @@ abstract class AbstractErrorSaver {
      * @return Error
      */
     protected function _findIdentical(Project $project,  Level $level,
-                                      Branch $branch, $environment,
+                                      Branch $branch, Environment $environment,
                                       $title, $traceFile, $traceLine
     ) {
         $title = trim(preg_replace('/(\(code \#[a-z0-9]+\))/','',$title));
@@ -51,7 +51,7 @@ abstract class AbstractErrorSaver {
             $traceFile,
             $traceLine,
             $project->id,
-            $environment
+            $environment->id
         )));
 
         $error = Error::model()->findByAttributes(array(
@@ -67,6 +67,7 @@ abstract class AbstractErrorSaver {
                 'level_id' => $level->id,
                 'branch_id' => $branch->id,
                 'project_id' => $project->id,
+                'environment_id' => $environment->id,
                 'hash' => $hash,
                 'total_count' => 1,
                 'trace_file' => $traceFile ? $traceFile : null,
@@ -160,6 +161,23 @@ abstract class AbstractErrorSaver {
             $branch->save(false);
         }
         return $branch;
+    }
+
+    protected function _getEnvironment($companyId, $environmentName) {
+        $criteria = new CDbCriteria();
+        $criteria->compare('t.title',$environmentName);
+        $criteria->addCondition('(t.company_id is null or t.company_id = :company)');
+        $criteria->params[':company'] = $companyId;
+        $environment = Environment::model()->find($criteria);
+        if (!$environment) {
+            $environment = new Environment();
+            $environment->setAttributes(array(
+                'title' => $environmentName,
+                'company_id' => $companyId,
+            ));
+            $environment->save(false);
+        }
+        return $environment;
     }
 
     /**

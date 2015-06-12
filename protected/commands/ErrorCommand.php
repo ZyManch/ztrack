@@ -41,6 +41,7 @@ class ErrorCommand extends CConsoleCommand {
             } catch (\Phive\Queue\Exception\NoItemException $e) {
                 break;
             } catch (Exception $e) {
+                print $e->getMessage();die();
                 print '-';
             }
         }

@@ -25,11 +25,15 @@ class GraylogErrorSaver extends AbstractErrorSaver {
                 $this->_extractParam($content,'_environment','unknown')
             )
         );
+        $environment = $this->_getEnvironment(
+            $companyId,
+            $this->_extractParam($content,'_environment','unknown')
+        );
         $error = $this->_findIdentical(
             $token->project,
             $level,
             $branch,
-            $this->_extractParam($content,'_environment','unknown'),
+            $environment,
             $this->_extractParam($content,'short_message','unknown'),
             $fileNameAndLine[0],
             $fileNameAndLine[1]

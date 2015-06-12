@@ -10,6 +10,7 @@
     * @property string $level_id
     * @property string $project_id
     * @property string $branch_id
+    * @property string $environment_id
     * @property string $total_count
     * @property string $trace_file
     * @property integer $trace_line
@@ -17,6 +18,7 @@
     * @property string $changed
     *
     * The followings are the available model relations:
+        * @property Environment $environment
         * @property Level $level
         * @property Project $project
         * @property Branch $branch
@@ -31,11 +33,11 @@ class CError extends ActiveRecord {
 
     public function rules()	{
         return array(
-            array('title, hash, level_id, branch_id', 'required'),
+            array('title, hash, level_id, branch_id, environment_id', 'required'),
 			array('trace_line', 'numerical', 'integerOnly'=>true),
 			array('title', 'length', 'max'=>128),
 			array('hash', 'length', 'max'=>32),
-			array('level_id, project_id, branch_id, total_count', 'length', 'max'=>10),
+			array('level_id, project_id, branch_id, environment_id, total_count', 'length', 'max'=>10),
 			array('trace_file', 'length', 'max'=>200),
 			array('status', 'length', 'max'=>7)        );
     }
@@ -45,6 +47,7 @@ class CError extends ActiveRecord {
     */
     protected function _baseRelations()	{
         return array(
+            'environment' => array(self::BELONGS_TO, 'Environment', 'environment_id'),
             'level' => array(self::BELONGS_TO, 'Level', 'level_id'),
             'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
             'branch' => array(self::BELONGS_TO, 'Branch', 'branch_id'),
@@ -61,6 +64,7 @@ class CError extends ActiveRecord {
             'level_id' => 'Level',
             'project_id' => 'Project',
             'branch_id' => 'Branch',
+            'environment_id' => 'Environment',
             'total_count' => 'Total Count',
             'trace_file' => 'Trace File',
             'trace_line' => 'Trace Line',

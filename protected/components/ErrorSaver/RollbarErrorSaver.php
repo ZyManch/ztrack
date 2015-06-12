@@ -22,11 +22,15 @@ class RollbarErrorSaver extends AbstractErrorSaver {
             $companyId,
             $this->_extractParam($data,'server.branch','unknown')
         );
+        $environment = $this->_getEnvironment(
+            $companyId,
+            $this->_extractParam($data,'environment','unknown')
+        );
         $error = $this->_findIdentical(
             $token->project,
             $level,
             $branch,
-            $this->_extractParam($data,'environment','unknown'),
+            $environment,
             $this->_extractParam($data,'title','unknown'),
             $fileNameAndLine[0],
             $fileNameAndLine[1]
@@ -42,7 +46,8 @@ class RollbarErrorSaver extends AbstractErrorSaver {
 
         $browser = $this->_extractParam(
             $data,
-            'client.javascript.browser'
+            'request.headers.User-Agent',
+            $this->_extractParam($data, 'client.javascript.browser')
         );
         $detector = new DeviceDetector\DeviceDetector($browser);
         $detector->discardBotInformation();

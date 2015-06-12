@@ -45,6 +45,10 @@
                 <th style="text-align: right">Branch</th>
                 <td><?php echo CHtml::encode($error->branch->title);?></td>
             </tr>
+            <tr>
+                <th style="text-align: right">Environment</th>
+                <td><?php echo CHtml::encode($error->environment->title);?></td>
+            </tr>
             <?php if (isset($request)):?>
                 <tr>
                     <th style="text-align: right">OS</th>
@@ -73,7 +77,7 @@
                             array('target'=>'_top')
                         );?></td>
                 </tr>
-                <?php if ($request->referer_url_id):?>
+                <?php if ($request->referer_url_id && $request->refererUrl->domain):?>
                     <tr>
                         <th style="text-align: right">Referer URL</th>
                         <td><?php echo CHtml::link(
