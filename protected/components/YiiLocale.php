@@ -5,7 +5,7 @@
  * Date: 16.03.2015
  * Time: 19:44
  */
-class Locale extends CLocale {
+class YiiLocale extends CLocale {
 
     protected $_dateFormatter;
 
@@ -20,6 +20,6 @@ class Locale extends CLocale {
         if(isset($locales[$id]))
             return $locales[$id];
         else
-            return $locales[$id]=new Locale($id);
+            return $locales[$id]=new YiiLocale($id);
     }
 }

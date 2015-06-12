@@ -11,7 +11,7 @@ return array(
     'preload'=>array('loader'),
     'sourceLanguage' => 'en',
     'language' => 'ru',
-    'localeClass' => 'Locale',
+    'localeClass' => 'YiiLocale',
     'import'=>array(
         'application.models.original.*',
         'application.models.page.*',
