@@ -59,6 +59,7 @@ return array(
             'class' => 'AuthManager',
         ),
         'user'=>array(
+            'class'=>'WebUser',
             'loginUrl'=>array('user/login'),
             'allowAutoLogin'=>true,
         ),
