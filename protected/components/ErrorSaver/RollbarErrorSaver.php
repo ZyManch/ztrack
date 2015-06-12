@@ -79,6 +79,10 @@ class RollbarErrorSaver extends AbstractErrorSaver {
         $request->setAttributes(
             $this->_getRequestAttributes($method,$url,$referer)
         );
+        $context = $this->_extractParam($data,'context',array());
+        if (is_array($context) && isset($context['code'])) {
+            $request->code = substr($context['code'],0,32);
+        }
         $request->save(false);
         return $request;
     }

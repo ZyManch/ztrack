@@ -108,6 +108,10 @@ class GraylogErrorSaver extends AbstractErrorSaver {
         $request->setAttributes(
             $this->_getRequestAttributes($method,$url,$referer)
         );
+        $code = $this->_extractParam($content,'_code');
+        if ($code && is_string($code)) {
+            $request->code = substr($code,0,32);
+        }
         $request->save(false);
         return $request;
     }
