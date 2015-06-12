@@ -7,4 +7,11 @@
  */
 class WikiPage extends Page {
 
+    public function getTitle() {
+        if (trim($this->title)) {
+            return $this->title;
+        }
+        return 'Unknown';
+    }
+
 }

@@ -82,6 +82,42 @@ class SearchPage extends CPage {
         ));
     }
 
+    public static function searchByWords($word, $page_type_id = null) {
+        switch ($page_type_id) {
+            case PAGE_TYPE_WIKI:
+                if (!Yii::app()->user->checkAccess(PERMISSION_WIKI_VIEW)) {
+                    return new CArrayDataProvider(array());
+                }
+                break;
+            case PAGE_TYPE_TICKETS:
+                if (!Yii::app()->user->checkAccess(PERMISSION_TICKET_VIEW)) {
+                    return new CArrayDataProvider(array());
+                }
+                break;
+        }
+        if (is_array($word)) {
+            $word = implode(' ',$word);
+        }
+        $criteria = new CDbCriteria();
+        $criteria->with = array(
+            'project',
+        );
+        $criteria->together = true;
+        $criteria->params[':word'] = '%'.$word.'%';
+        $criteria->addCondition('t.title LIKE :word','OR');
+        $criteria->addCondition('t.body LIKE :word','OR');
+        $criteria->compare('project.company_id',Yii::app()->user->getUser()->company_id);
+        $criteria->order = 't.changed DESC';
+        $criteria->group = 't.id';
+        if ($page_type_id) {
+            $criteria->compare('t.page_type_id',$page_type_id);
+        }
+        return new CActiveDataProvider('Page', array(
+            'criteria'=>$criteria,
+            'pagination'=>array('pageSize'=>40)
+        ));
+    }
+
     public function save() {
         throw new Exception('Its search only model');
     }

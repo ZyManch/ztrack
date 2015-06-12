@@ -48,8 +48,8 @@ class WikiProjectModule extends AbstractProjectModule {
         $request = Yii::app()->request;
         $projectId = $request->getParam('id');
         $url = $request->getParam('wiki','');
-        if (isset($_POST['Page']) && is_array($_POST['Page'])) {
-            $wiki->attributes = $_POST['Page'];
+        if (isset($_POST['WikiPage']) && is_array($_POST['WikiPage'])) {
+            $wiki->attributes = $_POST['WikiPage'];
             $wiki->attributes = array(
                 'page_type_id' => PAGE_TYPE_WIKI,
                 'changed' => time(),

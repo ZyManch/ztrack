@@ -42,8 +42,10 @@ class SearchRequest extends CRequest {
 
     public function search() {
 
+        if (!Yii::app()->user->checkAccess(PERMISSION_ERROR_VIEW)) {
+            return new CArrayDataProvider(array());
+        }
         $criteria=new CDbCriteria;
-
 		$criteria->compare('t.id',$this->id);
 		$criteria->compare('t.error_id',$this->error_id);
 		$criteria->compare('t.browser_id',$this->browser_id);
@@ -65,6 +67,39 @@ class SearchRequest extends CRequest {
             'refererUrl'
         );
         $criteria->order = 't.changed DESC';
+        return new CActiveDataProvider('Request', array(
+            'criteria'=>$criteria,
+            'pagination'=>array('pageSize'=>40)
+        ));
+    }
+
+    public static function searchByWords($word) {
+        if (is_array($word)) {
+            $word = implode(' ',$word);
+        }
+        $criteria = new CDbCriteria();
+        $criteria->with = array(
+            'error.project',
+            'browser',
+            'os',
+            'method',
+            'server',
+            'url',
+            'refererUrl',
+            'requestDatas'
+        );
+        $criteria->together = true;
+        $criteria->params[':word'] = '%'.$word.'%';
+        $criteria->addCondition('t.code LIKE :word','OR');
+        $criteria->addCondition('browser.browser LIKE :word','OR');
+        $criteria->addCondition('os.os LIKE :word','OR');
+        $criteria->addCondition('server.title LIKE :word','OR');
+        $criteria->addCondition('url.domain LIKE :word','OR');
+        $criteria->addCondition('url.url LIKE :word','OR');
+        $criteria->addCondition('requestDatas.data LIKE :word','OR');
+        $criteria->compare('project.company_id',Yii::app()->user->getUser()->company_id);
+        $criteria->order = 't.changed DESC';
+        $criteria->group = 't.id';
         return new CActiveDataProvider('Request', array(
             'criteria'=>$criteria,
             'pagination'=>array('pageSize'=>40)
