@@ -6,6 +6,6 @@
         "password":""
     },
     "queue" : {
-        "error":"sqlite:filename=E:/Denwer/home/ztrack.dev/protected/queue/error.sqlite"
+        "error":"mysql:host=localhost;port=3306;db=ztrack;user=root;pass="
     }
 }
