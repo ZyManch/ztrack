@@ -106,7 +106,7 @@ class SearchPage extends CPage {
         $criteria->params[':word'] = '%'.$word.'%';
         $criteria->addCondition('t.title LIKE :word','OR');
         $criteria->addCondition('t.body LIKE :word','OR');
-        $criteria->compare('project.company_id',Yii::app()->user->getUser()->company_id);
+        $criteria->compare('t.project_id',array_keys(Yii::app()->user->getUser()->getAvailableProjects()));
         $criteria->order = 't.changed DESC';
         $criteria->group = 't.id';
         if ($page_type_id) {

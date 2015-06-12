@@ -79,7 +79,7 @@ class SearchRequest extends CRequest {
         }
         $criteria = new CDbCriteria();
         $criteria->with = array(
-            'error.project',
+            'error',
             'browser',
             'os',
             'method',
@@ -97,7 +97,7 @@ class SearchRequest extends CRequest {
         $criteria->addCondition('url.domain LIKE :word','OR');
         $criteria->addCondition('url.url LIKE :word','OR');
         $criteria->addCondition('requestDatas.data LIKE :word','OR');
-        $criteria->compare('project.company_id',Yii::app()->user->getUser()->company_id);
+        $criteria->compare('error.project_id',array_keys(Yii::app()->user->getUser()->getAvailableProjects()));
         $criteria->order = 't.changed DESC';
         $criteria->group = 't.id';
         return new CActiveDataProvider('Request', array(
