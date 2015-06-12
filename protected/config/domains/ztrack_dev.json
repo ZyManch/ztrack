@@ -1,0 +1,11 @@
+{
+    "db": {
+        "hostname": "localhost",
+        "database": "ztrack",
+        "username":"root",
+        "password":""
+    },
+    "queue" : {
+        "error":"sqlite:filename=E:/Denwer/home/ztrack.dev/protected/queue/error.sqlite"
+    }
+}

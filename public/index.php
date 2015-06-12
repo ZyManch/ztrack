@@ -12,7 +12,14 @@ if (!file_exists($yii)) {
     print 'Install composer and try again';
     return;
 }
+$secureName = preg_replace('/([^a-z0-9]+)/','_',ltrim(strtolower($_SERVER['SERVER_NAME']),'w.'));
+$securePath = dirname(__FILE__).'/../protected/config/domains/'.$secureName.'.json';
+if (!file_exists($securePath)) {
+    print 'Secure file is missed';
+    return;
+}
 require_once($yii);
+$secure = json_decode(file_get_contents($securePath),1);
 $config = require_once $config;
 $staticConfig = require_once $staticConfig;
 require_once dirname(__FILE__).'/../protected/merge.php';

@@ -7,7 +7,7 @@
 // CWebApplication properties can be configured here.
 return array(
     'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-    'name'=>'My Web Application',
+    'name'=>'zTrack',
     'preload'=>array('loader'),
     'sourceLanguage' => 'en',
     'language' => 'ru',
@@ -38,10 +38,10 @@ return array(
     // application components
     'components'=>array(
         'db'=>array(
-            'connectionString' => 'mysql:host=localhost;dbname=ztrack',
+            'connectionString' => 'mysql:host='.$secure['db']['hostname'].';dbname='.$secure['db']['database'],
             'emulatePrepare' => true,
-            'username' => 'root',
-            'password' => '',
+            'username' => $secure['db']['username'],
+            'password' => $secure['db']['password'],
             'charset' => 'utf8',
             'nullConversion' => PDO::NULL_EMPTY_STRING,
             'schemaCachingDuration' => 3600 * 24,
@@ -50,7 +50,7 @@ return array(
         'cache'=>array(
             'class'=>'system.caching.CFileCache',
             'directoryLevel' =>1,
-            'cachePath' => dirname(__FILE__).'/../../cache'
+            'cachePath' => dirname(__FILE__).'/../../cache/'.$secureName
         ),
         'loader' => array(
             'class'=>'Loader',
@@ -64,8 +64,7 @@ return array(
         ),
     ),
     'params'=>array(
-        'adminEmail'=>'webmaster@example.com',
         'salt' => 'salt',
-        'error_queue' => 'sqlite:filename='.realpath(dirname(__FILE__).'/../queue/error.sqlite')
+        'error_queue' => $secure['queue']['error']
     ),
 );

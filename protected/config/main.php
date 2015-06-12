@@ -8,6 +8,7 @@
 return array(
     'defaultController' => 'dashboard',
     'preload'=>array('log'),
+    /*
 	'modules'=>array(
 		'gii'=>array(
 			'class'=>'system.gii.GiiModule',
@@ -15,20 +16,9 @@ return array(
 			'ipFilters'=>array('127.0.0.1','::1'),
 		),
 	),
-    'import'=>array(
-
-    ),
-	// application components
+    /**/
 	'components'=>array(
-		'user'=>array(
-            'class'=>'WebUser',
-			'allowAutoLogin'=>true,
-		),
 
-        'themeManager'=>array(
-            'class'=>'CThemeManager',
-        ),
-		// uncomment the following to enable URLs in path-format
 		'urlManager'=>array(
 			'urlFormat'=>'path',
             'showScriptName'=>false,
