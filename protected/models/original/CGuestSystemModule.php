@@ -6,8 +6,6 @@
 * The followings are the available columns in table 'guest_system_module':
     * @property string $id
     * @property string $system_module_id
-    * @property string $status
-    * @property string $changed
     *
     * The followings are the available model relations:
         * @property SystemModule $systemModule
@@ -21,8 +19,7 @@ class CGuestSystemModule extends ActiveRecord {
     public function rules()	{
         return array(
             array('system_module_id', 'required'),
-			array('system_module_id', 'length', 'max'=>10),
-			array('status', 'length', 'max'=>7)        );
+			array('system_module_id', 'length', 'max'=>10)        );
     }
 
     /**
@@ -38,8 +35,6 @@ class CGuestSystemModule extends ActiveRecord {
         return array(
             'id' => 'ID',
             'system_module_id' => 'System Module',
-            'status' => 'Status',
-            'changed' => 'Changed',
         );
     }
 

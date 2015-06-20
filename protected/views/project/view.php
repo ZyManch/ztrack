@@ -1,11 +1,14 @@
 <?php
 /* @var $this ProjectController */
 /* @var $model Project */
+/* @var $activeModule AbstractProjectModule */
 
-
-$currentModule = Yii::app()->request->getParam('module');
+$webUser = Yii::app()->user;
+$user = $webUser->getUser();
+$userProjects = $user->getAvailableProjects();
+$userProjectModules = $model->getEnabledProjectModules($user);
 $currentAction = Yii::app()->request->getParam('action');
-$activeSystemModule = null;
+$userHaveAccessToModule = false;
 ?>
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-xs-12">
@@ -18,18 +21,15 @@ $activeSystemModule = null;
 <div class="wrapper wrapper-content  animated fadeInRight">
     <div class="col-xs-12">
         <ul class="nav nav-tabs">
-            <?php foreach ($model->getEnabledProjectModules(Yii::app()->user->getUser()) as $systemModule):?>
+            <?php foreach ($userProjectModules as $systemModule):?>
                 <?php foreach ($systemModule->getTabs() as $tab):?>
                     <?php
-                    if (!$currentModule) {
-                        $currentModule = $systemModule->getModuleName();
-                    }
-                    $isActive = ($currentModule==$systemModule->getModuleName());
+                    $isActive = ($activeModule->id == $systemModule->id);
                     if ($isActive) {
-                        $activeSystemModule = $systemModule;
-                        if (!$currentAction) {
-                            $currentAction = $activeSystemModule->defaultAction;
-                        }
+                        $userHaveAccessToModule = true;
+                    }
+                    if ($isActive && !$currentAction) {
+                        $currentAction = $activeModule->defaultAction;
                     }
                     ?>
                     <li<?php if($isActive):?> class="active" <?php endif;?>>
@@ -43,14 +43,23 @@ $activeSystemModule = null;
         </ul>
     </div>
 </div>
-<?php if ($activeSystemModule && $activeSystemModule->hasAccess($currentAction)):?>
-    <?php $activeSystemModule->run($currentAction);?>
+<?php if ($userHaveAccessToModule && $activeModule->hasAccess($currentAction)):?>
+    <?php $activeModule->run($currentAction);?>
 <?php else:?>
     <div class="row">
         <div class="col-xs-12">
             <div class="panel colourable">
                 <div class="panel-body">
-                    <div class="alert alert-danger">Action not found</div>
+                    <div class="alert alert-danger">
+                        <?php if(!$model->haveSystemModule($activeModule)):?>
+                            <?php $this->renderPartial('//project/error/_moduleInstallation',array('model'=>$model));?>
+                        <?php elseif (!isset($userProjects[$model->id])):?>
+                            <?php $this->renderPartial('//project/error/_projectAccess',array('model'=>$model));?>
+                        <?php else:?>
+                            <?php $this->renderPartial('//project/error/_moduleAccess',array('model'=>$model,'module'=>$activeModule));?>
+
+                        <?php endif;?>
+                    </div>
                 </div>
             </div>
         </div>

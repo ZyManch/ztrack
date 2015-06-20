@@ -8,8 +8,6 @@
     * @property string $trace_id
     * @property integer $line
     * @property string $code
-    * @property string $status
-    * @property string $changed
     *
     * The followings are the available model relations:
         * @property Trace $trace
@@ -25,8 +23,7 @@ class CTraceCode extends ActiveRecord {
             array('trace_id, line, code', 'required'),
 			array('line', 'numerical', 'integerOnly'=>true),
 			array('trace_id', 'length', 'max'=>10),
-			array('code', 'length', 'max'=>255),
-			array('status', 'length', 'max'=>7)        );
+			array('code', 'length', 'max'=>255)        );
     }
 
     /**
@@ -44,8 +41,6 @@ class CTraceCode extends ActiveRecord {
             'trace_id' => 'Trace',
             'line' => 'Line',
             'code' => 'Code',
-            'status' => 'Status',
-            'changed' => 'Changed',
         );
     }
 

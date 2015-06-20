@@ -150,3 +150,6 @@ tr.immediately td, .label.label-immediately {
 .form-horizontal .control-label.error {
     margin-left: 0;
 }
+.label-saved {
+    display: none;
+}

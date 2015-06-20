@@ -26,13 +26,13 @@ $clientScript->registerScript('nest',
 
 <div class="row">
     <div class="col-xs-12">
-
         <ul class="dd" id="nestable">
             <ol class="dd-list">
                 <?php if ($projects):?>
                     <?php foreach ($projects as $project):?>
                         <?php $this->renderPartial('_view', array('data'=>$project));?>
                     <?php endforeach;?>
+
                 <?php endif;?>
             </ol>
         </ul>

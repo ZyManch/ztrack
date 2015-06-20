@@ -7,6 +7,7 @@
     * @property string $id
     * @property string $company_id
     * @property string $title
+    * @property string $type
     * @property string $status
     * @property string $changed
     *
@@ -27,6 +28,7 @@ class CGroup extends ActiveRecord {
             array('company_id, title', 'required'),
 			array('company_id', 'length', 'max'=>10),
 			array('title', 'length', 'max'=>32),
+			array('type', 'length', 'max'=>6),
 			array('status', 'length', 'max'=>7)        );
     }
 
@@ -47,6 +49,7 @@ class CGroup extends ActiveRecord {
             'id' => 'ID',
             'company_id' => 'Company',
             'title' => 'Title',
+            'type' => 'Type',
             'status' => 'Status',
             'changed' => 'Changed',
         );

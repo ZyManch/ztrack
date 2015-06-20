@@ -27,9 +27,15 @@ class Project extends CProject {
         );
     }
 
-    public function haveSystemModule(AbstractProjectModule $module) {
+    public function haveSystemModule($module) {
         foreach ($this->systemModules as $systemModule) {
-            if ($module->id == $systemModule->id) {
+            if (is_numeric($module) && $module == $systemModule->id) {
+                return true;
+            }
+            if (is_object($module) && $module->id == $systemModule->id) {
+                return true;
+            }
+            if ($module == $systemModule->name) {
                 return true;
             }
         }
@@ -110,11 +116,12 @@ class Project extends CProject {
         }
     }
 
+    /**
+     * @param User $user
+     * @return AbstractProjectModule[]
+     */
     public function getEnabledProjectModules(User $user = null) {
         $modules = $this->systemModules;
-        foreach (SystemModule::getForceInstalledSystemModules(SystemModule::TYPE_PROJECT) as $module) {
-            $modules[$module->id] = $module;
-        }
         if (!is_null($user)) {
             $result = array();
             $projects = $user->getAvailableProjects();

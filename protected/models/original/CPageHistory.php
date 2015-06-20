@@ -14,7 +14,6 @@
     * @property string $body
     * @property integer $progress
     * @property string $level_id
-    * @property string $status
     * @property string $created
     *
     * The followings are the available model relations:
@@ -38,7 +37,6 @@ class CPageHistory extends ActiveRecord {
 			array('progress', 'numerical', 'integerOnly'=>true),
 			array('user_id, previous_page_history_id, assign_user_id, page_id, project_id, level_id', 'length', 'max'=>10),
 			array('title', 'length', 'max'=>128),
-			array('status', 'length', 'max'=>7),
 			array('created', 'safe')        );
     }
 
@@ -69,7 +67,6 @@ class CPageHistory extends ActiveRecord {
             'body' => 'Body',
             'progress' => 'Progress',
             'level_id' => 'Level',
-            'status' => 'Status',
             'created' => 'Created',
         );
     }

@@ -13,7 +13,8 @@ Yii::app()->clientScript->registerScript(
     sprintf(
         '$(".system-modules input").change(function() {
             var $this = $(this),
-                $parent = $this.parents(".module");
+                $parent = $this.parents(".module"),
+                $saved = $parent.find(".label-saved");
             if($this.is(":checked")) {
                 $parent.addClass("checked");
                 $.ajax({
@@ -21,6 +22,7 @@ Yii::app()->clientScript->registerScript(
                     method: "POST",
                     data: {system_module_id: $this.data("module")}
                 });
+                $saved.stop().fadeIn().delay(1000).fadeOut(1000);
             } else {
                 $parent.removeClass("checked");
                 $.ajax({
@@ -28,6 +30,7 @@ Yii::app()->clientScript->registerScript(
                     method: "POST",
                     data: {system_module_id: $this.data("module")}
                 });
+                $saved.stop().fadeIn().delay(1000).fadeOut(1000);
             }
         });',
         CHtml::normalizeUrl(array('user/addUserModule','id'=>$model->id)),
@@ -45,6 +48,7 @@ Yii::app()->clientScript->registerScript(
                     <?php echo CHtml::encode($systemModule->title);?>
                     <?php if($isMe):?>
                         <input type="checkbox" data-module="<?php echo $systemModule->id;?>" <?php if (isset($model->systemModules[$systemModule->id])):?>checked="checked" <?php endif;?>/>
+                        <span class="label label-primary label-saved">Saved</span>
                     <?php endif;?>
                 </label>
             </td>

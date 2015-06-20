@@ -18,10 +18,10 @@
     * @property string $changed
     *
     * The followings are the available model relations:
-        * @property Environment $environment
         * @property Level $level
         * @property Project $project
         * @property Branch $branch
+        * @property Environment $environment
         * @property PageError[] $pageErrors
         * @property Request[] $requests
 */
@@ -47,10 +47,10 @@ class CError extends ActiveRecord {
     */
     protected function _baseRelations()	{
         return array(
-            'environment' => array(self::BELONGS_TO, 'Environment', 'environment_id'),
             'level' => array(self::BELONGS_TO, 'Level', 'level_id'),
             'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
             'branch' => array(self::BELONGS_TO, 'Branch', 'branch_id'),
+            'environment' => array(self::BELONGS_TO, 'Environment', 'environment_id'),
             'pageErrors' => array(self::HAS_MANY, 'PageError', 'error_id'),
             'requests' => array(self::HAS_MANY, 'Request', 'error_id'),
         );

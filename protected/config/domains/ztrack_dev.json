@@ -1,11 +1,11 @@
 {
     "db": {
-        "hostname": "localhost",
+        "hostname": "ztrack.dev",
         "database": "ztrack",
         "username":"root",
         "password":""
     },
     "queue" : {
-        "error":"mysql:host=localhost;port=3306;db=ztrack;user=root;pass="
+        "error":"mysql:host=ztrack.dev;port=3306;db=ztrack;user=root;pass="
     }
 }

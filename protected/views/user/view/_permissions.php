@@ -13,7 +13,8 @@ Yii::app()->clientScript->registerScript(
     sprintf(
         '$(".permissions input").change(function() {
             var $this = $(this),
-                $parent = $this.parents(".permission");
+                $parent = $this.parents(".permission"),
+                $saved = $parent.find(".label-saved");
             if($this.is(":checked")) {
                 $parent.addClass("checked");
                 $.ajax({
@@ -21,6 +22,7 @@ Yii::app()->clientScript->registerScript(
                     method: "POST",
                     data: {permission_id: $this.data("permission")}
                 });
+                $saved.stop().fadeIn().delay(1000).fadeOut(1000);
             } else {
                 $parent.removeClass("checked");
                 $.ajax({
@@ -28,6 +30,7 @@ Yii::app()->clientScript->registerScript(
                     method: "POST",
                     data: {permission_id: $this.data("permission")}
                 });
+                $saved.stop().fadeIn().delay(1000).fadeOut(1000);
             }
         });',
         CHtml::normalizeUrl(array('user/addPermission','id'=>$model->id)),
@@ -46,6 +49,7 @@ Yii::app()->clientScript->registerScript(
                         <?php echo $permissionTitle;?>
                         <?php if($canEdit):?>
                             <input type="checkbox" data-permission="<?php echo $permissionId;?>" <?php if (isset($model->permissions[$permissionId])):?>checked="checked" <?php endif;?><?php if ($permissionId == PERMISSION_ROOT && $model->id == Yii::app()->user->id):?> disabled="disabled"<?php endif;?>/>
+                            <span class="label label-primary label-saved">Saved</span>
                         <?php endif;?>
                     </label>
                 </td>

@@ -65,9 +65,17 @@ class DashboardController extends Controller {
             $dashboardSystemModule->attributes = $newParams;
             $dashboardSystemModule->params = json_encode($config);
             if ($dashboardSystemModule->render() && $dashboardSystemModule->save()) {
+                Yii::app()->user->setSuccessFlash(
+                    'dashboard',
+                    'Widget saved'
+                );
                 $this->redirect(array('dashboard/cancel','id'=>$dashboard->id));
             } else {
-                Yii::app()->user->setFlash('error','Error save config: '.$dashboardSystemModule->getErrorsAsText());
+                Yii::app()->user->setErrorFlash(
+                    'dashboard',
+                    'Error save widget: :error',
+                    array(':error' => CHtml::encode($dashboardSystemModule->getErrorsAsText()))
+                );
             }
         }
         $this->render('configure',array(
@@ -87,6 +95,10 @@ class DashboardController extends Controller {
             $model->user_id = Yii::app()->user->id;
             $model->position = ($lastDashboard ? $lastDashboard->position+1 : 1);
             if($model->save()) {
+                Yii::app()->user->setSuccessFlash(
+                    'dashboard',
+                    'Dashboard created'
+                );
                 $this->redirect(array('index','id'=>$model->id));
             }
         }
@@ -102,6 +114,10 @@ class DashboardController extends Controller {
         if(isset($_POST['Dashboard'])) {
             $model->attributes=$_POST['Dashboard'];
             if($model->save()) {
+                Yii::app()->user->setSuccessFlash(
+                    'dashboard',
+                    'Dashboard saved'
+                );
                 $this->redirect(array('view','id'=>$model->id));
             }
         }
@@ -133,7 +149,11 @@ class DashboardController extends Controller {
         /** @var DashboardSystemModule $dashboardSystemModule */
         $dashboardSystemModule = $dashboardSystemModules[$dashboard_system_module_id];
         $dashboardSystemModule->delete();
-        Yii::app()->user->setFlash('success',$dashboardSystemModule->title);
+        Yii::app()->user->setSuccessFlash(
+            'dashboard',
+            'Widget :widget deleted',
+            array(':widget' => $dashboardSystemModule->title)
+        );
         $this->redirect(array('dashboard/cancel','id'=>$id));
     }
 
@@ -179,11 +199,16 @@ class DashboardController extends Controller {
                     'params' => json_encode($configure)
                 );
                 if (!$link->save()) {
-                    Yii::app()->user->setFlash(
-                        'error',
-                        'Error save widget to dashboard: '.$link->getErrorsAsText()
+                    Yii::app()->user->setErrorFlash(
+                        'dashboard',
+                        'Error save widget to dashboard: :error',
+                        array(':error' => $link->getErrorsAsText())
                     );
                 } else {
+                    Yii::app()->user->setSuccessFlash(
+                        'dashboard',
+                        'Widget created'
+                    );
                     $this->redirect(array('dashboard/index','id'=>$dashboard->id));
                 }
             }

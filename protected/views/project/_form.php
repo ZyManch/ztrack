@@ -29,7 +29,7 @@ $projects = Project::getProjectsAsList($projectIds,$model->id ? array($model->id
             <?php echo $form->error($model,'title',array('class'=>'label label-danger')); ?>
         </div>
 	</div>
-
+    <?php if ($projects):?>
     <div class="form-group">
 		<?php echo $form->labelEx($model,'parent_id',array('class'=>'col-sm-2 control-label')); ?>
         <div class="col-sm-10">
@@ -42,7 +42,7 @@ $projects = Project::getProjectsAsList($projectIds,$model->id ? array($model->id
             <?php echo $form->error($model,'parent_id',array('class'=>'label label-danger')); ?>
         </div>
 	</div>
-
+    <?php endif;?>
     <div class="form-group">
         <div class="col-sm-4 col-sm-offset-2">
             <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save',array('class'=>'btn btn-primary')); ?>

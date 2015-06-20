@@ -7,6 +7,9 @@
  */
 class WebUser extends CWebUser {
 
+    const FLASH_SUCCESS = 'success';
+    const FLASH_ERROR = 'error';
+
     protected $_user;
 
     public $guestName='Гость';
@@ -23,8 +26,8 @@ class WebUser extends CWebUser {
         if ($this->_user) {
             return $this->_user;
         }
-        $this->_user = User::model()->findByPk($this->id);
-        if (!$this->_user) {
+        $this->_user = User::model()->resetScope()->findByPk($this->id);
+        if (!$this->_user || $this->_user->status != User::STATUS_ACTIVE) {
             $this->logout();
             Yii::app()->request->redirect('user/login');
         }
@@ -62,5 +65,37 @@ class WebUser extends CWebUser {
     }
 
 
+    public function setSuccessFlash($category, $message, $params = array()) {
+        $this->setFlash(self::FLASH_SUCCESS,Yii::t(
+            $category,
+            $message,
+            $params
+        ));
+    }
+
+    public function getSuccessFlash() {
+        return $this->getFlash(self::FLASH_SUCCESS);
+    }
+
+    public function hasSuccessFlash() {
+        return $this->hasFlash(self::FLASH_SUCCESS);
+    }
+
+
+    public function setErrorFlash($category, $message, $params = array()) {
+        $this->setFlash(self::FLASH_ERROR,Yii::t(
+            $category,
+            $message,
+            $params
+        ));
+    }
+
+    public function getErrorFlash() {
+        return $this->getFlash(self::FLASH_ERROR);
+    }
+
+    public function hasErrorFlash() {
+        return $this->hasFlash(self::FLASH_ERROR);
+    }
 
 }

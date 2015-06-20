@@ -35,13 +35,24 @@ class ActiveRecord extends CActiveRecord {
         return in_array('status', $this->tableSchema->columnNames);
     }
 
+    protected function _hasCompanyId() {
+        return in_array('company_id', $this->tableSchema->columnNames);
+    }
+
     public function defaultScope() {
-        if (!$this->_hasStatus()) {
+        $t = $this->getTableAlias(false, false);
+        $conditions = array();
+        if ($this->_hasStatus()) {
+            $conditions[] = $t.'.status  = "'.self::STATUS_ACTIVE.'"';
+        }
+        if ($this->_hasCompanyId()) {
+            $conditions[] = $t.'.company_id  = "'.Yii::app()->user->getUser()->company_id.'"';
+        }
+        if (!$conditions) {
             return array();
         }
-        $t = $this->getTableAlias(false, false);
         return array(
-            'condition' => $t.'.status  = "'.self::STATUS_ACTIVE.'"',
+            'condition' => implode(' AND ',$conditions),
         );
     }
 

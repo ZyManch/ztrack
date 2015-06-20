@@ -7,8 +7,6 @@
     * @property string $id
     * @property string $user_id
     * @property string $group_id
-    * @property string $status
-    * @property string $changed
     *
     * The followings are the available model relations:
         * @property User $user
@@ -23,8 +21,7 @@ class CUserGroup extends ActiveRecord {
     public function rules()	{
         return array(
             array('user_id, group_id', 'required'),
-			array('user_id, group_id', 'length', 'max'=>10),
-			array('status', 'length', 'max'=>7)        );
+			array('user_id, group_id', 'length', 'max'=>10)        );
     }
 
     /**
@@ -42,8 +39,6 @@ class CUserGroup extends ActiveRecord {
             'id' => 'ID',
             'user_id' => 'User',
             'group_id' => 'Group',
-            'status' => 'Status',
-            'changed' => 'Changed',
         );
     }
 

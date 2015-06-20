@@ -45,9 +45,38 @@ class ProjectController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionView($id) {
+	public function actionView($id, $module = null) {
+        $model = $this->loadModel($id);
+        $user = Yii::app()->user->getUser();
+        if (!$module) {
+            $userModules = $model->getEnabledProjectModules($user);
+            if ($userModules) {
+                $module = array_shift($userModules)->name;
+            } else {
+                $projectModules = $model->getEnabledProjectModules();
+                if ($projectModules) {
+                    $module = array_shift($projectModules)->name;
+                } else if (Yii::app()->user->checkAccess(PERMISSION_PROJECT_MANAGE)) {
+                    Yii::app()->user->setErrorFlash(
+                        'project',
+                        'Need install minimum one of module'
+                    );
+                    $this->redirect(array('project/update','id'=>$model->id));
+                } else {
+                    throw new CHttpException(404,'Project module not found');
+                }
+            }
+        }
+        $activeModule = SystemModule::model()->findByAttributes(array(
+            'type' => SystemModule::TYPE_PROJECT,
+            'name' => $module
+        ));
+        if (!$activeModule) {
+            throw new CHttpException(404,'Project module not found');
+        }
 		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+			'model'=>$model,
+            'activeModule' => $activeModule
 		));
 	}
 
@@ -96,6 +125,10 @@ class ProjectController extends Controller
 			$model->attributes=$_POST['Project'];
             $model->company_id = Yii::app()->user->getUser()->company_id;
 			if($model->save()) {
+                Yii::app()->user->setSuccessFlash(
+                    'project',
+                    'Project created'
+                );
 				$this->redirect(array('view','id'=>$model->id));
             }
 		}
@@ -116,6 +149,10 @@ class ProjectController extends Controller
 		if(isset($_POST['Project'])) {
 			$model->attributes=$_POST['Project'];
 			if($model->save()) {
+                Yii::app()->user->setSuccessFlash(
+                    'project',
+                    'Project saved'
+                );
 				$this->redirect(array('view','id'=>$model->id));
             }
 		}
@@ -146,7 +183,9 @@ class ProjectController extends Controller
 	 */
 	public function actionAdmin() {
         $projects = Project::getAllProjectsAsTree();
-        //var_dump($projects);die();
+        if (!$projects) {
+            $this->redirect(array('project/create'));
+        }
 		$this->render('admin',array(
 			'projects'=>$projects,
 		));
@@ -183,7 +222,11 @@ class ProjectController extends Controller
                 }
             }
         } catch (Exception $e) {
-            Yii::app()->user->setFlash('error',$e->getMessage());
+            Yii::app()->user->setErrorFlash(
+                'project',
+                'Error save module: :error',
+                array(':error' => $e->getMessage())
+            );
         }
         $this->redirect(array('project/update','id'=>$project->id));
     }
@@ -201,7 +244,11 @@ class ProjectController extends Controller
             }
             $project->removeProjectModule($systemModule);
         } catch (Exception $e) {
-            Yii::app()->user->setFlash('error',$e->getMessage());
+            Yii::app()->user->setErrorFlash(
+                'dashboard',
+                'Error save module: :error',
+                array(':error' => $e->getMessage())
+            );
         }
         $this->redirect(array('project/update','id'=>$project->id));
     }

@@ -71,7 +71,9 @@ class User extends CUser {
         $groupProjects = GroupProject::model()->
             findAll($criteria);
         foreach ($groupProjects as $groupProject) {
-            $result[$groupProject->project_id] = array();
+            if (!isset($result[$groupProject->project_id])) {
+                $result[$groupProject->project_id] = array();
+            }
             foreach ($groupProject->groupProjectModules as $groupProjectModule) {
                 $result[$groupProject->project_id][$groupProjectModule->system_module_id] = array(
                     //empty config
@@ -198,6 +200,16 @@ class User extends CUser {
         }
 
         return true;
+    }
+
+    protected static function _getVariantsCriteria($filters = array()) {
+        $criteria = new CDbCriteria();
+        $criteria->select = 'id, username';
+        if ($filters) {
+            $criteria->select.=','.implode(',',array_keys($filters));
+        }
+        $criteria->order = 'username ASC';
+        return $criteria;
     }
 
     public function __toString() {

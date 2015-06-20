@@ -67,7 +67,11 @@ class MessageController extends Controller
             $link->page_id = $ticket->id;
             $link->save(false);
         } catch (Exception $e) {
-            Yii::app()->user->setFlash('error',$e->getMessage());
+            Yii::app()->user->setErrorFlash(
+                'message',
+                'Error create message: :error',
+                array(':error' => $e->getMessage())
+            );
         }
         $this->redirect(array(
             'project/view',

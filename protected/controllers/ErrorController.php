@@ -11,8 +11,7 @@ class ErrorController extends Controller
 	 */
 	public function filters() {
 		return array(
-			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
+			'accessControl'
 		);
 	}
 
@@ -27,12 +26,8 @@ class ErrorController extends Controller
 				'actions'=>array('index','view','viewRequest'),
 				'roles'=>array(PERMISSION_ERROR_VIEW),
 			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
-				'roles'=>array(PERMISSION_ERROR_MANAGE),
-			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
+				'actions'=>array('admin'),
 				'roles'=>array(PERMISSION_ERROR_MANAGE),
 			),
 			array('deny',  // deny all users
@@ -58,57 +53,6 @@ class ErrorController extends Controller
             'model'=>$request,
         ));
     }
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
-	public function actionCreate() {
-		$model=new Error;
-
-		if(isset($_POST['Error'])) {
-			$model->attributes=$_POST['Error'];
-			if($model->save()) {
-				$this->redirect(array('view','id'=>$model->id));
-            }
-		}
-
-		$this->render('create',array(
-			'model'=>$model,
-		));
-	}
-
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
-	public function actionUpdate($id) {
-		$model=$this->loadModel($id);
-
-		if(isset($_POST['Error'])) {
-			$model->attributes=$_POST['Error'];
-			if($model->save()) {
-				$this->redirect(array('view','id'=>$model->id));
-            }
-		}
-
-		$this->render('update',array(
-			'model'=>$model,
-		));
-	}
-
-	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
-	public function actionDelete($id) {
-		$this->loadModel($id)->delete();
-
-		if(!isset($_GET['ajax'])) {
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-        }
-	}
 
 	/**
 	 * Manages all models.

@@ -9,8 +9,6 @@
     * @property string $name
     * @property integer $position
     * @property string $value
-    * @property string $status
-    * @property string $changed
     *
     * The followings are the available model relations:
         * @property Trace $trace
@@ -26,8 +24,7 @@ class CTraceArgument extends ActiveRecord {
             array('trace_id, position, value', 'required'),
 			array('position', 'numerical', 'integerOnly'=>true),
 			array('trace_id', 'length', 'max'=>10),
-			array('name', 'length', 'max'=>64),
-			array('status', 'length', 'max'=>7)        );
+			array('name', 'length', 'max'=>64)        );
     }
 
     /**
@@ -46,8 +43,6 @@ class CTraceArgument extends ActiveRecord {
             'name' => 'Name',
             'position' => 'Position',
             'value' => 'Value',
-            'status' => 'Status',
-            'changed' => 'Changed',
         );
     }
 

@@ -49,11 +49,19 @@ if ($miniNavbar) {
         <div id="page-wrapper" class="gray-bg">
             <?php $this->renderPartial('//layouts/_topMenu');?>
 
-            <?php if (Yii::app()->user->hasFlash('error')):?>
-            <div class="alert alert-danger"><?php echo Yii::app()->user->getFlash('error');?></div>
+            <?php if (Yii::app()->user->hasErrorFlash()):?>
+                <div class="row">
+                    <div class="alert alert-danger">
+                        <?php echo Yii::app()->user->getErrorFlash();?>
+                    </div>
+                </div>
             <?php endif;?>
-            <?php if (Yii::app()->user->hasFlash('success')):?>
-                <div class="alert alert-danger"><?php echo Yii::app()->user->getFlash('success');?></div>
+            <?php if (Yii::app()->user->hasSuccessFlash()):?>
+                <div class="row">
+                    <div class="alert alert-success">
+                        <?php echo Yii::app()->user->getSuccessFlash();?>
+                    </div>
+                </div>
             <?php endif;?>
 
             <?php echo $content; ?>

@@ -48,6 +48,10 @@ class NotesController extends Controller
             $model->page_type_id = PAGE_TYPE_NOTES;
             $model->author_user_id = Yii::app()->user->id;
 			if($model->save()) {
+                Yii::app()->user->setSuccessFlash(
+                    'notes',
+                    'Note created'
+                );
                 $this->redirect(array('index','id'=>$model->getTopPage()->id));
             }
 		}
@@ -87,6 +91,10 @@ class NotesController extends Controller
 		if(isset($_POST['NotePage'])) {
 			$model->attributes=$_POST['NotePage'];
 			if($model->save()) {
+                Yii::app()->user->setSuccessFlash(
+                    'notes',
+                    'Note saved'
+                );
 				$this->redirect(array('index','id'=>$model->getTopPage()->id));
             }
 		}
