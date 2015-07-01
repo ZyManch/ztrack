@@ -7,6 +7,7 @@
  * @property AbstractProjectModule[] $systemModules
  * @property int $pagesCount
  * @property Group[] $groups
+ * @property ProjectDatabase $projectDatabase
  */
 class Project extends CProject {
 
@@ -144,6 +145,7 @@ class Project extends CProject {
             'systemModules' => array(self::MANY_MANY, 'SystemModule', 'project_system_module(project_id,system_module_id)', 'order' => 'systemModules.position ASC','index'=>'id'),
             'pagesCount' => array(self::STAT, 'Page', 'project_id'),
             'groups' => array(self::MANY_MANY, 'Group','group_project(project_id,group_id)', 'index'=>'id'),
+            'projectDatabase' => array(self::HAS_ONE, 'ProjectDatabase', 'project_id'),
         );
     }
 

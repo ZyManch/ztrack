@@ -12,6 +12,7 @@
     * The followings are the available model relations:
         * @property Company $company
         * @property Error[] $errors
+        * @property ProjectDatabase[] $projectDatabases
 */
 class CEnvironment extends ActiveRecord {
 
@@ -34,6 +35,7 @@ class CEnvironment extends ActiveRecord {
         return array(
             'company' => array(self::BELONGS_TO, 'Company', 'company_id'),
             'errors' => array(self::HAS_MANY, 'Error', 'environment_id'),
+            'projectDatabases' => array(self::HAS_MANY, 'ProjectDatabase', 'environment_id'),
         );
     }
 

@@ -7,6 +7,7 @@
  */
 class WebUser extends CWebUser {
 
+    const FLASH_SQL = 'sql';
     const FLASH_SUCCESS = 'success';
     const FLASH_ERROR = 'error';
 
@@ -64,6 +65,18 @@ class WebUser extends CWebUser {
         return $this->_systemModules;
     }
 
+
+    public function setSQLFlash($message) {
+        $this->setFlash(self::FLASH_SQL,$message);
+    }
+
+    public function getSQLFlash() {
+        return $this->getFlash(self::FLASH_SQL);
+    }
+
+    public function hasSQLFlash() {
+        return $this->hasFlash(self::FLASH_SQL);
+    }
 
     public function setSuccessFlash($category, $message, $params = array()) {
         $this->setFlash(self::FLASH_SUCCESS,Yii::t(

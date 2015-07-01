@@ -21,6 +21,7 @@
         * @property Project $parent
         * @property Project[] $projects
         * @property Company $company
+        * @property ProjectDatabase[] $projectDatabases
         * @property ProjectSystemModule[] $projectSystemModules
         * @property Token[] $tokens
 */
@@ -52,6 +53,7 @@ class CProject extends ActiveRecord {
             'parent' => array(self::BELONGS_TO, 'Project', 'parent_id'),
             'projects' => array(self::HAS_MANY, 'Project', 'parent_id'),
             'company' => array(self::BELONGS_TO, 'Company', 'company_id'),
+            'projectDatabases' => array(self::HAS_MANY, 'ProjectDatabase', 'project_id'),
             'projectSystemModules' => array(self::HAS_MANY, 'ProjectSystemModule', 'project_id'),
             'tokens' => array(self::HAS_MANY, 'Token', 'project_id'),
         );
