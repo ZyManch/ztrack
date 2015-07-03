@@ -75,12 +75,12 @@ class ProjectDatabase extends CProjectDatabase {
             from($this->getCurrentTable());
         $filters = Yii::app()->request->getParam('filter',array());
         foreach ($this->getCurrentColumns() as $column) {
-            $name = $column['name'];
+            $name = $column->name;
             if (!isset($filters[$name]) || !$filters[$name]) {
                 continue;
             }
             $value = $filters[$name];
-            $query->where('`'.$column['name'].'` = ?',array($value));
+            $query->where('`'.$column->name.'` = ?',array($value));
         }
         return new CSqlDataProvider($query,array(
             'pagination' => array(
@@ -93,16 +93,16 @@ class ProjectDatabase extends CProjectDatabase {
         $result = array();
         $filters = Yii::app()->request->getParam('filter',array());
         foreach ($this->getCurrentColumns() as $column) {
-            $name = $column['name'];
+            $name = $column->name;
             $row = array(
                 'class'=>'CDataColumn',
-                'name' => $column['name'],
+                'name' => $column->name,
                 'filter' => CHtml::textField(
                     'filter['.$name.']',
                     isset($filters[$name]) ? $filters[$name] : ''
                 )
             );
-            switch ($column['type']) {
+            switch ($column->type) {
                 case 'text':
                     $row['value'] = function($row) use($name) {
                         if (strlen($row[$name]) < 128) {
@@ -144,6 +144,9 @@ class ProjectDatabase extends CProjectDatabase {
         return $result;
     }
 
+    /**
+     * @return DatabaseColumn[]
+     */
     public function getCurrentColumns() {
         if (is_null($this->_columns)) {
             $columns = $this->
@@ -160,26 +163,30 @@ class ProjectDatabase extends CProjectDatabase {
                 $type = explode('(',$type[0],2);
                 $size = (isset($type[1]) ? rtrim($type[1],')') : 0);
                 $type = strtolower($type[0]);
-                if (in_array($type,array('enum','set'))) {
-                    $size = array_map(
-                        function($value) {return trim($value,"'");},
-                        explode(',',$size)
-                    );
-                    $size = array_combine($size, $size);
-                }
                 $name = $column['Field'];
                 if (!$this->_pk || $column['Key'] == 'PRI') {
                     $this->_pk = $name;
                 }
-                $this->_columns[$name] = array(
+                $isNull = (strtoupper($column['Null']) == 'YES');
+                $this->_columns[$name] = DatabaseColumn::create(array(
                     'name' => $name,
                     'type' => $type,
                     'size' => $size,
                     'params' => $params,
-                    'null' => strtoupper($column['Null']) == 'YES',
+                    'null' => $isNull,
                     'key' => $column['Key'],
                     'default' => $column['Default'],
-                );
+                    'ai' => in_array('auto_increment',$params),
+                    'attr' => in_array('unsigned zerofill',$params) ? 'zerofill' :
+                        (in_array('unsigned',$params) ? 'unsigned' :
+                            (in_array('on update CURRENT_TIMESTAMP',$params) ? 'timestamp' :
+                                (in_array('binary',$params) ? 'binary' : ''))),
+                    'default_type' => is_null($column['Default']) ?
+                        ($isNull ? DatabaseColumn::DEFAULT_TYPE_NULL: DatabaseColumn::DEFAULT_TYPE_NO) :
+                        ($column['Default'] == 'CURRENT_TIMESTAMP' ?
+                            DatabaseColumn::DEFAULT_TYPE_TIMESTAMP :
+                            DatabaseColumn::DEFAULT_TYPE_VALUE),
+                ));
             }
         }
         return $this->_columns;
@@ -252,6 +259,66 @@ class ProjectDatabase extends CProjectDatabase {
         return $sql;
     }
 
+    public function updateColumn($oldColumnName, DatabaseColumn $column) {
+        $sql = sprintf(
+            'ALTER TABLE  `%s`.`%s` CHANGE  `%s`  %s',
+            $this->_activeDatabase,
+            $this->_activeTable,
+            $oldColumnName,
+            $column
+        );
+        $command = $this->_connect->createCommand();
+        $command->setText($sql)->execute();
+        return $sql;
+    }
+
+    public function createColumn(DatabaseColumn $column, $position, $afterColumn = null) {
+        $sql = sprintf(
+            'ALTER TABLE  `%s`.`%s` ADD %s  %s',
+            $this->_activeDatabase,
+            $this->_activeTable,
+            $column,
+            $position == 'after' ? 'AFTER `'.$afterColumn.'`' : 'FIRST'
+        );
+        $command = $this->_connect->createCommand();
+        $command->setText($sql)->execute();
+        return $sql;
+    }
+
+    public function deleteColumn(DatabaseColumn $column) {
+        $sql = sprintf(
+            'ALTER TABLE `%s`.`%s` DROP `%s`',
+            $this->_activeDatabase,
+            $this->_activeTable,
+            $column->name
+        );
+        $command = $this->_connect->createCommand();
+        $command->setText($sql)->execute();
+        return $sql;
+    }
+
+    public function createTable($tableName, $columns) {
+        $sqlColumns= array();
+        $pk = null;
+        foreach ($columns as $column) {
+            if (!$pk) {
+                $pk = $column->name;
+            }
+            $sqlColumns[] = (string)$column;
+        }
+        $sqlColumns[] = sprintf('PRIMARY KEY (`%s`)',$pk);
+        $sql = sprintf(
+            'CREATE TABLE `%s`.`%s` (%s)  %s',
+            $this->_activeDatabase,
+            $tableName,
+            implode(",\n",$sqlColumns),
+            'ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1'
+        );
+        $command = $this->_connect->createCommand();
+        $command->setText($sql)->execute();
+        return $sql;
+    }
+
     public function exec($sql) {
         $command = $this->_connect->createCommand($sql);
         if (strtolower(substr(ltrim($sql),0,6))=='select') {
@@ -264,7 +331,7 @@ class ProjectDatabase extends CProjectDatabase {
     public function getBlankRow() {
         $row = array();
         foreach ($this->getCurrentColumns() as $column) {
-            $row[$column['name']] = ($column['default']=='CURRENT_TIMESTAMP' ? date('Y-m-d H:i:s') : $column['Default']);
+            $row[$column->name] = ($column->default=='CURRENT_TIMESTAMP' ? date('Y-m-d H:i:s') : $column->default);
         }
         return $row;
     }

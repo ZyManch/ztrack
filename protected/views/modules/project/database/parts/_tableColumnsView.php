@@ -5,6 +5,7 @@
  * Date: 01.07.2015
  * Time: 14:41
  * @var ProjectDatabase $projectDatabase
+ * @var DatabaseColumn $column
  */
 ?>
 <table class="table table-responsive table-hover  table-bordered">
@@ -28,7 +29,7 @@
                     'action'=>'columnUpdate',
                     'database'=>$projectDatabase->getCurrentDatabase(),
                     'table'=>$projectDatabase->getCurrentTable(),
-                    'column'=>$column['name']
+                    'column'=>$column->name
                 )
             );?><?php echo CHtml::link(
                 '<span class="fa fa-trash-o"></span>',
@@ -39,25 +40,25 @@
                     'action'=>'columnDelete',
                     'database'=>$projectDatabase->getCurrentDatabase(),
                     'table'=>$projectDatabase->getCurrentTable(),
-                    'column'=>$column['name']
+                    'column'=>$column->name
                 )
             );?>
         </td>
         <td>
-            <?php echo CHtml::encode($column['name']);?>
+            <?php echo CHtml::encode($column->name);?>
         </td>
         <td>
-            <?php echo CHtml::encode($column['type']);?>
-            (<?php echo is_array($column['size']) ? implode(',',$column['size']): $column['size'];?>)
+            <?php echo CHtml::encode($column->type);?>
+            (<?php echo $column->size;?>)
         </td>
         <td>
-            <?php echo $column['null']?'yes':'no';?>
+            <?php echo $column->null?'yes':'no';?>
         </td>
         <td>
-            <?php echo CHtml::encode(is_null($column['default']) && $column['null'] ? 'null' : $column['default']);?>
+            <?php echo CHtml::encode(is_null($column->default) && $column->null ? 'null' : $column->default);?>
         </td>
         <td>
-            <?php echo CHtml::encode(implode(',',$column['params']));?>
+            <?php echo CHtml::encode(implode(',',$column->params));?>
         </td>
     </tr>
     <?php endforeach;?>

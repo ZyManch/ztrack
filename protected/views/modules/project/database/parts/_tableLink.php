@@ -30,6 +30,6 @@ if ($isSub) {
         'table'=>$table['Name']
     ),
     array(
-        'class'=>''.($table['Name']==$projectDatabase->getCurrentTable()?' active':'')
+
     )
 );?>

@@ -40,6 +40,10 @@ $databases = $projectDatabase->getDatabases();
                             '//modules/project/database/parts/_tableColumnsView',
                             array('projectDatabase'=>$projectDatabase)
                         );?>
+                        <?php $this->renderPartial(
+                            '//modules/project/database/parts/_addColumns',
+                            array('projectDatabase'=>$projectDatabase)
+                        );?>
                     </div>
 
                 </div>

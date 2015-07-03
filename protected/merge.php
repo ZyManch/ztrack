@@ -20,3 +20,13 @@ function array_merge_config() {
     }
     return $result;
 }
+
+function pr() {
+    print '<pre>';
+    foreach (func_get_args() as $arg) {
+        var_export($arg);
+        print '<hr>';
+    }
+    print '</pre>';
+    die();
+}

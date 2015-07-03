@@ -39,17 +39,19 @@ $tabs = array(
                     array('project/view','id'=>$projectDatabase->project_id,'module'=>'database','database'=>$projectDatabase->getCurrentDatabase())
                 );?>
             </li>
+            <?php if($projectDatabase->getCurrentTable()):?>
             <li>
                 <?php echo CHtml::link(
                     CHtml::encode($projectDatabase->getCurrentTable()),
                     array('project/view','id'=>$projectDatabase->project_id,'module'=>'database','database'=>$projectDatabase->getCurrentDatabase(),'table'=>$projectDatabase->getCurrentTable(),'action'=>'data')
                 );?>
             </li>
+            <?php endif;?>
             <?php if(isset($column)):?>
                 <li>
                     <?php echo CHtml::link(
-                        CHtml::encode($column['name']),
-                        array('project/view','id'=>$projectDatabase->project_id,'module'=>'database','database'=>$projectDatabase->getCurrentDatabase(),'table'=>$projectDatabase->getCurrentTable(),'action'=>'columnUpdate','column'=>$column['name'])
+                        CHtml::encode($column->name),
+                        array('project/view','id'=>$projectDatabase->project_id,'module'=>'database','database'=>$projectDatabase->getCurrentDatabase(),'table'=>$projectDatabase->getCurrentTable(),'action'=>'columnUpdate','column'=>$column->name)
                     );?>
                 </li>
             <?php endif;?>

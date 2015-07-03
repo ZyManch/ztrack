@@ -7,17 +7,17 @@
  * @var $projectDatabase ProjectDatabase
  */
 ?>
-<ul class="nav ">
+<ul class="nav nav-pills nav-stacked">
     <?php foreach ($projectDatabase->getGroupedTables() as $suffix => $tables):?>
         <?php if (sizeof($tables) > 1):?>
-            <li>
-                <a >
+            <li class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#<?php echo $suffix;?>">
                     <?php echo $suffix;?>
                     <span class="fa arrow"></span>
                 </a>
-                <ul class="nav nav-second-level">
+                <ul class="nav nav-second-level" id="<?php echo $suffix;?>">
                     <?php foreach ($tables as $table):?>
-                        <li>
+                        <li class="<?php echo $table['Name']==$projectDatabase->getCurrentTable()?' active':'';?>">
                             <?php $this->renderPartial(
                                 '//modules/project/database/parts/_tableLink',
                                 array(
@@ -31,7 +31,7 @@
                 </ul>
             </>
         <?php else:?>
-            <li>
+            <li class="<?php echo $tables[0]['Name']==$projectDatabase->getCurrentTable()?' active':'';?>">
             <?php $this->renderPartial(
                 '//modules/project/database/parts/_tableLink',
                 array(

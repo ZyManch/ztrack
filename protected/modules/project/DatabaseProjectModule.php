@@ -15,8 +15,13 @@ class DatabaseProjectModule extends AbstractProjectModule {
         return  array_merge(
             array(
                 array('allow',
-                    'actions' => array('index','manage','data','sql','structure',
-                        'insert','update','delete','columnUpdate'),
+                    'actions' => array('index','manage','data','sql',
+                        'insert','update','delete'),
+                    'roles'=>array(PERMISSION_DATABASE_VIEW),
+                ),
+                array('allow',
+                    'actions' => array('structure','columnUpdate','columnCreate','columnDelete',
+                    'tableCreate'),
                     'roles'=>array(PERMISSION_DATABASE_VIEW),
                 ),
                 array('allow',
@@ -82,16 +87,143 @@ class DatabaseProjectModule extends AbstractProjectModule {
             throw new CHttpException(404, 'Column not found');
         }
         $column = $columns[$columnName];
-        $newColumns = $request->getParam('column',array());
-        //var_dump($newColumns, $columnName);die();
+        $newColumns = $request->getParam('columns',array());
         if ($request->isPostRequest && isset($newColumns[$columnName])) {
-            $newColumn = $newColumns[$columnName];
-            var_dump($newColumn);die();
+            $newColumn = DatabaseColumn::create($newColumns[$columnName]);
+            if (!$newColumn->isEqual($column)) {
+                try {
+                    $sql = $projectDatabase->updateColumn($column->name, $newColumn);
+                    Yii::app()->user->setSQLFlash($sql);
+                    $this->redirect(array(
+                        'action' => 'structure',
+                        'database' => $projectDatabase->getCurrentDatabase(),
+                        'table' => $projectDatabase->getCurrentTable()
+                    ));
+                } catch (CDbException $e) {
+                    Yii::app()->user->setErrorFlash(
+                        'database',
+                        'Error: :message',
+                        array(':message' => nl2br(htmlspecialchars($e->getMessage())))
+                    );
+                }
+            }
         }
         $this->renderPartial('//modules/project/database/_columnUpdate',array(
             'project' => $project,
             'projectDatabase' => $projectDatabase,
             'column' => $column
+        ));
+    }
+
+    public function actionColumnCreate() {
+        $project = $this->_getProject();
+        $projectDatabase = $this->_getProjectDatabase($project);
+        $request = Yii::app()->request;
+        $count = min(100,max(1,(int)$request->getParam('count',1)));
+        $columns = $request->getParam('columns',array());
+        if ($request->isPostRequest && $columns) {
+            $position = $request->getParam('position','first');
+            $afterColumn = $request->getParam('after_column');
+            try {
+                $sql = array();
+                foreach ($columns as $column) {
+                    $column = DatabaseColumn::create($column);
+                    if ($column->name) {
+                        $sql[] = $projectDatabase->createColumn($column, $position, $afterColumn);
+                        $afterColumn = $column->name;
+                    }
+                }
+                Yii::app()->user->setSQLFlash(implode(";\n",$sql));
+
+            } catch (CDbException $e) {
+                Yii::app()->user->setErrorFlash(
+                    'database',
+                    'Error: :message',
+                    array(':message' => nl2br(htmlspecialchars($e->getMessage())))
+                );
+            }
+            $this->redirect(array(
+                'action' => 'structure',
+                'database' => $projectDatabase->getCurrentDatabase(),
+                'table' => $projectDatabase->getCurrentTable()
+            ));
+
+        }
+        $this->renderPartial('//modules/project/database/_columnCreate',array(
+            'project' => $project,
+            'projectDatabase' => $projectDatabase,
+            'count' => $count
+        ));
+    }
+
+    public function actionColumnDelete() {
+        $project = $this->_getProject();
+        $projectDatabase = $this->_getProjectDatabase($project);
+        $columns = $projectDatabase->getCurrentColumns();
+        $request = Yii::app()->request;
+        $columnName = $request->getParam('column');
+        if (!isset($columns[$columnName])) {
+            throw new CHttpException(404,'Column not found');
+        }
+        try {
+            $sql = $projectDatabase->deleteColumn($columns[$columnName]);
+            Yii::app()->user->setSQLFlash($sql);
+        } catch (CDbException $e) {
+            Yii::app()->user->setErrorFlash(
+                'database',
+                'Error: :message',
+                array(':message' => nl2br(htmlspecialchars($e->getMessage())))
+            );
+        }
+        $this->redirect(array(
+            'action' => 'structure',
+            'database' => $projectDatabase->getCurrentDatabase(),
+            'table' => $projectDatabase->getCurrentTable()
+        ));
+
+    }
+
+    public function actionTableCreate() {
+        $project = $this->_getProject();
+        $projectDatabase = $this->_getProjectDatabase($project);
+        $request = Yii::app()->request;
+        $count = min(100,max(1,(int)$request->getParam('count',1)));
+        $columns = $request->getParam('columns',array());
+        $tableName = $request->getParam('table_name','');
+        if ($request->isPostRequest && $columns) {
+            try {
+                if (!$tableName) {
+                    throw new Exception('Missed table name');
+                }
+                $tableColumns = array();
+                foreach ($columns as $column) {
+                    $column = DatabaseColumn::create($column);
+                    if ($column->name) {
+                        $tableColumns[] = $column;
+                    }
+                }
+                if ($tableColumns) {
+                    $sql = $projectDatabase->createTable($tableName, $tableColumns);
+                    Yii::app()->user->setSQLFlash($sql);
+                    $this->redirect(array(
+                        'action' => 'structure',
+                        'database' => $projectDatabase->getCurrentDatabase(),
+                        'table' => $tableName
+                    ));
+                }
+
+            } catch (CDbException $e) {
+                Yii::app()->user->setErrorFlash(
+                    'database',
+                    'Error: :message',
+                    array(':message' => nl2br(htmlspecialchars($e->getMessage())))
+                );
+            }
+        }
+        $this->renderPartial('//modules/project/database/_tableCreate',array(
+            'project' => $project,
+            'projectDatabase' => $projectDatabase,
+            'count' => $count
         ));
     }
 
