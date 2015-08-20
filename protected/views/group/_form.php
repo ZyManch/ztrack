@@ -26,7 +26,7 @@ $users = User::getVariants();
                 <div class="col-sm-10">
                     <?php echo $form->textField($model,'title',array('size'=>32,'maxlength'=>32,'class'=>'form-control')); ?>
                 </div>
-                <?php echo $form->error($model,'title',array('class'=>'label label-danger')); ?>
+                <?php echo $form->error($model,'title',array('class'=>'alert alert-danger alert-mini')); ?>
             </div>
 
             <div class="form-group">
@@ -39,7 +39,7 @@ $users = User::getVariants();
                         array('class'=>'form-control')
                     ); ?>
                 </div>
-                <?php echo $form->error($model,'type',array('class'=>'label label-danger')); ?>
+                <?php echo $form->error($model,'type',array('class'=>'alert alert-danger alert-mini')); ?>
             </div>
 
         </div><!-- form -->

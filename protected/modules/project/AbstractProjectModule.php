@@ -9,8 +9,6 @@ abstract class AbstractProjectModule extends SystemModule {
 
     public $defaultAction = 'index';
 
-    abstract function getModuleName();
-
     public function beforeInstall(Project $project) {
 
     }
@@ -90,9 +88,14 @@ abstract class AbstractProjectModule extends SystemModule {
 
     public function renderPartial($file,$attributes = array()) {
         if (substr($file,0,2)!='//') {
-            $file = '//modules/project/'.$this->name.'/'.ltrim($file,'/');
+            $file = $this->getViewPath().ltrim($file,'/');
         }
+        $attributes['module'] = $this;
         Yii::app()->controller->renderPartial($file,$attributes);
+    }
+
+    public function getViewPath() {
+        return 'application.modules.project.'.$this->getModuleName().'.views.';
     }
 
     public function redirect($attributes =  array()) {

@@ -18,7 +18,10 @@
         "psr-0": {
             "components": "./",
             "WikiParser":"./extensions/php-wiki-parser"
-        }
+        },
+        "classmap": [
+            "./protected/modules"
+        ]
     },
     "scripts": {
         "pre-install-cmd": "components\\ComposerCallback::preInstall",

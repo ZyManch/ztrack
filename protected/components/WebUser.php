@@ -46,6 +46,25 @@ class WebUser extends CWebUser {
         }
     }
 
+    public function getMainMenuItems() {
+        $result = array();
+        foreach ($this->getSystemModules() as $module) {
+            foreach ($module->getMainMenuItems() as $key => $menu) {
+                if (is_numeric($key)) {
+                    $result[] = $menu;
+                } else if (!isset($result[$key])) {
+                    $result[$key] = $menu;
+                } else {
+                    $result[$key]['items'] = array_merge(
+                        $result[$key]['items'],
+                        $menu['items']
+                    );
+                }
+            }
+        }
+        return $result;
+    }
+
     /**
      * @return AbstractEditor
      */

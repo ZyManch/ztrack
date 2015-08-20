@@ -153,3 +153,9 @@ tr.immediately td, .label.label-immediately {
 .label-saved {
     display: none;
 }
+.alert.alert-mini {
+    padding: 4px;
+    border-radius: 0px 0px 4px 4px;
+    border-top-width: 0;
+    font-size: 10px;
+}

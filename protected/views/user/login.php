@@ -31,12 +31,14 @@ $this->breadcrumbs=array(
                     <label class="col-sm-4 control-label">EMail:</label>
                     <div class="col-sm-8">
                         <?php echo $form->textField($model,'email',array('class'=>'form-control')); ?>
+                        <?php echo $form->error($model,'email',array('class'=>'alert alert-danger alert-mini')); ?>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Password:</label>
                     <div class="col-sm-8">
                         <?php echo $form->passwordField($model,'password',array('class'=>'form-control')); ?>
+                        <?php echo $form->error($model,'password',array('class'=>'alert alert-danger alert-mini')); ?>
                     </div>
                 </div>
                 <div class="form-group">

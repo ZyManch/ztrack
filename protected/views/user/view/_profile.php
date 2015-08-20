@@ -26,7 +26,7 @@ $isMe = (Yii::app()->user->id == $model->id);
                     <?php echo CHtml::encode($model->username);?>
                 </div>
             <?php endif;?>
-            <?php echo $form->error($model,'username',array('class'=>'label label-danger')); ?>
+            <?php echo $form->error($model,'username',array('class'=>'alert alert-danger alert-mini')); ?>
         </div>
     </div>
 
@@ -40,7 +40,7 @@ $isMe = (Yii::app()->user->id == $model->id);
                     <?php echo CHtml::encode($model->email);?>
                 </div>
             <?php endif;?>
-            <?php echo $form->error($model,'email',array('class'=>'label label-danger')); ?>
+            <?php echo $form->error($model,'email',array('class'=>'alert alert-danger alert-mini')); ?>
         </div>
     </div>
 <?php if ($isMe):?>
@@ -48,7 +48,7 @@ $isMe = (Yii::app()->user->id == $model->id);
         <?php echo $form->labelEx($model,'password',array('class'=>'col-sm-3 control-label')); ?>
         <div class="col-sm-9">
             <?php echo $form->passwordField($model,'password',array('size'=>60,'maxlength'=>64,'class'=>'form-control','value'=>'')); ?>
-            <?php echo $form->error($model,'password',array('class'=>'label label-danger')); ?>
+            <?php echo $form->error($model,'password',array('class'=>'alert alert-danger alert-mini')); ?>
         </div>
 
     </div>

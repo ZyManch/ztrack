@@ -44,7 +44,7 @@
                         <?php echo $form->labelEx($model,'email',array('class'=>'col-sm-3 control-label')); ?>
                         <div class="col-sm-9">
                             <?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>64,'class'=>'form-control')); ?>
-                            <?php echo $form->error($model,'email',array('class'=>'label label-danger')); ?>
+                            <?php echo $form->error($model,'email',array('class'=>'alert alert-danger alert-mini')); ?>
                         </div>
 
                     </div>
@@ -53,7 +53,7 @@
                         <?php echo $form->labelEx($model,'username',array('class'=>'col-sm-3 control-label')); ?>
                         <div class="col-sm-9">
                             <?php echo $form->textField($model,'username',array('size'=>60,'maxlength'=>64,'class'=>'form-control')); ?>
-                            <?php echo $form->error($model,'username',array('class'=>'label label-danger')); ?>
+                            <?php echo $form->error($model,'username',array('class'=>'alert alert-danger alert-mini')); ?>
                         </div>
 
                     </div>
@@ -68,7 +68,7 @@
                                 Group::getVariants(array('company_id'=>Yii::app()->user->getUser()->company_id)),
                                 array('class'=>'form-control','empty'=>'No group')
                             ); ?>
-                            <?php echo $form->error($model,'group_id',array('class'=>'label label-danger')); ?>
+                            <?php echo $form->error($model,'group_id',array('class'=>'alert alert-danger alert-mini')); ?>
                         </div>
 
                     </div>

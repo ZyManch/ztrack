@@ -15,6 +15,8 @@ class SystemModule extends CSystemModule {
     const INSTALLATION_INSTALL = 'install';
     const INSTALLATION_NOT_INSTALL = 'not_install';
 
+
+
     protected function instantiate($attributes)
     {
         $class = ucfirst($attributes['name']).ucfirst($attributes['type']).'Module';

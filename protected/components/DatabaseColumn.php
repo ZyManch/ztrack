@@ -17,7 +17,7 @@
  */
 class DatabaseColumn {
 
-    const REGEXP_VALID_STRING = '/^[a-zA-Z0-9]*$/';
+    const REGEXP_VALID_STRING = '/^[a-zA-Z0-9_]*$/';
 
     const DEFAULT_TYPE_NO = 'no';
     const DEFAULT_TYPE_VALUE = 'value';

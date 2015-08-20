@@ -7,6 +7,8 @@
  */
 abstract class AbstractWidgetModule extends SystemModule {
 
+    abstract function getModuleName();
+
     abstract public function getTitle();
 
     abstract protected function _renderWidget();
@@ -24,8 +26,19 @@ abstract class AbstractWidgetModule extends SystemModule {
         }
     }
 
+    public function renderPartial($file,$attributes = array()) {
+        if (substr($file,0,2)!='//') {
+            $file = $this->getViewPath().ltrim($file,'/');
+        }
+        $attributes['module'] = $this;
+        Yii::app()->controller->renderPartial($file,$attributes);
+    }
+
+    public function getViewPath() {
+        return 'application.modules.widget.'.$this->getModuleName().'.views.';
+    }
     public function renderConfigure(CActiveForm $form, $config = null) {
-        Yii::app()->controller->renderPartial('//modules/widget/'.$this->name.'/_settings',array(
+        $this->renderPartial('_settings',array(
             'system_module'=>$this,
             'config' => $config,
             'form' => $form

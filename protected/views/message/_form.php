@@ -23,7 +23,7 @@
 		<?php echo $form->labelEx($model,'user_id',array('class'=>'col-sm-2 control-label')); ?>
         <div class="col-sm-10">
 		    <?php echo $form->textField($model,'user_id',array('size'=>10,'maxlength'=>10,'class'=>'form-control')); ?>
-            <?php echo $form->error($model,'user_id',array('class'=>'label label-danger')); ?>
+            <?php echo $form->error($model,'user_id',array('class'=>'alert alert-danger alert-mini')); ?>
         </div>
 
 	</div>
@@ -32,7 +32,7 @@
 		<?php echo $form->labelEx($model,'body',array('class'=>'col-sm-2 control-label')); ?>
         <div class="col-sm-10">
 		    <?php echo $form->textArea($model,'body',array('rows'=>6, 'cols'=>50,'class'=>'form-control')); ?>
-            <?php echo $form->error($model,'body',array('class'=>'label label-danger')); ?>
+            <?php echo $form->error($model,'body',array('class'=>'alert alert-danger alert-mini')); ?>
         </div>
 
 	</div>
@@ -41,7 +41,7 @@
 		<?php echo $form->labelEx($model,'status',array('class'=>'col-sm-2 control-label')); ?>
         <div class="col-sm-10">
 		    <?php echo $form->textField($model,'status',array('size'=>7,'maxlength'=>7,'class'=>'form-control')); ?>
-            <?php echo $form->error($model,'status',array('class'=>'label label-danger')); ?>
+            <?php echo $form->error($model,'status',array('class'=>'alert alert-danger alert-mini')); ?>
         </div>
 
 	</div>
@@ -50,7 +50,7 @@
 		<?php echo $form->labelEx($model,'changed',array('class'=>'col-sm-2 control-label')); ?>
         <div class="col-sm-10">
 		    <?php echo $form->textField($model,'changed',array('class'=>'form-control')); ?>
-            <?php echo $form->error($model,'changed',array('class'=>'label label-danger')); ?>
+            <?php echo $form->error($model,'changed',array('class'=>'alert alert-danger alert-mini')); ?>
         </div>
 
 	</div>

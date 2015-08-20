@@ -26,7 +26,7 @@ $projects = Project::getProjectsAsList($projectIds,$model->id ? array($model->id
 		<?php echo $form->labelEx($model,'title',array('class'=>'col-sm-2 control-label')); ?>
         <div class="col-sm-10">
             <?php echo $form->textField($model,'title',array('size'=>60,'maxlength'=>64,'class'=>'form-control')); ?>
-            <?php echo $form->error($model,'title',array('class'=>'label label-danger')); ?>
+            <?php echo $form->error($model,'title',array('class'=>'alert alert-danger alert-mini')); ?>
         </div>
 	</div>
     <?php if ($projects):?>
@@ -39,7 +39,7 @@ $projects = Project::getProjectsAsList($projectIds,$model->id ? array($model->id
                 $projects,
                 array('class'=>'form-control')
             ); ?>
-            <?php echo $form->error($model,'parent_id',array('class'=>'label label-danger')); ?>
+            <?php echo $form->error($model,'parent_id',array('class'=>'alert alert-danger alert-mini')); ?>
         </div>
 	</div>
     <?php endif;?>

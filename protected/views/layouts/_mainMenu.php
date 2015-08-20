@@ -11,10 +11,8 @@
 <nav class="navbar-default navbar-static-side" role="navigation">
     <div class="sidebar-collapse">
         <ul class="nav" id="side-menu">
-            <?php foreach (Yii::app()->user->getSystemModules() as $systemModule):?>
-                <?php foreach ($systemModule->getMainMenuItems() as $menu):?>
-                    <?php $this->renderPartial('//layouts/_mainMenuItem',array('menu'=>$menu,'isTopMenu'=>true));?>
-                <?php endforeach;?>
+            <?php foreach (Yii::app()->user->getMainMenuItems() as $menu):?>
+                <?php $this->renderPartial('//layouts/_mainMenuItem',array('menu'=>$menu,'isTopMenu'=>true));?>
             <?php endforeach;?>
         </ul>
     </div>
