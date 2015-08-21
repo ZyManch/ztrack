@@ -11,7 +11,7 @@ $clientScript->registerScript('nest',
         }).on("change", function() {
             $.post("%s",{"projects":$(this).nestable("serialize")});
         });',
-        CHtml::normalizeUrl(array('project/sort'))
+        CHtml::normalizeUrl(array('module/view','module'=>'projects','action' => 'sort'))
     ),
     CClientScript::POS_READY);
 ?>
@@ -30,7 +30,7 @@ $clientScript->registerScript('nest',
             <ol class="dd-list">
                 <?php if ($projects):?>
                     <?php foreach ($projects as $project):?>
-                        <?php $this->renderPartial('_view', array('data'=>$project));?>
+                        <?php $module->renderPartial('_view', array('module' => $module,'data'=>$project));?>
                     <?php endforeach;?>
 
                 <?php endif;?>

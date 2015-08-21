@@ -2,8 +2,6 @@
 /* @var $this ProjectController */
 /* @var $model Project */
 
-
-
 ?>
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-xs-12">
@@ -21,12 +19,12 @@
             <div class="ibox ">
                 <div class="ibox-content">
 
-                <?php $this->renderPartial('_form', array('model'=>$model)); ?>
+                <?php $module->renderPartial('_form', array('model'=>$model)); ?>
                 </div>
             </div>
         </div>
     </div>
 
-    <?php $this->renderPartial('//project/settings/_view', array('project'=>$model,'groups'=>$groups,'modules' => $modules)); ?>
+    <?php $module->renderPartial('settings._view', array('project'=>$model,'groups'=>$groups,'modules' => $modules)); ?>
 
 </div>

@@ -19,7 +19,7 @@
         <div class="ibox ">
             <div class="ibox-content">
 
-                <?php $this->renderPartial('_form', array('model'=>$model)); ?>
+                <?php $module->renderPartial('_form', array('model'=>$model)); ?>
             </div>
         </div>
     </div>

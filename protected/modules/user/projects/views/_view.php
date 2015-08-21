@@ -10,17 +10,17 @@
             <div class="ibox-tools">
                 <?php echo CHtml::link(
                     '',
-                    array('project/create','id'=>$data['id']),
+                    array('module/view','module'=>'projects','action' => 'create','id'=>$data['id']),
                     array('class'=>'fa fa-plus')
                 );?>
                 <?php echo CHtml::link(
                     '',
-                    array('project/update','id'=>$data['id']),
+                    array('module/view','module'=>'projects','action' => 'update','id'=>$data['id']),
                     array('class'=>'fa fa-edit')
                 );?>
                 <?php echo CHtml::link(
                     '',
-                    array('project/delete','id'=>$data['id']),
+                    array('module/view','module'=>'projects','action' => 'delete','id'=>$data['id']),
                     array('class'=>'fa fa-trash')
                 );?>
             </div>
@@ -29,7 +29,7 @@
     <ol class="dd-list">
         <?php if ($data['items']):?>
             <?php foreach ($data['items'] as $childProject):?>
-                <?php $this->renderPartial('_view',array('data'=>$childProject));?>
+                <?php $module->renderPartial('_view',array('data'=>$childProject));?>
             <?php endforeach;?>
         <?php endif;?>
     </ol>

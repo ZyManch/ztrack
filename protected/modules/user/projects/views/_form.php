@@ -46,7 +46,7 @@ $projects = Project::getProjectsAsList($projectIds,$model->id ? array($model->id
     <div class="form-group">
         <div class="col-sm-4 col-sm-offset-2">
             <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save',array('class'=>'btn btn-primary')); ?>
-            <?php echo CHtml::link('Cancel',array('project/admin'),array('class'=>'btn btn-white'));?>
+            <?php echo CHtml::link('Cancel',array('module/view','module' => 'projects','action' => 'admin'),array('class'=>'btn btn-white'));?>
         </div>
     </div>
 

@@ -20,7 +20,7 @@
                         <h2>Groups</h2>
                         <div>
                             <?php foreach ($groups as $group):?>
-                                <?php $this->renderPartial('//project/settings/_group',array('group'=>$group,'project'=>$project));?>
+                                <?php $module->renderPartial('settings._group',array('group'=>$group,'project'=>$project));?>
                             <?php endforeach;?>
                         </div>
                     </div>
@@ -28,14 +28,14 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <h2>Installed modules</h2>
-                        <?php foreach ($modules as $module):?>
-                        <?php $this->renderPartial('//project/settings/_module',array('module'=>$module,'project'=>$project,'groups'=>$groups,'showInstalled'=>true));?>
+                        <?php foreach ($modules as $installedModule):?>
+                        <?php $module->renderPartial('settings._module',array('projectModule'=>$installedModule,'project'=>$project,'groups'=>$groups,'showInstalled'=>true));?>
                         <?php endforeach;?>
                     </div>
                     <div class="col-sm-6">
                         <h2>Not installed modules</h2>
-                        <?php foreach ($modules as $module):?>
-                            <?php $this->renderPartial('//project/settings/_module',array('module'=>$module,'project'=>$project,'groups'=>$groups,'showInstalled'=>false));?>
+                        <?php foreach ($modules as $notInstalledModule):?>
+                            <?php $module->renderPartial('settings._module',array('projectModule'=>$notInstalledModule,'project'=>$project,'groups'=>$groups,'showInstalled'=>false));?>
                         <?php endforeach;?>
                     </div>
                 </div>
@@ -45,6 +45,6 @@
     </div>
 </div>
 
-<?php foreach ($modules as $module):?>
-    <?php $this->renderPartial('//project/settings/_moduleDialog',array('module'=>$module,'groups'=>$groups,'project'=>$project));?>
+<?php foreach ($modules as $moduleDialog):?>
+    <?php $module->renderPartial('settings._moduleDialog',array('projectModule'=>$moduleDialog,'groups'=>$groups,'project'=>$project));?>
 <?php endforeach;?>

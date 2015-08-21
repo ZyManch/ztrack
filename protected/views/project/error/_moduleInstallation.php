@@ -8,4 +8,4 @@
  */
 ?>This module for this project is not installed.<br>
 You can install this module in next
-<?php echo CHtml::link('page',array('project/update','id'=>$model->id));?>.
+<?php echo CHtml::link('page',array('module/view','module' => 'projects','action' => 'update','id'=>$model->id));?>.
