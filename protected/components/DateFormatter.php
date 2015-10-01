@@ -15,7 +15,7 @@ class DateFormatter extends CDateFormatter {
 
     public function diff($timestampFrom, $timestampTo = null) {
         if (!$timestampTo) {
-            $timestampTo = time();
+            $timestampTo = self::getCurrentTimestamp();
         }
         $betweenMinutes = ($timestampTo-$timestampFrom)/60;
         if ($betweenMinutes < 60) {

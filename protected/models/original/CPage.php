@@ -31,6 +31,7 @@
         * @property PageLabel[] $pageLabels
         * @property PageMessage[] $pageMessages
         * @property UserPage[] $userPages
+        * @property UserTime[] $userTimes
 */
 class CPage extends ActiveRecord {
 
@@ -65,6 +66,7 @@ class CPage extends ActiveRecord {
             'pageLabels' => array(self::HAS_MANY, 'PageLabel', 'page_id'),
             'pageMessages' => array(self::HAS_MANY, 'PageMessage', 'page_id'),
             'userPages' => array(self::HAS_MANY, 'UserPage', 'page_id'),
+            'userTimes' => array(self::HAS_MANY, 'UserTime', 'page_id'),
         );
     }
 

@@ -165,6 +165,23 @@ class Page extends CPage {
     }
 
 
+    public function assign($userId) {
+        $user = User::model()->findByAttributes(array(
+            'id' => $userId,
+            'company_id' => Yii::app()->user->getUser()->company_id
+        ));
+        if (!$user) {
+            throw new Exception('User not found');
+        }
+        $link = $this->getOrCreateUserPage($user->id);
+        if ($this->assignedUserPage) {
+            $this->assignedUserPage->is_assigned = UserPage::IS_NOT_ASSIGNED;
+            $this->assignedUserPage->save(false);
+        }
+        $link->is_assigned = UserPage::IS_ASSIGNED;
+        $link->save(false);
+    }
+
     public function getProgressValue() {
         if ($this->status == self::STATUS_CLOSED) {
             return 100;

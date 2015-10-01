@@ -1,24 +1,35 @@
 <?php
 /* @var $this TicketController */
 /* @var $model TicketPage */
+/* @var $form CActiveForm */
 
 $parent = $model->parentPage;
 Yii::app()->clientScript->registerCssFile('/css/custom.css');
-
+$user = Yii::app()->user->getUser();
+Yii::app()->clientScript->registerScript(
+    'start-ticket-timer',
+    '$("#start-ticket-timer").popover({
+        placement: "bottom",
+        html: true,
+        content: function() {
+            return $("#start-ticket-timer-form").html();
+        }
+    });'
+);
 ?>
 <div class="row">
     <div class="col-md-12">
         <div class="ibox float-e-margins">
             <div class="ibox-content">
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-7">
                         <h1>[#<?php echo $model->id;?>] <?php echo CHtml::encode($model->getTitle());?></h1>
                         <?php if ($model->parent_page_id):?>
                             <?php echo implode(' > ', $model->getParentsList(true));?>
                         <?php endif;?>
                         <hr>
                     </div>
-                    <div class="col-md-4 text-right">
+                    <div class="col-md-5 text-right">
                         <?php echo CHtml::link('Create sub ticket',array(
                             'project/view',
                             'id' =>$model->project_id,
@@ -26,6 +37,27 @@ Yii::app()->clientScript->registerCssFile('/css/custom.css');
                             'action'=>'create',
                             'ticket_id'=>$model->id
                         ),array('class'=>'btn btn-warning'));?>
+
+                        <?php if ($user->hasUserModule(20)):?>
+                            <?php if ($user->userActiveTime && $user->userActiveTime->page_id == $model->id):?>
+                                <?php echo CHtml::link('Stop timer',array(
+                                    'module/view',
+                                    'module'=>'timer',
+                                    'action'=>'stop',
+                                    'ticket_id'=>$model->id
+                                ),array('class'=>'btn btn-danger'));?>
+                            <?php else:?>
+                                <div class="btn btn-primary btn-group" id="start-ticket-timer">
+                                    Start timer
+                                </div>
+                                <div id="start-ticket-timer-form" style="display: none">
+                                    <?php $module->renderPartial('_timerStart',array(
+                                        'model' => $model
+                                    ));?>
+                                </div>
+                            <?php endif;?>
+                        <?php endif;?>
+
                         <?php echo CHtml::link('Edit',array(
                             'project/view',
                             'id' =>$model->project_id,
@@ -70,12 +102,12 @@ Yii::app()->clientScript->registerCssFile('/css/custom.css');
                                         <?php echo $model->authorUser;?>
                                     </dd>
                                     <dt>Created</dt>
-                                    <dd>
-                                        <?php echo Yii::app()->dateFormatter->diff(strtotime($model->created));?>
+                                    <dd title="<?php echo $model->created;?>">
+                                        <?php echo Yii::app()->dateFormatter->diff(strtotime($model->created));?> ago
                                     </dd>
                                     <dt>Changed</dt>
-                                    <dd>
-                                        <?php echo Yii::app()->dateFormatter->diff(strtotime($model->changed));?>
+                                    <dd title="<?php echo $model->changed;?>">
+                                        <?php echo Yii::app()->dateFormatter->diff(strtotime($model->changed));?> ago
                                     </dd>
                                 </dl>
                             </div>

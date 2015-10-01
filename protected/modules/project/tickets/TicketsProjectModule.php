@@ -64,20 +64,7 @@ class TicketsProjectModule extends AbstractProjectModule {
             if (!$userId) {
                 throw new Exception('User not found');
             }
-            $user = User::model()->findByAttributes(array(
-                'id' => $userId,
-                'company_id' => Yii::app()->user->getUser()->company_id
-            ));
-            if (!$user) {
-                throw new Exception('User not found');
-            }
-            $link = $model->getOrCreateUserPage($user->id);
-            if ($model->assignedUserPage) {
-                $model->assignedUserPage->is_assigned = UserPage::IS_NOT_ASSIGNED;
-                $model->assignedUserPage->save(false);
-            }
-            $link->is_assigned = UserPage::IS_ASSIGNED;
-            $link->save(false);
+            $model->assign($userId);
             if (!$model->save()) {
                 throw new Exception($model->getErrorsAsText());
             }
@@ -126,6 +113,9 @@ class TicketsProjectModule extends AbstractProjectModule {
                 $model->parent_page_id = null;
             }
             if ($model->save()) {
+                if (isset($_POST['assigned_user_id'])) {
+                    $model->assign($_POST['assigned_user_id']);
+                }
                 $this->redirect(array(
                     'action'=>'view',
                     'ticket_id'=>$model->id
@@ -237,6 +227,10 @@ class TicketsProjectModule extends AbstractProjectModule {
         return $widget;
     }
 
+    /**
+     * @return TicketPage
+     * @throws Exception
+     */
     protected function _getCurrentTicket() {
         $ticketId = Yii::app()->request->getParam('ticket_id');
         if (!$ticketId) {

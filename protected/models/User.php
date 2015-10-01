@@ -6,6 +6,7 @@
  * @property Page[] $mainNotes
  * @property Permission[] $permissions
  * @property UserPage[] $assignedUserPages
+ * @property UserTime $userActiveTime
  */
 class User extends CUser {
 
@@ -46,7 +47,8 @@ class User extends CUser {
             'permissions' => array(self::MANY_MANY,'Permission','user_permission(user_id,permission_id)','index'=>'id'),
             'systemModules' => array(self::MANY_MANY, 'SystemModule','user_system_module(user_id,system_module_id)', 'order' => 'systemModules.position ASC','index'=>'id'),
             'mainNotes' => array(self::HAS_MANY, 'Page','author_user_id', 'on' => 'mainNotes.page_type_id='.PAGE_TYPE_NOTES.' AND mainNotes.parent_page_id IS  null','index'=>'id'),
-            'assignedUserPages' => array(self::HAS_MANY,'UserPage','user_id','on'=>'assignedUserPages.is_assigned="Yes"')
+            'assignedUserPages' => array(self::HAS_MANY,'UserPage','user_id','on'=>'assignedUserPages.is_assigned="Yes"'),
+            'userActiveTime' => array(self::HAS_ONE, 'UserTime', 'user_id','on' => 'userActiveTime.finished is NULL'),
         );
     }
 
@@ -56,6 +58,10 @@ class User extends CUser {
             $result[$module->id] = $module;
         }
         return SystemModule::sort($result);
+    }
+
+    public function hasUserModule($moduleId) {
+        return isset($this->systemModules[$moduleId]);
     }
 
     public function getAvailableProjects() {

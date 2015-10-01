@@ -92,7 +92,20 @@ $projectIds = array_keys(Yii::app()->user->getUser()->getAvailableProjects());
         </div>
 
 	</div>
+    <div class="hr-line-dashed"></div>
 
+    <div class="form-group">
+        <?php echo CHtml::label('Assigned user','assigned_user_id',array('class'=>'col-sm-2 control-label')); ?>
+        <div class="col-sm-10">
+            <?php echo CHtml::dropDownList(
+                'assigned_user_id',
+                $model->assignedUserPage ? $model->assignedUserPage->user_id : null,
+                CHtml::listData($model->project->getUsersThatHaveProject(),'id','username'),
+                array('class'=>'form-control')
+            ); ?>
+        </div>
+
+    </div>
 
     <div class="hr-line-dashed"></div>
 

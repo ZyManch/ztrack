@@ -12,7 +12,7 @@
                 <h5>Правка Group <?php echo $model->id; ?></h5>
             </div>
             <div class="ibox-content">
-                <?php $this->renderPartial('_form', array('model'=>$model)); ?>            </div>
+                <?php $module->renderPartial('_form', array('model'=>$model)); ?>            </div>
         </div>
     </div>
 </div>

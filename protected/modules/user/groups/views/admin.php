@@ -1,6 +1,7 @@
 <?php
 /* @var $this GroupController */
 /* @var $model Group */
+/* @var $module GroupsUserModule  */
 
 
 ?>
@@ -42,8 +43,17 @@
                             array(
                                 'class'=>'CButtonColumn',
                                 'htmlOptions' => array('style'=>'width:100px'),
-                                'template' => '{update} {delete}'
-                            ),
+                                'template' => '{update} {delete}',
+                                'viewButtonUrl'=>function($data) use($module) {
+                                    return $module->normalizeUrl(array("view", "group_id" => $data->primaryKey));
+                                },
+                                'updateButtonUrl'=>function($data)  use($module){
+                                    return $module->normalizeUrl(array("update", "group_id" => $data->primaryKey));
+                                },
+                                'deleteButtonUrl'=>function($data) use($module) {
+                                    return $module->normalizeUrl(array("delete", "group_id" => $data->primaryKey));
+                                }
+                            )
                         ),
                     )); ?>
                 </div>

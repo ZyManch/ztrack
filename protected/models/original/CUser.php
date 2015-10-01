@@ -25,6 +25,7 @@
         * @property UserPage[] $userPages
         * @property UserPermission[] $userPermissions
         * @property UserSystemModule[] $userSystemModules
+        * @property UserTime[] $userTimes
 */
 class CUser extends ActiveRecord {
 
@@ -58,6 +59,7 @@ class CUser extends ActiveRecord {
             'userPages' => array(self::HAS_MANY, 'UserPage', 'user_id'),
             'userPermissions' => array(self::HAS_MANY, 'UserPermission', 'user_id'),
             'userSystemModules' => array(self::HAS_MANY, 'UserSystemModule', 'user_id'),
+            'userTimes' => array(self::HAS_MANY, 'UserTime', 'user_id'),
         );
     }
 

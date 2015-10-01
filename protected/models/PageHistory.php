@@ -38,8 +38,7 @@ class PageHistory extends CPageHistory {
             'title',
             'body',
             'progress',
-            'level_id',
-            'status',
+            'level_id'
         );
     }
 

@@ -58,7 +58,7 @@ $users = User::getVariants();
 </div>
 <div class="row">
         <div class="col-md-4 col-md-offset-1">
-            <?php echo CHtml::link('Cancel',array('group/admin'),array('class'=>'btn btn-white')); ?>
+            <?php echo CHtml::link('Cancel',$module->normalizeUrl(array('admin')),array('class'=>'btn btn-white')); ?>
             <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save',array('class'=>'btn btn-primary')); ?>
         </div>
 
